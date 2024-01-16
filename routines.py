@@ -282,7 +282,7 @@ class Rules():
 				elif 'EXDATE' in line:                                        
 					ed=line.strip('\r\n').split(":")
 					ed_a= self.parseDate(ed[1],1)
-					exdate.append(ed_a)
+					if ed_a:exdate.append(ed_a)
 				elif 'TRIGGER' in line: 
 					erg=self.parseTrigger(line,DTstart)
 					trigger1=erg[0]
@@ -322,8 +322,8 @@ class Rules():
 
 
 	def parseDate(self, dateStr, test=None):
-		dateStr=dateStr.strip()
-		self.date_ok=1
+		dateStr = dateStr.strip()
+		self.date_ok = 1
 		try:
 			year = int(dateStr[:4])
 			if year < 1900:
@@ -331,27 +331,23 @@ class Rules():
 			month = int(dateStr[4:6])
 			day = int(dateStr[6:8])
 		except:
-			self.date_ok=0
-			d=datetime.today()
-			now=datetime(d.year,d.month,d.day,0,0) 
-			return now
+			f = open("/tmp/PlanerFS-Errors.txt", "a")
+			f.write("parseDate dateStr: "+str(dateStr)+"\n"+str(test))
+			f.close()
+			self.date_ok = 0
 		if self.date_ok:
-			if len(dateStr)>10:
+			if len(dateStr) > 10:
 				hour = int(dateStr[9:11])
 				minute = int(dateStr[11:13])
 				sek = int(dateStr[13:15])
-				dt1=datetime(year, month, day, hour, minute,sek)
-				try:
-					if dateStr[15:16] == 'Z':
-						dt1=dt1+timedelta(hours=getTimeDiffUTC())
-				except:
-					pass 
-			
-				return dt1        
+				dt1 = datetime(year, month, day, hour, minute, sek)
+				if dateStr[15:16] == 'Z':
+					dt1 = dt1 + timedelta(hours=getTimeDiffUTC())
+				return dt1
 			else:
 				return date(year, month, day)
-
-		#f.close()
+		else:
+				return None
 	def parseTrigger(self, line=None,DTstart=None):
 			                        trigger1=None
 			                        trigger=None
@@ -478,9 +474,11 @@ class Rules():
                                                                   if aktion_des is None: aktion_des=txt_s
                                                                   alert=(erg[1],str(aktion_des),erg[2],erg[3])
 			                        elif 'EXDATE' in line:
-			                            ed=line.split(":")
-			                            ed_a= self.parseDate(ed[1],1)
-			                            exdate.append(ed_a)
+									ed2=Icomp.get('exdate',None)
+									if isinstance(ed2, list):ed2=ed2[0]
+									ed2=str(ed2.to_ical().decode("utf-8"))
+									ed_a = self.parseDate(ed2, "eventb: "+txt_s+"\n"+str(DTstart)+"\n"+str(ed2)+"\n\n")
+									if ed_a:exdate.append(ed_a)
 
 
 #detail_list=(summary,categories,startDate,endDate2,action,rule,description,self.date_fehler,index,filename,comment,trigger,timed,location)
