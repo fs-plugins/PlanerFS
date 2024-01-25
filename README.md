@@ -1,7 +1,8 @@
 # PlanerFS 
+für enigma2-Systeme, basierend auf Python 2 und Python 3
+
 ![pfs_kal_b](https://github.com/fs-plugins/PlanerFS/assets/24637469/3735adc2-d45e-4a5c-8876-0c09f2463198)
 
-für enigma2-Systeme, basierend auf Python 2 und Python 3
 **_fast überall hilft die HELP-Taste !_**
 
 ## **eigene (und online-) ical - Dateien anzeigen (*.ics, Google-Kalender usw.)**
