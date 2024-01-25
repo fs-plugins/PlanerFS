@@ -11,6 +11,14 @@
 - Schulferien (Menü -> Einstellungen -> Taste gelb ---> Neustart nach speichern erforderlich)
 - Schichten (oder zB Belegung Ferienwohnung) anzeigen
 - Meldung am TV unter Verwendung von 'VALARM'+'DISPLAY', bei Katergorie 'timer' keine Anzeige als Termin (zB medi-Timer)
+- Sichern/Wiedeherstellen der ical-Dateien und Einstellungen
+- Termine eines Kalender können separat angezeigt/bearbeitet werden, z.B. für Dienst- Bereitschaftsplan, Ferien usw. (Wechsel mit Bouquet-Taste)
+- bei installiertem mspFS (Schichtplan) werden die Schichten im Kalender angezeigt
+- auf Wunsch Anzeige aktuelle Termine bei Reciver-Start und/oder Uhrzeit, Anzeige auf ext. Displays mit LCD4Linux
+- bewegliche christl. Feiertage können vom PlanerFS (wahlweise greg. oder jul.) berechnet und angezeigt werden
+
+- Screens komplett skinfähig (Ausnahme: Farben für Ereignisse usw.),
+Farben direkt im Programm wählbar, Ereignisse/Kategorien mit unterschiedlichen Farben enthalten: skins für SD, HD, fHD
 
 ## **Adressenkarten anzeigen und verwalten**
 - Import von vcf-Dateien (sog. Visitenkarten-Daten)
