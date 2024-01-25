@@ -1,4 +1,5 @@
 # PlanerFS
+![pfs_kal2](https://github.com/fs-plugins/PlanerFS/assets/24637469/ba52179f-8d9d-4f98-b393-ead3e4136000)
 
 **_fast überall hilft die HELP-Taste !_**
 
