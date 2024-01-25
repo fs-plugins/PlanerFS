@@ -10,7 +10,8 @@ from skin import parseColor
 from Components.Label import Label
 from Components.Sources.List import List
 from Components.Input import Input
-from ConfigParser import ConfigParser
+try:from configparser import ConfigParser#py3
+except:from ConfigParser import ConfigParser
 from Components.ActionMap import ActionMap,HelpableActionMap
 from enigma import getDesktop
 import os.path
@@ -54,7 +55,7 @@ pfscolor_list=("#006400","#BDB76B","#556B2F","#CAFF70","#BCEE68","#A2CD5A","#6E8
 
 
 class color_select(Screen):
-        size_w = getDesktop(0).size().width()
+	size_w = getDesktop(0).size().width()
 	if size_w < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFScatset.xml"
 	elif size_w > 1300:
@@ -68,31 +69,30 @@ class color_select(Screen):
 
 	def __init__(self, session, scolor=None,t_farb1=0xffffff,t_farb2=0xff0000,kat=None,args = None):
 		self.session = session
-                Screen.__init__(self, session)
+		Screen.__init__(self, session)
 		self.skinName="PFS_categorie_conf5"
-                self["catmenu"] = List([])
+		self["catmenu"] = List([])
 		self["catmenu"].style="colorsx"
 		self["key_green"] = Label()
 		self["key_red"] = Label()
 		self["key_yellow"] = Label()
-		self["key_blue"] = Label()                
-                
-                calist=[]
-                i=0
-                self.sel_index=0
-                for x in pfscolor_list:
-                    color= int(x.lstrip('#'), 16)
-                    tx1= " "
-                    tx2= " "
-	            if scolor != None and scolor==color:
-                        self.sel_index=i
-                        tx1= " >> "
-                        tx2= " << "
-                    calist.append((tx1,tx2, color, color,x,t_farb1,t_farb2,_("calendar days"),_("calendar holiday")))
-                    i+=1                
-                if kat:
-                   self.setTitle(_("Select Color for: ")+kat)
-                self["catmenu"].setList(calist) 
+		self["key_blue"] = Label()
+		calist=[]
+		i=0
+		self.sel_index=0
+		for x in pfscolor_list:
+			color= int(x.lstrip('#'), 16)
+			tx1= " "
+			tx2= " "
+			if scolor != None and scolor==color:
+				self.sel_index=i
+				tx1= " >> "
+				tx2= " << "
+			calist.append((tx1,tx2, color, color,x,t_farb1,t_farb2,_("calendar days"),_("calendar holiday")))
+			i+=1
+		if kat:
+			self.setTitle(_("Select Color for: ")+kat)
+		self["catmenu"].setList(calist) 
 		self.onLayoutFinish.append(self.move)
 		
 		self["actions"] = ActionMap(["OkCancelActions","ColorActions"], 
@@ -100,14 +100,15 @@ class color_select(Screen):
 			"ok": self.keyOK,
 			"cancel": self.cancel,
 		}, -1)
+
 	def move(self):
-                self['catmenu'].setIndex(self.sel_index)
+		self['catmenu'].setIndex(self.sel_index)
 
 	def keyOK(self):
 		current = self["catmenu"].getCurrent()
-                if current:
+		if current:
 			ce = current[4]
-                        self.close(ce)
+			self.close(ce)
 
 	def cancel(self):
 		self.close(None)
@@ -116,74 +117,68 @@ class color_select(Screen):
 
 
 class PFS_categorie_conf7(Screen, HelpableScreen):
-        size_w = getDesktop(0).size().width()
+	size_w = getDesktop(0).size().width()
 	if size_w < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFScatset.xml"
 	elif size_w > 1300:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/fHD/PFScatset.xml"
 	else:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/HD/PFScatset.xml"
-
 	tmpskin = open(skindatei)
 	skin = tmpskin.read()
 	tmpskin.close()
+
 	def __init__(self, session):
-                color_holiday = "#FF0000"
-                color_days = "#FFFFFF"
-                color_event = "#e5b243"
-                inactiv_timer = "#FFFFFF"
-                cal_background="#20343c4f"
-                col_list_jubi = "#FF0000"
-                col_list_txt = "#FFFFFF"
-                self.alt_list=[]
-                self.z_liste=["0","1","0","1","1","0","0","0","0","0"]
-                categories="" #",".join((_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"), _("calendar days"),_("calendar holiday"),_("calendar day background"),_("calendar day event"),_("list inactive"),_("list anniversaries"),_("list txt"),_("calendar today background")))
-                mcolor_list=() #("#00008B","#D2691E","#006400","#696969","#FFD700","#000000","#B22222","#8B8878","#CD0000","#00868B","#FF0000","#FFFFFF","#e5b243","#FFFFFF","#20343c4f","#FF0000","#FFFFFF","#228B22")
-                if os.path.exists('/etc/ConfFS/PlanerFS.conf'):
-                    configparser = ConfigParser()
-                    configparser.read("/etc/ConfFS/PlanerFS.conf")
-                    if configparser.has_section("settings"):
-                          l1=configparser.items("settings")
-                          for k,v in  l1:
-                              if k=="categories":
-                                 categories=v.encode("UTF-8")
-                              elif k=="z_liste":
-                                 self.z_liste=list(v.split(","))
-                              elif k=="cat_color_list":
-                                 mcolor_list=v.split(",")
+		color_holiday = "#FF0000"
+		color_days = "#FFFFFF"
+		color_event = "#e5b243"
+		inactiv_timer = "#FFFFFF"
+		cal_background="#20343c4f"
+		col_list_jubi = "#FF0000"
+		col_list_txt = "#FFFFFF"
+		self.alt_list=[]
+		self.z_liste=["0","1","0","1","1","0","0","0","0","0"]
+		categories="" #",".join((_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"), _("calendar days"),_("calendar holiday"),_("calendar day background"),_("calendar day event"),_("list inactive"),_("list anniversaries"),_("list txt"),_("calendar today background")))
+		mcolor_list=() #("#00008B","#D2691E","#006400","#696969","#FFD700","#000000","#B22222","#8B8878","#CD0000","#00868B","#FF0000","#FFFFFF","#e5b243","#FFFFFF","#20343c4f","#FF0000","#FFFFFF","#228B22")
+		if os.path.exists('/etc/ConfFS/PlanerFS.conf'):
+			configparser = ConfigParser()
+			configparser.read("/etc/ConfFS/PlanerFS.conf")
+			if configparser.has_section("settings"):
+				l1=configparser.items("settings")
+				for k,v in  l1:
+					if k=="categories":
+						categories=v.encode("UTF-8")
+					elif k=="z_liste":
+						self.z_liste=list(v.split(","))
+					elif k=="cat_color_list":
+						mcolor_list=v.split(",")
+		self.categories= list(categories.split(","))
+		self.color_list=list(mcolor_list)
+		allcolor_list=["#00008B","#D2691E","#006400","#696969","#FFD700","#000000","#B22222","#8B8878","#CD0000","#00868B","#f0f8ff","#ff4500","#20343c4f","#deb887","#228B22","#5F9EA0","#DC143C","#F0F8FF","#EEC900","#20343c4f","#f0f8ff"]
+		if len(self.color_list)<21:
+			self.color_list.extend(allcolor_list[len(self.color_list):])
+		if len(self.categories)<10:
+			self.categories=[_("None"),_("Birthday"), _("HOLIDAY"), _("Anniversary"), _("Wedding day"),_("None"),_("None"),_("None"),_("None"),_("None")]
+		self.categories.extend((_("calendar days"),_("calendar holiday"),_("calendar background"),_("calendar event"),_("calendar today background"),_("list inactive"),_("list anniversaries"),_("list text"),_("list heading"),_("startscreen background"),_("startscreen text")))
 
-                self.categories= list(categories.split(","))
-                self.color_list=list(mcolor_list)
-
-                allcolor_list=["#00008B","#D2691E","#006400","#696969","#FFD700","#000000","#B22222","#8B8878","#CD0000","#00868B","#f0f8ff","#ff4500","#20343c4f","#deb887","#228B22","#5F9EA0","#DC143C","#F0F8FF","#EEC900","#20343c4f","#f0f8ff"]
-
-                if len(self.color_list)<21:
-                      self.color_list.extend(allcolor_list[len(self.color_list):])
-
-                if len(self.categories)<10:
-                        self.categories=[_("None"),_("Birthday"), _("HOLIDAY"), _("Anniversary"), _("Wedding day"),_("None"),_("None"),_("None"),_("None"),_("None")]
-                self.categories.extend((_("calendar days"),_("calendar holiday"),_("calendar background"),_("calendar event"),_("calendar today background"),_("list inactive"),_("list anniversaries"),_("list text"),_("list heading"),_("startscreen background"),_("startscreen text")))
-
-                   
-                Screen.__init__(self, session)
-                self.skinName="PFS_categorie_conf5"
-                HelpableScreen.__init__(self)
+		Screen.__init__(self, session)
+		self.skinName="PFS_categorie_conf5"
+		HelpableScreen.__init__(self)
 		self.setTitle(_("Edit colors and categories"))
-                self.list=[]
-                self["catmenu"] = List([])
+		self.list=[]
+		self["catmenu"] = List([])
 
 		self["key_green"] = Label(_("Save"))
 		self["key_red"] = Label(_("Cancel"))
 		self["key_yellow"] = Label(_("Years"))
 		self["key_blue"] = Label(_("Color"))
-                
-                self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions", 
+		self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions", 
 		{
 			"cancel": (self.cancel,_("Cancel")),
 			"ok": (self.text,_("Edit text for categorie")),
 		})
 
-                self["ColorActions"] = HelpableActionMap(self,  "ColorActions",
+		self["ColorActions"] = HelpableActionMap(self,  "ColorActions",
 		{
 			"green": (self.save,_("Save and exit")),
 			"red": (self.cancel,_("Cancel")),
@@ -191,132 +186,123 @@ class PFS_categorie_conf7(Screen, HelpableScreen):
 			"blue": (self.colors,_("Open color list")),
 		})
 
-                self.alt_list=[]
-                self.alt_list.extend(self.categories)
-                self.alt_list.extend(self.color_list)
-                self.alt_list.extend(self.z_liste)
-                self.onLayoutFinish.append(self.load_list)
+		self.alt_list=[]
+		self.alt_list.extend(self.categories)
+		self.alt_list.extend(self.color_list)
+		self.alt_list.extend(self.z_liste)
+		self.onLayoutFinish.append(self.load_list)
 
-                
 	def load_list(self,ind=0):
-
-                liste=[]
+		liste=[]
 		text_col=self.color_list[10]
-                bg_col=self.color_list[12]
-                #start_bgr= self.color_list[20]
-                #start_txt= self.color_list[19]
+		bg_col=self.color_list[12]
 		self.t_farb1=int(text_col.lstrip('#'), 16)
-                self.t_farb2=int(bg_col.lstrip('#'), 16)
-                for x in range(len(self.color_list)):
-                   try:  
-                     text=  _(self.categories[x])
-                     zaehle=", "+_("Not number of years")
-                     if x<10:
-                        if self.z_liste[x]=="1":
-                           zaehle=", "+_("Number of years")
-                        text=_("Category")+": "+ _(self.categories[x])+ zaehle
-                     liste.append((_(self.categories[x]),self.color_list[x],text)) 
-                   except:
-                      pass                
-                alist=[]
-                for x in liste:
-                    txtcol=int(text_col.lstrip('#'), 16)
-                    bgcol= int(bg_col.lstrip('#'), 16)
-                    if x[0] ==_("calendar days"):          #,_("calendar event")
-                         txtcol= int(x[1].lstrip('#'), 16)
-                         self.t_farb1=txtcol
-                    elif x[0] ==_("startscreen background") or x[0] ==_("startscreen text"):
-                        txtcol= int(self.color_list[20].lstrip('#'), 16)
-                        bgcol=  int(self.color_list[19].lstrip('#'), 16)
+		self.t_farb2=int(bg_col.lstrip('#'), 16)
+		for x in range(len(self.color_list)):
+			try:  
+				text=  _(self.categories[x])
+				zaehle=", "+_("Not number of years")
+				if x<10:
+					if self.z_liste[x]=="1":
+						zaehle=", "+_("Number of years")
+					text=_("Category")+": "+ _(self.categories[x])+ zaehle
+				liste.append((_(self.categories[x]),self.color_list[x],text)) 
+			except:
+				pass
+		alist=[]
+		for x in liste:
+			txtcol=int(text_col.lstrip('#'), 16)
+			bgcol= int(bg_col.lstrip('#'), 16)
+			if x[0] ==_("calendar days"):
+				txtcol= int(x[1].lstrip('#'), 16)
+				self.t_farb1=txtcol
+			elif x[0] ==_("startscreen background") or x[0] ==_("startscreen text"):
+				txtcol= int(self.color_list[20].lstrip('#'), 16)
+				bgcol=  int(self.color_list[19].lstrip('#'), 16)
 
-                    elif x[0] ==_("calendar holiday"):
-                        txtcol= int(x[1].lstrip('#'), 16)
-                        self.t_farb2= txtcol
-                    elif x[0] in (_("list inactive"),_("list anniversaries"),_("list text"),_("list heading")):
-                         bgcol= bgcol #None
-                         txtcol= int(x[1].lstrip('#'), 16)
-                    else:
-                         bgcol= int(x[1].lstrip('#'), 16)
+			elif x[0] ==_("calendar holiday"):
+				txtcol= int(x[1].lstrip('#'), 16)
+				self.t_farb2= txtcol
+			elif x[0] in (_("list inactive"),_("list anniversaries"),_("list text"),_("list heading")):
+				bgcol= bgcol
+				txtcol= int(x[1].lstrip('#'), 16)
+			else:
+				bgcol= int(x[1].lstrip('#'), 16)
 
-                    res=(" text",x[2],txtcol,bgcol,x)
-                    alist.append(res)                
-                #if not len(self.alt_list):
-                #   for x in alist:
-                #        if len(x)>2:self.alt_list.append(str(x[1].value))    
-                self["catmenu"].setList(alist) #buildList(liste,self.color_list[10],self.color_list[12])
-                self['catmenu'].setIndex(ind)
-                #color_days,color_holiday,cal_background,color_event,extern_color,color_inactiv))
+			res=(" text",x[2],txtcol,bgcol,x)
+			alist.append(res)
+		self["catmenu"].setList(alist)
+		self['catmenu'].setIndex(ind)
 
 	def colors(self):
-                farb=self["catmenu"].getCurrent()[4][1]
-                farb=int(farb.lstrip('#'), 16)
-                self.session.openWithCallback(self.color_set, color_select,farb, self.t_farb1,self.t_farb2,self["catmenu"].getCurrent()[4][0])    
+		farb=self["catmenu"].getCurrent()[4][1]
+		farb=int(farb.lstrip('#'), 16)
+		self.session.openWithCallback(self.color_set, color_select,farb, self.t_farb1,self.t_farb2,self["catmenu"].getCurrent()[4][0])    
 	def color_set(self,answer=None):
-                 if answer:
-                     idx =self["catmenu"].getIndex()
-                     self.color_list[idx]=answer
-                     self.load_list(idx)
+		if answer:
+			idx =self["catmenu"].getIndex()
+			self.color_list[idx]=answer
+			self.load_list(idx)
 
 	def text(self):
-             if self["catmenu"].getIndex()<10:   
-                text1=self["catmenu"].getCurrent()[4][0]
-                self.session.openWithCallback(self.text_set,VirtualKeyBoard, title=_("Edit text for category"), text=text1)
+		if self["catmenu"].getIndex()<10:   
+			text1=self["catmenu"].getCurrent()[4][0]
+			self.session.openWithCallback(self.text_set,VirtualKeyBoard, title=_("Edit text for category"), text=text1)
 
 	def red2(self):
-             if self["catmenu"].getIndex()<10:
-                ind=self["catmenu"].getIndex()   
-                if self.z_liste[ind]=="1":
-                    self.z_liste[ind]="0"
-                else:
-                    self.z_liste[ind]="1"
-                #self.session.openWithCallback(self.text_set,VirtualKeyBoard, title=_("Edit text for category"), text=text1)
-                self.load_list(ind)
+		if self["catmenu"].getIndex()<10:
+			ind=self["catmenu"].getIndex()
+			if self.z_liste[ind]=="1":
+				self.z_liste[ind]="0"
+			else:
+				self.z_liste[ind]="1"
+			self.load_list(ind)
+			
 	def text_set(self,answer=None):
-                 if answer:
-                     idx =self["catmenu"].getIndex()
-                     self.categories[idx]=answer
-                     self.load_list(idx)
+		if answer:
+			idx =self["catmenu"].getIndex()
+			self.categories[idx]=answer
+			self.load_list(idx)
 
 
 	def save(self):
-                self.configparser2 = ConfigParser()
-                self.configparser2.read("/etc/ConfFS/PlanerFS.conf")
-                cat=self.categories[0:10]
-                self.catego=",".join(cat)
-                self.col=",".join(self.color_list)
-                zz=",".join(self.z_liste)
-                if os.path.exists('/etc/ConfFS/PlanerFS.conf'):
-                        self.configparser2.set("settings", "categories",self.catego.decode("utf-8"))
-                        self.configparser2.set("settings", "cat_color_list",self.col)
-                        self.configparser2.set("settings", "z_liste",zz)
-			fp = open("/etc/ConfFS/PlanerFS.conf","w")
-			self.configparser2.write(fp)
-		#self.close(1)
-                #if self.col != self.color_list or zz
-                self.new_list=[]
-                self.new_list.extend(self.categories)
-                self.new_list.extend(self.color_list)
-                self.new_list.extend(self.z_liste)
-                if self.alt_list != self.new_list:
-                     self.session.openWithCallback(self.saveConfirm,MessageBox,_("Restart PlanerFS for new settings\nPlease wait a moment"),MessageBox.TYPE_INFO, timeout = 5)
-                else:
-                    self.close(None)
+		self.configparser2 = ConfigParser()
+		self.configparser2.read("/etc/ConfFS/PlanerFS.conf")
+		cat=self.categories[0:10]
+		self.catego=",".join(cat)
+		self.col=",".join(self.color_list)
+		zz=",".join(self.z_liste)
+		if os.path.exists('/etc/ConfFS/PlanerFS.conf'):
+			self.configparser2.set("settings", "categories",self.catego.decode("utf-8"))
+			self.configparser2.set("settings", "cat_color_list",self.col)
+			self.configparser2.set("settings", "z_liste",zz)
+		fp = open("/etc/ConfFS/PlanerFS.conf","w")
+		self.configparser2.write(fp)
+		self.new_list=[]
+		self.new_list.extend(self.categories)
+		self.new_list.extend(self.color_list)
+		self.new_list.extend(self.z_liste)
+		if self.alt_list != self.new_list:
+			self.session.openWithCallback(self.saveConfirm,MessageBox,_("Restart PlanerFS for new settings\nPlease wait a moment"),MessageBox.TYPE_INFO, timeout = 5)
+		else:
+			self.close(None)
+
 	def saveConfirm(self,answer=None):
-		    self.close(True,self.session,"restart")
-            
+		self.close(True,self.session,"restart")
+
 	def cancel(self):
 		self.close(None)
 
 
 
 class schicht_conf(Screen, HelpableScreen):
-        global L4l
-        try:
-            from Plugins.Extensions.LCD4linux.module import L4Lelement
-            L4l=True
-        except:
-            L4l=None        
-        size_w = getDesktop(0).size().width()
+	global L4l
+	try:
+		from Plugins.Extensions.LCD4linux.module import L4Lelement
+		L4l=True
+	except:
+		L4l=None        
+	size_w = getDesktop(0).size().width()
 	if size_w < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFScatset.xml"
 	elif size_w > 1300:
@@ -329,204 +315,182 @@ class schicht_conf(Screen, HelpableScreen):
 	tmpskin.close()
 
 	def __init__(self, session):
-                   
+		self.schicht_colors={"F":"#008B45","S":"#FFD700","N":"#3A5FCD","fr":"#858585"}
+		l4l_sets=("Off","1","1","0","80","500","100","10","On,Idle")
+		schicht=("0","0","0")
+		configparser = ConfigParser()
+		configparser.read("/etc/ConfFS/PlanerFS.conf")
 
-                self.schicht_colors={"F":"#008B45","S":"#FFD700","N":"#3A5FCD","fr":"#858585"}
-                l4l_sets=("Off","1","1","0","80","500","100","10","On,Idle")
-                schicht=("0","0","0")
-                configparser = ConfigParser()
-                configparser.read("/etc/ConfFS/PlanerFS.conf")
-
-                if configparser.has_section("settings"):
-
-                    if configparser.has_option("settings","schicht_art"):
-                        schicht=str(configparser.get("settings","schicht_art")).split(",")
-                        if len(schicht)<3:
-                             schicht.extend(("0","0","0")[len(schicht):])
-                    if configparser.has_option("settings","schicht_col"):
-                         self.schicht_colors= eval(configparser.get("settings","schicht_col"))
-                    else:
-                        self.schicht_colors={"F":"#008B45","S":"#FFD700","N":"#3A5FCD","fr":"#858585"}
-
-                    if configparser.has_option("settings","l4l_sets"):
-                         l4l_sets= configparser.get("settings","l4l_sets").split(":")
-         
-                    else:
-                        l4l_sets=("On","1","1","0","80","500","100","10","On,Idle","0")
+		if configparser.has_section("settings"):
+			if configparser.has_option("settings","schicht_art"):
+				schicht=str(configparser.get("settings","schicht_art")).split(",")
+				if len(schicht)<3:
+					schicht.extend(("0","0","0")[len(schicht):])
+			if configparser.has_option("settings","schicht_col"):
+				self.schicht_colors= eval(configparser.get("settings","schicht_col"))
+			else:
+				self.schicht_colors={"F":"#008B45","S":"#FFD700","N":"#3A5FCD","fr":"#858585"}
+			if configparser.has_option("settings","l4l_sets"):
+				l4l_sets= configparser.get("settings","l4l_sets").split(":")
+			else:
+				l4l_sets=("On","1","1","0","80","500","100","10","On,Idle","0")
 
 
-                schicht_des=int(schicht[2])
-                if not _("without text") in self.schicht_colors:
-                      self.schicht_colors[_("without text")]="#858585"
-                if schicht_des and not _("If description") in self.schicht_colors:
-                      self.schicht_colors[_("If description")]="#858585"                
-                elif schicht_des==0 and  _("If description") in self.schicht_colors:
-                      del self.schicht_colors[_("If description")]
-                if _("unlisted") in self.schicht_colors: 
-                      del self.schicht_colors[_("unlisted")]               
-                Screen.__init__(self, session)
-                self.skinName="PFS_categorie_conf5"
-                HelpableScreen.__init__(self)
+		schicht_des=int(schicht[2])
+		if not _("without text") in self.schicht_colors:
+			self.schicht_colors[_("without text")]="#858585"
+		if schicht_des and not _("If description") in self.schicht_colors:
+			self.schicht_colors[_("If description")]="#858585"
+		elif schicht_des==0 and  _("If description") in self.schicht_colors:
+			del self.schicht_colors[_("If description")]
+		if _("unlisted") in self.schicht_colors: 
+			del self.schicht_colors[_("unlisted")]
+		Screen.__init__(self, session)
+		self.skinName="PFS_categorie_conf5"
+		HelpableScreen.__init__(self)
 		self.setTitle(_("Setting shifts"))
-                self.list=[]
-                self["catmenu"] = List([])
-                self["catmenu"].style="schicht"
-		
-                self.idx=0
-                self.lcl_sets2=list(l4l_sets)
-                if len(self.lcl_sets2)==9:self.lcl_sets2.append("0")
-                #self.list=[]
-
+		self.list=[]
+		self["catmenu"] = List([])
+		self["catmenu"].style="schicht"
+		self.idx=0
+		self.lcl_sets2=list(l4l_sets)
+		if len(self.lcl_sets2)==9:self.lcl_sets2.append("0")
 		self["key_green"] = Label(_("Save"))
 		self["key_red"] = Label(_("Cancel"))
 		self["key_yellow"] = Label(_("delete"))
 		self["key_blue"] = Label(_("New"))
-                
-                self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions", 
+
+		self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions", 
 		{
 			"cancel": (self.cancel,_("Cancel")),
 			"ok": (self.text,_("Edit selected option")),
 		})
 
-                self["ColorActions"] = HelpableActionMap(self,  "ColorActions",
+		self["ColorActions"] = HelpableActionMap(self,  "ColorActions",
 		{
 			"green": (self.save,_("Save and exit")),
 			"red": (self.cancel,_("Cancel")),
 			"yellow": (self.del_entry,_("delete shift entry")),
 			"blue": (self.new_entry,_("Make new entry")),
 		})
-                self["catmenu"].onSelectionChanged.append(self.changed)
-                self.onLayoutFinish.append(self.load_list)
-#			
-#			"blue": (self.colors,_("Open color list")),
-                
+		self["catmenu"].onSelectionChanged.append(self.changed)
+		self.onLayoutFinish.append(self.load_list)
+
 	def changed(self):
-            if self["catmenu"].getCurrent()[4] == "sch_col":
-                self["key_yellow"].show()
-#                self["pic_yellow"].show()
-                self["key_blue"].show()
-#                self["pic_blue"].show()
-            else:
-                self["key_yellow"].hide()
-#                self["pic_yellow"].hide()
-#		self["pic_blue"].hide()
-                self["key_blue"].hide()
+		if self["catmenu"].getCurrent()[4] == "sch_col":
+			self["key_yellow"].show()
+			self["key_blue"].show()
+		else:
+			self["key_yellow"].hide()
+			self["key_blue"].hide()
 	def load_list(self):
 		liste=[]
 		self.farb_start=2
 		txtcol="#ffffff"
 		bgcol="#000000"
 		txtcol=int(txtcol.lstrip('#'), 16)
-		bgcol=None#int(bgcol.lstrip('#'), 16)
-                liste.append((" >> "+_("Shift colors:"),"",txtcol,bgcol,"sch_col",""))
-                colb=[]
-                for key,v  in self.schicht_colors.iteritems():
-                   if key not in colb:   
-                      colb.append(key)
-                      liste.append((key,"",txtcol,int(v.lstrip('#'), 16),"sch_col",(key,v)))
-                      #res=(" text",x[2],txtcol,bgcol,x)
-                if L4l:
-                    # an/aus,lcd,screen,pos,size,breit,hoch,abstand,onidle
-                    liste.append((" ","",txtcol,bgcol,"",""))
-                    liste.append((_(" >> l4l-Grafik:"),"",txtcol,bgcol,"")) 
-                    liste.append((_("Show in LCD"),self.lcl_sets2[0],txtcol,bgcol,0))                
-                    liste.append((_("LCD"),self.lcl_sets2[1],txtcol,bgcol,1))
-                    liste.append((_("Screen"),self.lcl_sets2[2],txtcol,bgcol,2))
-                    liste.append((_("Mode"),self.lcl_sets2[8],txtcol,bgcol,8))
-                    liste.append((_("Widht total"),self.lcl_sets2[5],txtcol,bgcol,5))
-                    liste.append((_("High total"),self.lcl_sets2[6],txtcol,bgcol,6))
-                    liste.append((_("Distance from top (pixel)"),self.lcl_sets2[3],txtcol,bgcol,3))
-                    liste.append((_("Distance from left (%)"),self.lcl_sets2[9],txtcol,bgcol,9))
-                    liste.append((_("Size for a single"),self.lcl_sets2[4],txtcol,bgcol,4))
-                    liste.append((_("distance between"),self.lcl_sets2[7],txtcol,bgcol,7))
-                self["catmenu"].setList(liste)
+		bgcol=None
+		liste.append((" >> "+_("Shift colors:"),"",txtcol,bgcol,"sch_col",""))
+		colb=[]
+		for key,v  in self.schicht_colors.iteritems():
+			if key not in colb:   
+				colb.append(key)
+				liste.append((key,"",txtcol,int(v.lstrip('#'), 16),"sch_col",(key,v)))
+		if L4l:
+			liste.append((" ","",txtcol,bgcol,"",""))
+			liste.append((_(" >> l4l-Grafik:"),"",txtcol,bgcol,""))
+			liste.append((_("Show in LCD"),self.lcl_sets2[0],txtcol,bgcol,0))
+			liste.append((_("LCD"),self.lcl_sets2[1],txtcol,bgcol,1))
+			liste.append((_("Screen"),self.lcl_sets2[2],txtcol,bgcol,2))
+			liste.append((_("Mode"),self.lcl_sets2[8],txtcol,bgcol,8))
+			liste.append((_("Widht total"),self.lcl_sets2[5],txtcol,bgcol,5))
+			liste.append((_("High total"),self.lcl_sets2[6],txtcol,bgcol,6))
+			liste.append((_("Distance from top (pixel)"),self.lcl_sets2[3],txtcol,bgcol,3))
+			liste.append((_("Distance from left (%)"),self.lcl_sets2[9],txtcol,bgcol,9))
+			liste.append((_("Size for a single"),self.lcl_sets2[4],txtcol,bgcol,4))
+			liste.append((_("distance between"),self.lcl_sets2[7],txtcol,bgcol,7))
+		self["catmenu"].setList(liste)
 
 	def colors(self):
-                farb=self["catmenu"].getCurrent()[5][1]
-                farb=int(farb.lstrip('#'), 16)
+		farb=self["catmenu"].getCurrent()[5][1]
+		farb=int(farb.lstrip('#'), 16)
 		self.t_farb1=int("#000000".lstrip('#'), 16)
-                self.t_farb2=None#int(bg_col.lstrip('#'), 16)
-                self.session.openWithCallback(self.sch_col_set, color_select,farb, self.t_farb1,self.t_farb2,self["catmenu"].getCurrent()[5][0])    
+		self.t_farb2=None
+		self.session.openWithCallback(self.sch_col_set, color_select,farb, self.t_farb1,self.t_farb2,self["catmenu"].getCurrent()[5][0])
 
 	def sch_col_set(self,answer=None):
-                 if answer:
-                     if str(self["catmenu"].getCurrent()[4]) == "sch_col":
-                         #global schicht_colors
-                         self.schicht_colors[self["catmenu"].getCurrent()[0]]=answer.lstrip('#')
-                     self.load_list()
+		if answer:
+			if str(self["catmenu"].getCurrent()[4]) == "sch_col":
+				self.schicht_colors[self["catmenu"].getCurrent()[0]]=answer.lstrip('#')
+			self.load_list()
 
 	def text(self):
-           if self["catmenu"].getCurrent()[4] == "sch_col":
-                self.colors()
-           elif self["catmenu"].getCurrent()[0].strip() != "": 
-
-             auswahl=self["catmenu"].getCurrent()[0]
-             if auswahl == _("Show in LCD"): 
-                    self.session.openWithCallback(self.choice_back, ChoiceBox, title=_("Show on LCD"), list=((_("activate"),"On"),(_("deactivate"),"Off")))
-             elif auswahl == _("LCD"): 
-                    self.session.openWithCallback(self.choice_back, ChoiceBox, title=_("Select the LCD"), list=(("1","LCD 1"),("LCD 2","2"),("LCD 3","3")))
-             elif auswahl == _("Screen"): 
-                    self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set number for screen")),text = self.lcl_sets2[2],maxSize = False,type=Input.NUMBER)
-             elif auswahl == _("Mode"): 
-                    self.session.openWithCallback(self.choice_back, ChoiceBox, title=_("Select the Mode(s)"), list=(("On","On"),("Idle","Idle"),("Media","Media"),("On,Media","On,Media"),("Idle,Media","Idle,Media"),("On,Idle","On,Idle"),("On,Idle,Media","On,Idle,Media")))
-             elif auswahl == _("Widht total"): 
-                    self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set Widht total")),text = self.lcl_sets2[5],maxSize = False,type=Input.NUMBER)
-             elif auswahl == _("High total"): 
-                    self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set High total")),text = self.lcl_sets2[4],maxSize = False,type=Input.NUMBER)
-             elif auswahl == _("Distance from left (%)"): 
-                    self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set Distance from left (%)")),text = self.lcl_sets2[9],maxSize = False,type=Input.NUMBER)
-             elif auswahl == _("Distance from top (pixel)"): 
-                    self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set Distance from top in pixel")),text = self.lcl_sets2[3],maxSize = False,type=Input.NUMBER)
-             elif auswahl == _("Size for a single"): 
-                    self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set Size for a single")),text = self.lcl_sets2[4],maxSize = False,type=Input.NUMBER)
-             elif auswahl == _("distance between"): 
-                    self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set distance between")),text = self.lcl_sets2[7],maxSize = False,type=Input.NUMBER)
+		if self["catmenu"].getCurrent()[4] == "sch_col":
+			self.colors()
+		elif self["catmenu"].getCurrent()[0].strip() != "": 
+			auswahl=self["catmenu"].getCurrent()[0]
+			if auswahl == _("Show in LCD"): 
+				self.session.openWithCallback(self.choice_back, ChoiceBox, title=_("Show on LCD"), list=((_("activate"),"On"),(_("deactivate"),"Off")))
+			elif auswahl == _("LCD"): 
+				self.session.openWithCallback(self.choice_back, ChoiceBox, title=_("Select the LCD"), list=(("1","LCD 1"),("LCD 2","2"),("LCD 3","3")))
+			elif auswahl == _("Screen"): 
+				self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set number for screen")),text = self.lcl_sets2[2],maxSize = False,type=Input.NUMBER)
+			elif auswahl == _("Mode"): 
+				self.session.openWithCallback(self.choice_back, ChoiceBox, title=_("Select the Mode(s)"), list=(("On","On"),("Idle","Idle"),("Media","Media"),("On,Media","On,Media"),("Idle,Media","Idle,Media"),("On,Idle","On,Idle"),("On,Idle,Media","On,Idle,Media")))
+			elif auswahl == _("Widht total"): 
+				self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set Widht total")),text = self.lcl_sets2[5],maxSize = False,type=Input.NUMBER)
+			elif auswahl == _("High total"): 
+				self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set High total")),text = self.lcl_sets2[4],maxSize = False,type=Input.NUMBER)
+			elif auswahl == _("Distance from left (%)"): 
+				self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set Distance from left (%)")),text = self.lcl_sets2[9],maxSize = False,type=Input.NUMBER)
+			elif auswahl == _("Distance from top (pixel)"): 
+				self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set Distance from top in pixel")),text = self.lcl_sets2[3],maxSize = False,type=Input.NUMBER)
+			elif auswahl == _("Size for a single"): 
+				self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set Size for a single")),text = self.lcl_sets2[4],maxSize = False,type=Input.NUMBER)
+			elif auswahl == _("distance between"): 
+				self.session.openWithCallback(self.texteingabeFinished,InputBox,title = (_("Set distance between")),text = self.lcl_sets2[7],maxSize = False,type=Input.NUMBER)
 
 
 
 
 	def choice_back(self,answer=None):
-                if answer:
-                       self.lcl_sets2[self["catmenu"].getCurrent()[4]] =answer[1]
-                       self.load_list()
-        
-        def texteingabeFinished(self,answer=None):
-                if answer:
-                              self.lcl_sets2[self["catmenu"].getCurrent()[4]] =answer
-                              self.load_list()
+		if answer:
+			self.lcl_sets2[self["catmenu"].getCurrent()[4]] =answer[1]
+			self.load_list()
+
+	def texteingabeFinished(self,answer=None):
+		if answer:
+			self.lcl_sets2[self["catmenu"].getCurrent()[4]] =answer
+			self.load_list()
 
 
 	def del_entry(self):
-            if self["catmenu"].getCurrent()[4] == "sch_col":    
-                x=self["catmenu"].getCurrent()[5]
-                del self.schicht_colors[x[0]]
-                self.load_list()
+		if self["catmenu"].getCurrent()[4] == "sch_col":
+			x=self["catmenu"].getCurrent()[5]
+			del self.schicht_colors[x[0]]
+			self.load_list()
 
 	def new_entry(self):
 		self.session.openWithCallback(self.new_entry2,VirtualKeyBoard,title = _("New entry"),text="")
+
 	def new_entry2(self,answer):
-               if answer:
-                   if not answer in self.schicht_colors:
-                       self.schicht_colors[answer.strip()]= "858585"
-                       self.load_list() 
-                   else:
-                       self.session.open(MessageBox, "entry already exists", type=MessageBox.TYPE_ERROR)
+		if answer:
+			if not answer in self.schicht_colors:
+				self.schicht_colors[answer.strip()]= "858585"
+				self.load_list() 
+			else:
+				self.session.open(MessageBox, "entry already exists", type=MessageBox.TYPE_ERROR)
 
 	def save(self):
-                configparser2 = ConfigParser()
-                configparser2.read("/etc/ConfFS/PlanerFS.conf")
-                if not configparser2.has_section("settings"):
-                    configparser2.add_section("settings")
-                configparser2.set("settings", "schicht_col",str(self.schicht_colors))
-
-                if L4l:configparser2.set("settings","l4l_sets", ':'.join(map(str, self.lcl_sets2)))
-                fp = open("/etc/ConfFS/PlanerFS.conf","w")
-                configparser2.write(fp)
-#                if L4l:
-#                    from PFSpaint import mspFS_paint
-#                    mspFS_paint(l4l_sets)
+		configparser2 = ConfigParser()
+		configparser2.read("/etc/ConfFS/PlanerFS.conf")
+		if not configparser2.has_section("settings"):
+			configparser2.add_section("settings")
+		configparser2.set("settings", "schicht_col",str(self.schicht_colors))
+		if L4l:configparser2.set("settings","l4l_sets", ':'.join(map(str, self.lcl_sets2)))
+		fp = open("/etc/ConfFS/PlanerFS.conf","w")
+		configparser2.write(fp)
 		self.close()
-            
+
 	def cancel(self):
 		self.close()
-	
