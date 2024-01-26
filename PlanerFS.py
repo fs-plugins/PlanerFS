@@ -245,9 +245,11 @@ class PlanerFS7(Screen, HelpableScreen):
 			"down": self.down,
 			"up": self.up,
 			}, -2)
-		eakt_dict={"prevBouquet": (self.Bouquet, _("Change calendar file")),"nextBouquet": (self.Bouquet,_("Change calendar file"))}
-		if termindatei_2=="":eakt_dict={"prevBouquet": (self.rueck,_("previous month")),"nextBouquet": (self.vor,_("next Month")),}
-		if conf["adr_on"]:eakt_dict["info"]=(self.vcards,_("Show buisness card of selected name"))
+		BQ1=[(self.Bouquet, _("Change calendar file")),(self.Bouquet,_("Change calendar file"))]
+		if termindatei_2=="":BQ1=[(self.rueck,_("previous month")),(self.vor,_("next Month"))]
+		eakt_dict={"prevBouquet": BQ1[0],"nextBouquet": BQ1[1],"prevService": BQ1[0],"nextService": BQ1[1]}
+		if conf["adr_on"]:
+			eakt_dict["info"]=(self.vcards,_("Show buisness card of selected name"))
 		eakt_dict["input_date_time"]=(self.showMainMenu,_("Show more Options in Menu"))
 		self["EPGSelectActions"] = HelpableActionMap(self, "EPGSelectActions",eakt_dict, -2)
 
