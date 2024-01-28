@@ -392,7 +392,7 @@ class schicht_conf(Screen, HelpableScreen):
 		bgcol=None
 		liste.append((" >> "+_("Shift colors:"),"",txtcol,bgcol,"sch_col",""))
 		colb=[]
-		for key,v  in self.schicht_colors.iteritems():
+		for key,v  in self.schicht_colors.items():
 			if key not in colb:   
 				colb.append(key)
 				liste.append((key,"",txtcol,int(v.lstrip('#'), 16),"sch_col",(key,v)))
