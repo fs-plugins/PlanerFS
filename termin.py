@@ -62,7 +62,7 @@ class TerminList():
 		self.schichtnamen=[]
 		if isinstance(conf["schicht_col"], dict):
 			if pyv==2:
-				for key in conf["schicht_col"].iterkeys():
+				for key in conf["schicht_col"].keys():
 					self.schichtnamen.append(key)
 			else:
 				for key in conf["schicht_col"].keys():
