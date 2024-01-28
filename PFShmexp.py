@@ -78,7 +78,7 @@ class hm_exp(object):
 			conf["schicht_col"]=eval(conf["schicht_col"])
 		self.schichtnamen=[]
 		if isinstance(conf["schicht_col"], dict):
-			for key in conf["schicht_col"].iterkeys():
+			for key in conf["schicht_col"].keys():
 				self.schichtnamen.append(key)
 
 		fileliste1=[]
