@@ -3,7 +3,7 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
 from os import environ as os_environ
 import gettext
 
-my_version="9.70"
+my_version="9.72"
 dat_dir = "/etc/ConfFS/"
 defconf = {
 			"version":"",
