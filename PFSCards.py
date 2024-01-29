@@ -316,6 +316,7 @@ class PFS_edit_cards(ConfigListScreen,Screen, InfoBarNotifications):
 	def __init__(self, session,ds=[],index=None,new_geb=None):
 		self.cards_liste=PFS_read_vcards().cards1
 		self.index=index
+		self.ds=ds
 		if self.index:
 			for x in self.cards_liste:
 				if x[0]==self.index:
