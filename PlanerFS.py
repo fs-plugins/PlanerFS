@@ -297,7 +297,7 @@ class PlanerFS7(Screen, HelpableScreen):
 			self["ueberschrift"].instance.setBackgroundColor(parseColor(self.cal_background))
 		if str(conf["ferien"]) != "0":
 			from .PFSimport import online_import
-			online_import().run(str(conf["dat_dir"]),(conf["ferien"],conf["l_ferien"]),None)
+			online_import().run(dat_dir,(conf["ferien"],conf["l_ferien"]),None)
 		self.einlesen()
   
 	def info_ical(self):
@@ -449,7 +449,7 @@ class PlanerFS7(Screen, HelpableScreen):
 
 	def green(self):    #liste alle dat-Termine bilden und senden
 		from .PFSimport import online_import
-		erg=online_import().run(str(conf["dat_dir"])+'PlanerFS_online.txt',(conf["ferien"],9),1)
+		erg=online_import().run(dat_dir+'PlanerFS_online.txt',(conf["ferien"],9),1)
 		if erg==0:
 			self.session.open(MessageBox, _("Error: at least one external file could not be loaded!")+"\n/tmp/PlanerFS_Errors.txt", MessageBox.TYPE_ERROR) 
 		elif erg==2:
