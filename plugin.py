@@ -37,7 +37,7 @@ except ImportError:
 
 try:
 	from Plugins.Extensions.LCD4linux.module import L4Lelement
-	L4L=True
+	L4L=L4Lelement()
 	from PFSl4l import l4l_export
 except Exception as e:
 	L4L=None
@@ -332,14 +332,7 @@ class Termin_Timer():
 
 
 	def l4l(self):
-		global L4L
 		global display_size
-		if self.MyElements is None:
-			try:
-				from Plugins.Extensions.LCD4linux.module import L4Lelement
-				self.MyElements = L4Lelement()
-			except:
-				L4L=None
 		if L4L is not None:
 			self.display_timer = eTimer()
 			self.display_timer.timeout.get().append(self.l4l)
@@ -349,16 +342,13 @@ class Termin_Timer():
 					self.display_timer = None
 				if len(plfs_list)>0:
 					from .PFSl4l import PFS_l4l
-					#a= PFS_l4l(plfs_list,l4l_sets,conf["vorschaum"],display_size)
+					a= PFS_l4l(plfs_list,l4l_sets,conf["vorschaum"],display_size)
 			elif display_size==0:
-				display_size=self.MyElements.getResolution(l4l_sets[0])[1]
+				display_size=L4L.getResolution(l4l_sets[0])[1]
 				self.display_timer.startLongTimer(2)
 			else:
-				if self.MyElements is None:
-					from Plugins.Extensions.LCD4linux.module import L4Lelement
-					self.MyElements = L4Lelement()
-					display_size=self.MyElements.getResolution(l4l_sets[0])[1]
-					self.display_timer.startLongTimer(2)
+				display_size=L4L.getResolution(l4l_sets[0])[1]
+				self.display_timer.startLongTimer(2)
 
 
 if modul==0:
