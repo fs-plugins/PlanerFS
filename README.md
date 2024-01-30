@@ -4,6 +4,9 @@ für enigma2-Systeme, basierend auf Python 2 und Python 3
 ![pfs_kal_b](https://github.com/fs-plugins/PlanerFS/assets/24637469/3735adc2-d45e-4a5c-8876-0c09f2463198)
 
 **_fast überall hilft die HELP-Taste !_**
+* [wie kann man Kalender aus anderen Programmen/Quellen verwenden?](https://github.com/fs-plugins/PlanerFS/wiki/Home/wie-kann-man-kalender-aus-anderen-programmenquellen-verwenden)
+* [Schichtplan/Belegungsplan](https://github.com/fs-plugins/PlanerFS/wiki/Home/schichtplanbelegungsplan)
+* [Schnittstelle/Export für andere Anwendungen](https://github.com/fs-plugins/PlanerFS/wiki/Home/schnittstelleexport-f%C3%BCr-andere-anwendungen)
 
 ## **eigene (und online-) ical - Dateien anzeigen (*.ics, Google-Kalender usw.)**
 - iCal-Dateien und PlanerFS_online.txt im Ordner ‚etc/ConfFS‘ und einem einstellbaren Verzeichnis (intern, Mount) möglich
