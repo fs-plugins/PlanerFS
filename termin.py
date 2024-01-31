@@ -204,8 +204,7 @@ class TerminList():
 												y1=(next_date,x[0],x[1],x[2],day_heute,x[6],zeit1,x[11],jubi,date1,x[4],no_stscr,ld)
 												self.terminlist.append(y1)
 												if (x[15] or "DISPLAY" in str(x[4])) and (eigen or conf["erinn_ext"] == "1"):
-														sound=conf["m_sound"]
-														if x[15]:
+														if x[15] and x[15][0]:
 															dr=x[15][0]
 															date1=datetime.datetime(z.year,z.month,z.day,dr.hour,dr.minute)
 															if x[15][2] and x[15][3]:
@@ -213,13 +212,13 @@ class TerminList():
 																elif x[15][2]=="h":date1=date1-timedelta(hours=x[15][3])
 																elif x[15][2]=="d":date1=date1-timedelta(days=x[15][3])
 
-															t2b=mktime(date1.timetuple())
-															now = datetime.datetime.now()
-															u = mktime(now.timetuple())
-															if t2b-u>0 and t2b-u<86401:
-																zeit1=(date1.hour,date1.minute)
-																y2=((date1.year,date1.month,date1.day),x[0],x[1],date1,conf["m_sound"],x[10],m_sound_volume,x[6],zeit1,x[11],t2b,conf["m_dauer"],jubi)
-																self.timer_liste.append(y2)
+														t2b=mktime(date1.timetuple())
+														now = datetime.datetime.now()
+														u = mktime(now.timetuple())
+														if t2b-u>0 and t2b-u<86401:
+															zeit1=(date1.hour,date1.minute)
+															y2=((date1.year,date1.month,date1.day),x[0],x[1],date1,conf["m_sound"],x[10],m_sound_volume,x[6],zeit1,x[11],t2b,conf["m_dauer"],jubi)
+															self.timer_liste.append(y2)
 
 								else:
 									if  not x[10] or x[10] != "no_activ":
@@ -233,18 +232,18 @@ class TerminList():
 												next_date=(z.year,z.month,z.day)
 												date1=datetime.datetime(z.year,z.month,z.day,x[2].hour,x[2].minute)
 												if (x[15] or "DISPLAY" in str(x[4])) and (eigen or conf["erinn_ext"] == "1"):
-													if x[15]:
+													if x[15] and x[15][0]:
 														dr=x[15][0]
 														date1=datetime.datetime(z.year,z.month,z.day,dr.hour,dr.minute)
 														if x[15][2] and x[15][3]:
 															if x[15][2]=="m":date1=date1-timedelta(minutes=x[15][3])
 															elif x[15][2]=="h":date1=date1-timedelta(hours=x[15][3])
 															elif x[15][2]=="d":date1=date1-timedelta(days=x[15][3])
-													t2b=mktime(date1.timetuple())
-													u = mktime(now.timetuple())
-													vol=(conf["m_vol_min"],conf["m_vol_max"])
-													url=None
-													if t2b-u>0 and t2b-u<86401:
+												t2b=mktime(date1.timetuple())
+												u = mktime(now.timetuple())
+												vol=(conf["m_vol_min"],conf["m_vol_max"])
+												url=None
+												if t2b-u>0 and t2b-u<86401:
 														zeit1=(date1.hour,date1.minute)
 														if x[4] == "radio" or x[4] == "AUDIO":
 															try:
@@ -271,6 +270,8 @@ class TerminList():
 								continue   
 
 		return(self.terminlist,self.timer_liste,self.fehler_list,self.schichtlist)
+
+
 
 
 
