@@ -157,7 +157,6 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 		self.l4l_ges_file = NoSave(ConfigSelection(choices = [("Yes", _("Yes")), ("No", _("No"))], default = self.conf["l4l_ges_file"]))
 		self.l4l_ges_file_len = NoSave(ConfigInteger(default = self.conf["l4l_ges_file_len"],limits = (10, 999)))
 
-		self.doubles = NoSave(ConfigSelection(choices = [(0, _("No")),(1, _("Yes"))], default = self.conf["doubles"]))
 		self.l_ferien = NoSave(ConfigSelection(choices = [(0, _("No")),(1, _("Yes"))], default = self.conf["l_ferien"]))
 		self.startTime=NoSave(ConfigClock(default =def_Start_Time))
 		self.schicht_art = NoSave(ConfigSelection(choices = [(0, _("No")),(1, _("In Calendar")+" 1"),(2, _("In Calendar")+ "2")], default = int(self.schicht[0])))
@@ -200,14 +199,13 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 		self.startanzeige2.value="systemstart"
 		self.vorschaum.value=1
 		self.holidays_in_Startscreen.value="Yes"
-		self.doubles_in_Startscreen="all"
+		self.doubles_in_Startscreen.value=_("all")
 		self.sec_file.value="none"
 		self.Start_Display_AutoHide.value=0
 		self.kalender_art.value="Gregorian"
 		self.altloesch_on.value="No"
 		self.altloesch.value=365
 		self.autosync.value="No"
-		#self.online_on_kal.value=1
 		self.extern_color.value = "On"
 		self.l4l_on.value="Yes"
 		self.l4l_lcd.value=1
@@ -227,7 +225,6 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 		self.conf["ferien"]="0"
 		self.schicht_art.value=0
 		self.schicht_onstart.value=0
-		self.doubles.value=0
 		self.l_ferien.value=0
 
 		self.reloadList()
@@ -277,8 +274,7 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 			getConfigListEntry(_("Additional directory for calendars")+" (ics)", self.cals_dir,"cals_dir"),
 			getConfigListEntry(_("update every ? minutes,0=Off"), self.akt_intv,"akt_intv"),
 			getConfigListEntry(_("calendar in Menu:"),self.cal_menu,"cal_menu"),
-			getConfigListEntry( _("Overview-list in Menu:"),self.startscreen_plus,"startscreen_plus"),
-			getConfigListEntry(_("Show repetitions in lists"), self.doubles,"doubles"),
+			getConfigListEntry( _("Overview-list in Menu:"),self.startscreen_plus,"startscreen_plus"), 
 			getConfigListEntry(_("Background from skin"), self.bgr_skin,"bgr_skin"),
 			getConfigListEntry(_("use address book:"),self.adr_on,"adr_on"),
 			))
@@ -470,7 +466,7 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 			help=_("When is the start screen displayed?")
 		elif cur == self.countdown_text or cur == self.countdown_dat:
 			help=_("for countdown in start display (pd days to christmas)")
-		elif cur == self.doubles:
+		elif cur == self.doubles_in_Startscreen:
 			help=_("Show same named appointment with all dates?")+ "\n(Startscreen, LCD4Linux)"
 		elif cur == self.l_ferien:
 			help=_("Ferien anzeigen in Listen?")+ "\n(Startscreen, LCD4Linux)"

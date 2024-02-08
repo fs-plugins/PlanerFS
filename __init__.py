@@ -3,7 +3,7 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
 from os import environ as os_environ
 import gettext
 
-my_version="9.76"
+my_version="9.77"
 dat_dir = "/etc/ConfFS/"
 defconf = {
 			"version":"",
@@ -44,7 +44,6 @@ defconf = {
 			"schicht_send_url":"",
 			"cals_dir":'',
 			"ferien":0,
-			"doubles":0,
 			"l_ferien":0,
 			"start_back":"no_l",
 			"bgr_skin":1,
