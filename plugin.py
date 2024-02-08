@@ -37,7 +37,7 @@ except ImportError:
 
 try:
 	from Plugins.Extensions.LCD4linux.module import L4Lelement
-	L4L=L4Lelement()
+	L4L=L4Lelement()#True
 	from PFSl4l import l4l_export
 except Exception as e:
 	L4L=None
@@ -332,8 +332,17 @@ class Termin_Timer():
 
 
 	def l4l(self):
+		global L4L
 		global display_size
+#		self.MyElements = L4Lelement()
+#		if self.MyElements is None:
+#			try:
+#				from Plugins.Extensions.LCD4linux.module import L4Lelement
+#				self.MyElements = L4Lelement()
+#			except:
+#				L4L=None
 		if L4L is not None:
+#			self.MyElements = L4Lelement()
 			self.display_timer = eTimer()
 			self.display_timer.timeout.get().append(self.l4l)
 			if display_size>0:
@@ -347,6 +356,9 @@ class Termin_Timer():
 				display_size=L4L.getResolution(l4l_sets[0])[1]
 				self.display_timer.startLongTimer(2)
 			else:
+#				if self.MyElements is None:
+#					from Plugins.Extensions.LCD4linux.module import L4Lelement
+#					self.MyElements = L4Lelement()
 				display_size=L4L.getResolution(l4l_sets[0])[1]
 				self.display_timer.startLongTimer(2)
 

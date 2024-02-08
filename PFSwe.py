@@ -153,4 +153,4 @@ class PFS_alarm_clock(Screen):
 			self.session.nav.playService(self.oldService)
 		if self.timer1_instanz:
 			self.timer1.stop()
-		self.close(num)                                                                
+		self.close(num)

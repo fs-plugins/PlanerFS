@@ -3,7 +3,7 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
 from os import environ as os_environ
 import gettext
 
-my_version="9.72"
+my_version="9.76"
 dat_dir = "/etc/ConfFS/"
 defconf = {
 			"version":"",
@@ -61,8 +61,6 @@ def localeInit():
 def _(txt):
 	t = gettext.dgettext("PlanerFS", txt)
 	if t == txt:
-		#print "[PlanerFS] fallback to default translation for", txt
-		print("[PlanerFS] fallback to default translation for %s" % txt)
 		t = gettext.gettext(txt)
 	return t
 

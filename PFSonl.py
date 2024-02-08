@@ -30,6 +30,14 @@ class PlanerFSonline_files(Screen, ConfigListScreen):
 
 	def __init__(self, session):
 		self.path=dat_dir+'PlanerFS_online.txt'
+#		configparser = ConfigParser()
+#		if os.path.exists('/etc/ConfFS/PlanerFS.conf'):
+#			configparser.read("/etc/ConfFS/PlanerFS.conf")
+#			if configparser.has_section("settings"):
+#				if configparser.has_option("settings","cals_dir"):
+#					path2= str(configparser.get("settings","dat_dir"))+'PlanerFS_online.txt'
+#				if os.path.exists(path2):self.path=path2 
+
 		self.error=None
 		self.list = []
 		check_list = []

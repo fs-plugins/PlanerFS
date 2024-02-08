@@ -179,7 +179,6 @@ class PFS_show_card7(Screen, InfoBarNotifications):
 				f.close()
 				self.setPicture(self.pic_file)
 		if len(self.tel)>0:   
-			
 			for x in self.tel:
 				if len(x[2].replace(' ',''))>0:
 					self.tel1.append((str(x[0]),str(x[2]),x[0],x[2]))

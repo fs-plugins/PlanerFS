@@ -208,7 +208,7 @@ class PFS_edit_Termin(ConfigListScreen,Screen):
 		self.hauptliste=s_d[11]
 		if str(s_d[5])=="DISPLAY":
 			self.vaDisplay.value=1
-		if s_d[21] and s_d[22]:
+		if s_d[21] and s_d[22][0]:
 			self.vaTxt.value=s_d[22][1]
 			if s_d[21].startswith("-"):
 				self.vaRel.value=0

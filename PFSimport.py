@@ -285,4 +285,3 @@ class online_import():
 					continue
 
 		return erg
-	

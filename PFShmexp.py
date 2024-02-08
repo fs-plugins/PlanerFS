@@ -50,17 +50,7 @@ class hm_exp(object):
 						if nf_file != "ferien" or conf["l_ferien"]:
 							nf=(nf_file,xdir+cal_file)
 							if not nf in files:files.append(nf)
-#		if os.path.exists(conf["dat_dir"]):
-#			for cal_file in os.listdir(conf["dat_dir"]):
-#				if cal_file.endswith(".ics"):
-#					nf=(str(cal_file).replace(".ics",""),conf["dat_dir"]+cal_file)
-#					if not nf in files:files.append(nf)
-#		for cal_file in os.listdir(conf["cals_dir"]):
-#			if cal_file.endswith(".ics"):
-#				nf_file= str(cal_file)[1:].replace(".ics","")
-#				if nf_file != "ferien" or conf["l_ferien"]:
-#					nf=(nf_file,conf["cals_dir"]+cal_file)
-#					if not nf in files:files.append(nf)
+
 		return(files)
 
 

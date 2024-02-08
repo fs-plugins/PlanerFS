@@ -196,7 +196,7 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 		self.adr_menu.value=2
 		self.timer_on.value="On"
 		self.m_dauer.value=0
-		self.adr_on=1
+		self.adr_on.value=1
 		self.startanzeige2.value="systemstart"
 		self.vorschaum.value=1
 		self.holidays_in_Startscreen.value="Yes"
@@ -207,7 +207,7 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 		self.altloesch_on.value="No"
 		self.altloesch.value=365
 		self.autosync.value="No"
-		self.online_on_kal.value=1
+		#self.online_on_kal.value=1
 		self.extern_color.value = "On"
 		self.l4l_on.value="Yes"
 		self.l4l_lcd.value=1
@@ -404,7 +404,7 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 	def keyCancel(self):
 		l2=[]
 		for x in self.list:
-			if len(x)>2:l2.append(str(x[1].value))
+			if len(x)>2:l2.append(str(x[1]))
 		if self.alt_list != l2:
 			self.session.openWithCallback(self.cancelConfirm,MessageBox,_("Really close without saving settings?"),MessageBox.TYPE_YESNO)
 		else:

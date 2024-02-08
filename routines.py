@@ -729,11 +729,18 @@ class Next_Termin():
 
 
 class schicht():
+	def parseSchichtb(self, datei=None,sel=None,art="s2"):
+		f=open("/tmp/003","w")
+		f.write("art: "+str(art)+"\n")
+		f.write("sel: "+str(sel)+"\n")
+		f.write("datei: "+str(datei)+"\n")
+		return []
 
 	def parseSchicht(self, datei=None,sel=None,art="s2"):
 		all_list=[]
 		err=""
-		from ConfigParser import ConfigParser
+		try:from configparser import ConfigParser#py3
+		except:from ConfigParser import ConfigParser
 		configparser = ConfigParser()
 		configparser.read("/etc/ConfFS/PlanerFS.conf")
 		schicht=("0","0","0")
@@ -823,24 +830,24 @@ class schicht():
 								if detail_list not in all_list:
 									all_list.append(detail_list)
 
-				else:
-					now2=now1+timedelta(days=21)
-					if DTstart < now2 and DTend >= now1:
-						if DTend>DTstart:
-							dx=DTstart
-							while dx <= DTend and dx <= now2:
-								detail_list=(dx.day,txt,color,dx,gesamt,all)
-								if detail_list not in all_list and dx < now2 and dx >= now1:
-									if dx.date() not in datlist:
-										datlist.append(dx.date())
+					else:
+						now2=now1+timedelta(days=21)
+						if DTstart < now2 and DTend >= now1:
+							if DTend>DTstart:
+								dx=DTstart
+								while dx <= DTend and dx <= now2:
+									detail_list=(dx.day,txt,color,dx,gesamt,all)
+									if detail_list not in all_list and dx < now2 and dx >= now1:
+										if dx.date() not in datlist:
+											datlist.append(dx.date())
+											all_list.append(detail_list)
+									dx=dx+timedelta(days=1)    
+							else:
+								detail_list=(DTstart.day,txt,color,DTstart,gesamt,all)
+								if detail_list not in all_list:
+									if DTstart.date() not in datlist:
+										datlist.append(DTstart.date())
 										all_list.append(detail_list)
-								dx=dx+timedelta(days=1)    
-						else:
-							detail_list=(DTstart.day,txt,color,DTstart,gesamt,all)
-							if detail_list not in all_list:
-								if DTstart.date() not in datlist:
-									datlist.append(DTstart.date())
-									all_list.append(detail_list)
 
 		if len(rullist):
 			for x in rullist:
@@ -849,16 +856,16 @@ class schicht():
 					all_list.append(x)
 
 		max1=date(jetzt[0],jetzt[1],1)
-		max2= max1+ timedelta(days=31) 
+		max2= max1+ timedelta(days=31)
 		if sel and sel[0] and str(sel)!="export1" : 
 			while now1.date()<max2:
 				if now1.date() not in datlist:
 					all_list.append((now1.day,"",schicht_colors[_("without text")],now1))
 					datlist.append(now1.date())
-					try:
-						now1=now1+timedelta(days=1)
-					except:
-						break    
+				try:
+					now1=now1+timedelta(days=1)
+				except:
+					break    
 		else:
 			now2= now1+timedelta(days=20)
 			now3=now1
@@ -866,10 +873,10 @@ class schicht():
 				if now3.date() not in datlist:
 					all_list.append((now3.day,"",schicht_colors[_("without text")],now3))
 					datlist.append(now3.date())
-					try:
-						now3=now3+timedelta(days=1)
-					except:
-						break 
+				try:
+					now3=now3+timedelta(days=1)
+				except:
+					break 
 
 		all_list.sort(key=lambda x:x[3] or str(sel)=="export1" )
 		if sel is None or sel[0] is None:

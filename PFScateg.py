@@ -139,7 +139,7 @@ class PFS_categorie_conf7(Screen, HelpableScreen):
 		self.alt_list=[]
 		self.z_liste=["0","1","0","1","1","0","0","0","0","0"]
 		categories="" #",".join((_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"), _("calendar days"),_("calendar holiday"),_("calendar day background"),_("calendar day event"),_("list inactive"),_("list anniversaries"),_("list txt"),_("calendar today background")))
-		mcolor_list=() #("#00008B","#D2691E","#006400","#696969","#FFD700","#000000","#B22222","#8B8878","#CD0000","#00868B","#FF0000","#FFFFFF","#e5b243","#FFFFFF","#20343c4f","#FF0000","#FFFFFF","#228B22")
+		mcolor_list=() 
 		if os.path.exists('/etc/ConfFS/PlanerFS.conf'):
 			configparser = ConfigParser()
 			configparser.read("/etc/ConfFS/PlanerFS.conf")
@@ -412,11 +412,12 @@ class schicht_conf(Screen, HelpableScreen):
 		self["catmenu"].setList(liste)
 
 	def colors(self):
-		farb=self["catmenu"].getCurrent()[5][1]
-		farb=int(farb.lstrip('#'), 16)
-		self.t_farb1=int("#000000".lstrip('#'), 16)
-		self.t_farb2=None
-		self.session.openWithCallback(self.sch_col_set, color_select,farb, self.t_farb1,self.t_farb2,self["catmenu"].getCurrent()[5][0])
+		if self["catmenu"].getCurrent()[5] and len(self["catmenu"].getCurrent()[5])>1:
+			farb=self["catmenu"].getCurrent()[5][1]
+			farb=int(farb.lstrip('#'), 16)
+			self.t_farb1=int("#000000".lstrip('#'), 16)
+			self.t_farb2=None
+			self.session.openWithCallback(self.sch_col_set, color_select,farb, self.t_farb1,self.t_farb2,self["catmenu"].getCurrent()[5][0])
 
 	def sch_col_set(self,answer=None):
 		if answer:

@@ -313,7 +313,6 @@ class PlanerFS7(Screen, HelpableScreen):
 				name_x = self["event_list"].getCurrent()[3][1]
 				geb= self["event_list"].getCurrent()[3][3]
 				geb2= str(geb.year) +"-" + str(geb.month)+"-"+str(geb.day)
-				self.session.open(PFS_show_card7,name_x,geb2)
 				try:
 					self.session.open(PFS_show_card7,name_x,geb2)
 				except:
@@ -1350,12 +1349,14 @@ class PlanerFS7(Screen, HelpableScreen):
 
 	def delete_termin(self): 
 		k=1
+		t=""
+		rule=None
 		try:
 			if self.edit_index is None: 
 				self.edit_index=self.eigen_events.index(self["event_list"].getCurrent()[3][24])+1
-				dat=self.eigen_events[self.edit_index-1]
-				t= dat[0]
-				rule=dat[5]
+			dat=self.eigen_events[self.edit_index-1]
+			t= dat[0]
+			rule=dat[5]
 		except Exception as e:
 			k=None
 		if k:

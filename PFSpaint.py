@@ -8,7 +8,7 @@ import time
 from .routines import schicht
 
 configparser = ConfigParser()
-
+L4Lmspfs=None
 try:
 	from Plugins.Extensions.LCD4linux.module import L4Lelement
 	configparser = ConfigParser()
@@ -17,22 +17,20 @@ try:
 		l4l_sets= configparser.get("settings","l4l_sets").split(":")
 	else:
 		l4l_sets=("On","1","1","0","60","100","500","10","On","0")
-
 		L4Lmspfs = L4Lelement()
-		l4l=True
 		schicht_send=None
 		if configparser.has_option("settings","schicht_send"):
 			schicht_send= True
 		if configparser.has_option("settings","schicht_send_url"):
 			schicht_send_url= configparser.get("settings","schicht_send_url")
 except:
-	l4l=None
+	pass
 
 heute=datetime.date.today()
 
 class mspFS_paint: 
 	def __init__(self,liste=None):
-		if l4l and liste: 
+		if L4Lmspfs and liste: 
 			mySchicht=[]
 			try:
 				os.remove("/tmp/mspFS.png")
