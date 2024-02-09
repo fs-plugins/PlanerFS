@@ -413,7 +413,7 @@ class Rules():
 					gcal = icalendar.Calendar().from_string(cal_datei)
 			except Exception as e:
 					fx=open("/tmp/PlanerFS-Errors.txt","a")
-					fx.write("routine:a: "+str(e)+datei+": ICS-file non standard conform, not readable for icalendar!"+"\n")
+					fx.write("routine: "+str(e)+", "+datei+": ICS-file non standard conform, not readable for icalendar!"+"\n")
 					fx.close()
 
 
@@ -430,6 +430,7 @@ class Rules():
 							trigger=0
 							trigger1=None
 							aktion=None
+							aktion2=None
 							alert=None
 							location=""
 							schicht1=0
@@ -439,8 +440,8 @@ class Rules():
 								aktion_des = Icomp2.decoded('description',None)
 							Icomp_str= str(Icomp)
 							txt_s=str(Code_utf8(Icomp.get('summary')))
-							if schicht:
-								if txt_s.strip() in schicht:schicht1=1
+							if schicht and  txt_s.strip() in schicht:schicht1=1
+
 							DTstart = Icomp.decoded("dtstart")
 							if isinstance(DTstart, datetime):
 								timed = 'time'
@@ -477,20 +478,13 @@ class Rules():
 										if ed_a:exdate.append(ed_a)
 
 							rrule=Icomp.get("rrule",None)
-							#f=open("/tmp/002","a")
 							if rrule:
-								#f.write(str(rrule)+"\n")
-								#f.write(str(Icomp.get('rrule').to_ical().decode('utf-8'))+"\n")
-								#rrule = str(rrule).strip()
-								#rrule = rrule.replace(' ','')
 								if p3:
 									rrule=Icomp.get('rrule').to_ical().decode('utf-8')
 								else:
 									rrule = str(rrule).strip()
 									rrule = rrule.replace(' ','')
 								rule = self.parseRule(rrule)
-								#f.write("r: "+str(rule)+"\n")
-							#f.close()
 							descript=txt_s
 							d_read= Icomp.get('description',None)
 							if d_read:

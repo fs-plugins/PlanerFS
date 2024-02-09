@@ -274,7 +274,6 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 			getConfigListEntry(_("Additional directory for calendars")+" (ics)", self.cals_dir,"cals_dir"),
 			getConfigListEntry(_("update every ? minutes,0=Off"), self.akt_intv,"akt_intv"),
 			getConfigListEntry(_("calendar in Menu:"),self.cal_menu,"cal_menu"),
-			getConfigListEntry( _("Overview-list in Menu:"),self.startscreen_plus,"startscreen_plus"), 
 			getConfigListEntry(_("Background from skin"), self.bgr_skin,"bgr_skin"),
 			getConfigListEntry(_("use address book:"),self.adr_on,"adr_on"),
 			))
@@ -289,36 +288,37 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 		list.extend((
 			getConfigListEntry(""),
 			getConfigListEntry("-- "+_("overview-list")+" --"),
-			getConfigListEntry(_("Setting Start"), self.startanzeige2,"startanzeige2"),
+			getConfigListEntry(" "*5+_("Setting Start"), self.startanzeige2,"startanzeige2"),
 			))
 		if self.startanzeige2.value != "Off":
 			if self.startanzeige2.value == "time" or self.startanzeige2.value == "standby and time" or self.startanzeige2.value == "systemstart and time":
-				list.extend((getConfigListEntry(_("Start-Time"), self.startTime,"starttime"),))
+				list.extend((getConfigListEntry(" "*5+_("Start-Time"), self.startTime,"starttime"),))
 			if self.startanzeige2.value != "standby and time":
 				list.extend((
-					getConfigListEntry(_("When standby(Idle) display later"), self.timestartstandby,"timestartstandby"),
+					getConfigListEntry(" "*5+_("When standby(Idle) display later"), self.timestartstandby,"timestartstandby"),
 				))
 
 			list.extend((
-				getConfigListEntry(_("Months for events preview"), self.vorschaum,"vorschaum"),
-				getConfigListEntry(_("Holidays in Startscreen"), self.holidays_in_Startscreen,"holidays_in_startscreen"),
-				getConfigListEntry(_("Show repetitions in Startscreen"), self.doubles_in_Startscreen,"doubles_in_startscreen"),
-				getConfigListEntry(_("2. File for Startscreen"), self.sec_file,"sec_file"),
-				getConfigListEntry(_("Start Display AutoHide (sec, 0=Off)"), self.Start_Display_AutoHide,"start_display_autohide"),
-				getConfigListEntry(_("Startscreen lines"), self.start_back,"start_back"),
+				getConfigListEntry(" "*5+_("Months for events preview"), self.vorschaum,"vorschaum"),
+				getConfigListEntry(" "*5+_("Holidays in Startscreen"), self.holidays_in_Startscreen,"holidays_in_startscreen"),
+				getConfigListEntry(" "*5+_("Show repetitions in Startscreen"), self.doubles_in_Startscreen,"doubles_in_startscreen"),
+				getConfigListEntry(" "*5+_("2. File for Startscreen"), self.sec_file,"sec_file"),
+				getConfigListEntry(" "*5+_("Start Display AutoHide (sec, 0=Off)"), self.Start_Display_AutoHide,"start_display_autohide"),
+				getConfigListEntry(" "*5+_("Overview-list in Menu:"),self.startscreen_plus,"startscreen_plus"),
+				getConfigListEntry(" "*5+_("Startscreen lines"), self.start_back,"start_back"),
 				))
 
 		list.extend((
 			getConfigListEntry(""),
 			getConfigListEntry("-- "+_("Timer / Reminder")+" --"),
-			getConfigListEntry(_("Timer on"), self.timer_on,"timer_on"),
+			getConfigListEntry(" "*5+_("Timer on"), self.timer_on,"timer_on"),
 			))
 		if self.timer_on.value=="On":
 				list.extend((
-			getConfigListEntry(_("Timer display time (0=endless)"), self.m_dauer,"m_dauer"),
-			getConfigListEntry(_("Timer sound"), self.m_sound,"m_sound"),
-			getConfigListEntry(_("Timer start volume"), self.m_vol_min,"m_vol_min"),
-			getConfigListEntry(_("Timer max volume"), self.m_vol_max,"m_vol_max"),
+			getConfigListEntry(" "*5+_("Timer display time (0=endless)"), self.m_dauer,"m_dauer"),
+			getConfigListEntry(" "*5+_("Timer sound"), self.m_sound,"m_sound"),
+			getConfigListEntry(" "*5+_("Timer start volume"), self.m_vol_min,"m_vol_min"),
+			getConfigListEntry(" "*5+_("Timer max volume"), self.m_vol_max,"m_vol_max"),
 			))
 		if self.m_sound.value=="radio":
 				list.extend((
@@ -327,13 +327,18 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 		list.extend((
 			getConfigListEntry(""),
 			getConfigListEntry("-- "+_("extern dats")+" --"),
-			getConfigListEntry(_("floating holidays"), self.kalender_art,"kalender_art"),
+			getConfigListEntry(" "*5+_("floating holidays"), self.kalender_art,"kalender_art"),
 			))
 
-		list.extend((getConfigListEntry(_("download on Start"), self.autosync,"autosync"),))
-		list.extend((getConfigListEntry(_("extern events color in calendar"), self.extern_color,"extern_color"),))
-		list.extend((getConfigListEntry(_("Show external reminders"), self.erinn_ext,"erinn_ext"),))
-		list.extend((getConfigListEntry(_("Use shift plan"), self.schicht_art,"schicht_art"),))
+		list.extend((getConfigListEntry(" "*5+_("download on Start"), self.autosync,"autosync"),))
+		list.extend((getConfigListEntry(" "*5+_("extern events color in calendar"), self.extern_color,"extern_color"),))
+		list.extend((getConfigListEntry(" "*5+_("Show external reminders"), self.erinn_ext,"erinn_ext"),))
+
+		list.extend((
+			getConfigListEntry(""),		
+			getConfigListEntry("-- "+_("Shift/occupancy plan")+" --"),
+			))
+		list.extend((getConfigListEntry(" "*5+_("Activate"), self.schicht_art,"schicht_art"),))
 		if self.schicht_art.value>0:
 			list.extend((getConfigListEntry(" "*5+"("+_("Settings in Menu->Shift Setting...")+")"),))
 			list.extend((getConfigListEntry(" "*5+_("Identifier text in calendar"), self.schicht_bez,"schicht_bez"),))
@@ -348,25 +353,25 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 			list.extend((
 			getConfigListEntry(""),
 			getConfigListEntry("-- "+"LCD4Linux-Settings"+" --"),
-			getConfigListEntry(_("lcd on/off"), self.l4l_on,"l4l_on"),
+			getConfigListEntry(" "*5+_("lcd on/off"), self.l4l_on,"l4l_on"),
 			))
 		if self.l4l_on.value=="Yes":
 			list.extend((
-			getConfigListEntry(_("lcd-nr"), self.l4l_lcd,"l4l_lcd"),
-			getConfigListEntry(_("lcd screen-nr"), self.l4l_screen,"l4l_screen"),
-			getConfigListEntry(_("lcd list fontsize"), self.l4l_font,"l4l_font"),
-			getConfigListEntry(_("lcd timer fontsize"), self.l4lm_font,"l4lm_font"),
-			getConfigListEntry(_("write text file"), self.l4l_ges_file,"l4l_ges_file"),
-			getConfigListEntry(_("maximum characters per line"), self.l4l_ges_file_len,"l4l_ges_file_len"),
+			getConfigListEntry(" "*5+_("lcd-nr"), self.l4l_lcd,"l4l_lcd"),
+			getConfigListEntry(" "*5+_("lcd screen-nr"), self.l4l_screen,"l4l_screen"),
+			getConfigListEntry(" "*5+_("lcd list fontsize"), self.l4l_font,"l4l_font"),
+			getConfigListEntry(" "*5+_("lcd timer fontsize"), self.l4lm_font,"l4lm_font"),
+			getConfigListEntry(" "*5+_("write text file"), self.l4l_ges_file,"l4l_ges_file"),
+			getConfigListEntry(" "*5+_("maximum characters per line"), self.l4l_ges_file_len,"l4l_ges_file_len"),
 			))
 		list.extend((
 			getConfigListEntry(""),
 			getConfigListEntry( _("Countdown-Text:"),self.countdown_text,"cd_text"),
+			getConfigListEntry(" "*5+_("Info: Placeholder in text for number of days = pd")),
 			))
 
 		if len(str(self.countdown_text.value)):
 			list.extend((
-				getConfigListEntry(_("Info: Placeholder in text for number of days = pd")),
 				getConfigListEntry(_("Countdown-Dat:"),self.countdown_dat,"cd_dat"),
 				))
 		else:

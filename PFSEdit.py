@@ -129,7 +129,7 @@ class PFS_edit_Termin(ConfigListScreen,Screen):
 		self["key_green"] = Label(_("Save"))
 		self["key_red"] = Label(_("Cancel"))
 		self["key_blue"] = Label("")
-		self["help"] = Label(_("select from the list: Event by Date, Event by Rules, Timer"))
+		self["help"] = Label(_("text for List, press ok for edit"))
 		self["setupActions"] = ActionMap(["SetupActions","DirectionActions","ColorActions"],
 		{
 			"green": self.save,
@@ -208,7 +208,7 @@ class PFS_edit_Termin(ConfigListScreen,Screen):
 		self.hauptliste=s_d[11]
 		if str(s_d[5])=="DISPLAY":
 			self.vaDisplay.value=1
-		if s_d[21] and s_d[22][0]:
+		if s_d[21] and s_d[22] and s_d[22][0]:
 			self.vaTxt.value=s_d[22][1]
 			if s_d[21].startswith("-"):
 				self.vaRel.value=0
@@ -255,7 +255,7 @@ class PFS_edit_Termin(ConfigListScreen,Screen):
 			else:
 				if self.termintext.value==(_("radio alarm Clock")): self.termintext.value=(_("Event-text"))
 				if self.terminDESCRIPTION.value=="http://": self.terminDESCRIPTION.value=(_("DESCRIPTION"))
-		list.extend((getConfigListEntry(_("DESCRIPTION"), self.terminDESCRIPTION ),))
+
 		list.extend((
 			getConfigListEntry(_("DESCRIPTION"), self.terminDESCRIPTION ),
 			getConfigListEntry(_("Category"), self.termin_cat),
@@ -312,7 +312,7 @@ class PFS_edit_Termin(ConfigListScreen,Screen):
 		idx=idx+1
 		if idx < l:
 			self["config"].setCurrentIndex(idx)
-			self.help()
+		self.help()
 
 	def upPressed(self):
 		idx = self["config"].getCurrentIndex()
@@ -321,30 +321,30 @@ class PFS_edit_Termin(ConfigListScreen,Screen):
 		self.help()
 
 	def help(self):
-		cur = self["config"].getCurrent()
-		cur = cur and cur[1]
-		if cur == self.terminart:
+		self.cur = self["config"].getCurrent()
+		self.cur = self.cur and self.cur[1]
+		if self.cur == self.terminart:
 			help=_("select from the list: Event by Date, Event by Rules, Timer")+", "+_("Press 'OK' for list")
-		elif cur == self.termin_wiederholung:
+		elif self.cur == self.termin_wiederholung:
 			help=_("select from the list: repeat, repeat until, none")+", "+_("Press 'OK' for list")
-		elif cur == self.termin_cat:
+		elif self.cur == self.termin_cat:
 			help=_("Press 'OK' for list") 
-		elif cur == self.termin_freq:
+		elif self.cur == self.termin_freq:
 			help=_("monthly backward = for Day of Month backward (last Day...)")+", "+_("Press 'OK' for list")
-		elif cur == self.termin_byDay:
+		elif self.cur == self.termin_byDay:
 			help=_("sample: you will MO,TH,SA,SU then type: 1467")
-		elif cur == self.terminTime:
+		elif self.cur == self.terminTime:
 			help=_("Next timer earliest in 5 minutes or 5 minutes after standby")
-		elif cur == self.termintext: 
+		elif self.cur == self.termintext: 
 			help=_("text for List, press ok for edit")
-		elif cur==self.terminDESCRIPTION:
+		elif self.cur==self.terminDESCRIPTION:
 			if self.terminsound.value=="radio":
 				help=_("set mp3-URL for radio-Stream: http:\\....\n (mp3,ogg, aac - not pls,m3u,wmp,flash....)")
 			else:
 				help=_("Long-Text, press ok for edit")
 		else:
-			help="No help text available"
-			self["help"].setText(help)
+			help=_("No help text available")
+		self["help"].setText(help)
 
 
 	def texteingabeFinished(self, ret):

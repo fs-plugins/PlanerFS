@@ -146,6 +146,7 @@ class PlanerFS7(Screen, HelpableScreen):
 						conf[k] = v
 
 		self.schichtnamen=None
+		self.show_schichttermin=False
 		self.kalnum=1
 		schicht=str(conf["schicht_art"]).split(",")
 		if len(schicht)<4:
@@ -370,6 +371,12 @@ class PlanerFS7(Screen, HelpableScreen):
 				self.showAbout()
 			elif menu_nr=="info_ical":
 				self.info_ical()
+			elif menu_nr=="Shift dates":
+				if self.show_schichttermin:
+					self.show_schichttermin=False
+				else:
+					self.show_schichttermin=True
+				self.einlesen()
 			elif menu_nr=="Setting_shifts":
 				from .PFScateg import schicht_conf
 				self.session.open(schicht_conf)
@@ -512,6 +519,8 @@ class PlanerFS7(Screen, HelpableScreen):
 					if "PlanerFS.ics" in str(x[9]) or "PlanerFS2.ics" in str(x[9]):
 						in1=x
 						self.eigen_events.append(x)
+						if self.show_schichttermin:
+								self.events.append(x)
 					self.schichtlist.append((x[0],x[2],x[3],x[5],x[6],in1,x[17]))
 				else:
 					if "PlanerFS.ics" in str(x[9]) or "PlanerFS2.ics" in str(x[9]):
@@ -554,7 +563,10 @@ class PlanerFS7(Screen, HelpableScreen):
 						in1=None
 						if "PlanerFS.ics" in rname or "PlanerFS2.ics" in rname:
 							in1=parse1
+							if self.show_schichttermin:
+								self.events.append(parse1)
 						self.schichtlist.append((parse1[0],parse1[2],parse1[3],parse1[5],parse1[6],in1,parse1[17]))
+						
 					else:
 						if  "PlanerFS2.ics" in rname or conf["cals_dir"]+"2" in rname:
 							self.events2.append(parse1)
@@ -949,7 +961,7 @@ class PlanerFS7(Screen, HelpableScreen):
 		kat=""
 		if self["event_list"].getCurrent() is not None:
 			index = self["event_list"].getCurrent()[3]
-		if  self["event_list"].getCurrent():
+		if self["event_list"].getCurrent():
 			descreption = ""
 			datum=""
 			zeit=""
@@ -960,7 +972,7 @@ class PlanerFS7(Screen, HelpableScreen):
 				descreption= self["event_list"].getCurrent()[3][1]                   
 			elif self["event_list"].getCurrent()[3][1] not in descreption:
 				descreption = self["event_list"].getCurrent()[3][1]+", "+descreption 
-			descreption =descreption.replace('\\n',', ')
+			descreption =descreption.replace('\n',', ').replace('\\',' ')
 			kat1= str(self["event_list"].getCurrent()[3][2])
 			if self["event_list"].getCurrent()[3][2]: kat1= str(self["event_list"].getCurrent()[3][2])
 			if not kat1 or kat1 =="" or kat1 =="None":
@@ -973,7 +985,6 @@ class PlanerFS7(Screen, HelpableScreen):
 				cat_ind=0
 				for tmp in categories1:
 					tmpstrip=tmp.strip()
-					#tmpstrip=str.encode(tmpstrip)
 					if kat1 and kat1 in tmpstrip:
 						if z_liste[cat_ind]=="1":
 							alter = " "+str(index[7] - int(index[3].year))
@@ -1107,7 +1118,7 @@ class PlanerFS7(Screen, HelpableScreen):
 		if conf["schicht_art"] and len(msp_liste):
 			le= msp_liste[int(self.sel_dat)-1]
 			try:
-				tp_txt=str(le[1]).strip()
+				tp_txt1=str(le[1]).strip()
 				tplus=""
 				if len(le)>4 and le[4]:
 					edt=le[4]
@@ -1117,9 +1128,8 @@ class PlanerFS7(Screen, HelpableScreen):
 					self.ed_list.append((tp_txt,ed2))
 					if zeit != (0,0) or zeit2 != (0,0):
 						tplus=" "+str(zeit[0])+":"+str(zeit[1])+" - "+str(zeit2[0])+":"+str(zeit2[1])
-					if edt[6] and edt[0] != edt[6]:
-						tplus+= " ("+str(edt[6])+")"
-					if len(str(tp_txt)): tp_txt=self.schicht_bez+": "+str(tp_txt)+tplus
+				if len(str(tp_txt1)): 
+					tp_txt=self.schicht_bez+": "+str(tp_txt1)+tplus
 			except:
 				pass
 		date = datetime.date(self.jahr,self.monat,self.sel_dat)
@@ -1155,7 +1165,7 @@ class PlanerFS7(Screen, HelpableScreen):
 								zeit1=zeit1+"- "
 							zeit=" "+zeit1+zeit2
 					try:
-						anz_text=str(x[8])
+						anz_text=str(x[8]).replace("\n",", ").replace("\\"," ")
 						if anz_text is None or not len(anz_text): 
 							anz_text=str(x[1])
 						elif x[1] not in anz_text: 
@@ -1166,7 +1176,7 @@ class PlanerFS7(Screen, HelpableScreen):
 							for tmp in categories1:
 								if tmp.strip() in anz_text:
 									kat1= tmp.strip()
-									anz_text=anz_text.replace(tmp.strip(),"")
+									anz_text=anz_text.replace(tmp.strip()+":","")
 						alter=""
 						if kat1 and kat1 !="" and kat1 !="None":
 							cat_ind=0
@@ -1295,12 +1305,13 @@ class PlanerFS7(Screen, HelpableScreen):
 					self.altdatum = x[3]
 					summary="SUMMARY:"+x[0]+"\n"
 					desc=x[6]
-					if x[6] is None or x[6]=="": desc=x[0]
+					if x[6] is None or x[6]=="" or x[6]=="None": desc=x[0]
 					desc= "DESCRIPTION:"+desc+"\n"
 					if len(str(x[13].strip())):location= "LOCATION:"+x[13].strip()+"\n"
-					if str(x[4]) == "no_startscreen" :location= location+"ACTION:"+str(x[4]).strip()+"\n"
+					if str(x[4]) == "no_startscreen" or len(x)>16 and str(x[16])=="1":
+						location= location+"ACTION:no_startscreen\n"
 					if x[1]=="TIMER":
-						anzeige="BEGIN:VALARM\nACTION:"+str(x[4]) +"\nTRIGGER;VALUE=DURATION:-PT1M\n"+desc+"END:VALARM\n"
+						anzeige="BEGIN:VALARM\nACTION:"+str(x[4]).strip() +"\nTRIGGER;VALUE=DURATION:-PT1M\n"+desc+"END:VALARM\n"
 					elif x[4]=="DISPLAY":
 						anzeige="BEGIN:VALARM\nACTION:DISPLAY\nTRIGGER;VALUE=DURATION:-P1D\n"+desc+"END:VALARM\n"
 					cat=""
@@ -1326,7 +1337,8 @@ class PlanerFS7(Screen, HelpableScreen):
 						rule=rule+"\n"
 					if x[10] and x[10] != None:comment="COMMENT:"+x[10]+"\n"
 					trigger=""
-					if len(x)>14 and x[14]:trigger="BEGIN:VALARM\nACTION:DISPLAY\n"+x[14]+"\nEND:VALARM\n"
+					#if str(x[14]) == "0" or str(x[14]) == "1" or str(x[14]) == "None":x[14]=None 
+					if len(x)>14 and x[14] and str(x[14]) != "0" and str(x[14]) != "1":trigger="BEGIN:VALARM\nACTION:DISPLAY\n"+str(x[14]).strip()+"\nEND:VALARM\n"
 					detailliste=on+start_dat+end_dat+summary+cat+rule+desc+anzeige+comment+location+trigger+off
 					if conf["altloesch_on"]=="No":
 						events.append(str(detailliste))
@@ -1414,9 +1426,11 @@ class PanerFS_menu7(Screen):
 			nr=nr+1
 		if conf["schicht_art"]:
 			lista.append((str(nr+5)," "+_("Setting shifts"), "Setting_shifts"))
-			nr=nr+1
-		lista.append((str(nr+5)," "+_("Show errors"), "show_errors"))
-		lista.append((str(nr+6)," "+_("About"), "about"))
+			lista.append((str(nr+6)," "+_("Show/Hide Shift dates"), "Shift dates"))
+			nr=nr+2
+		if os.path.exists('/tmp/PlanerFS-Errors.txt') and os.path.getsize("/tmp/PlanerFS-Errors.txt")>60:
+			lista.append((" "," "+_("Show errors"), "show_errors"))
+		lista.append((" "," "+_("About the plugin"), "about"))
 		if modul==0:
 			lista.append((" ","", "nix"))
 			lista.append((" "," "+_("info, no ical-module"), "info_ical"))
