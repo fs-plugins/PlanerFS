@@ -314,16 +314,17 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 			getConfigListEntry(" "*5+_("Timer on"), self.timer_on,"timer_on"),
 			))
 		if self.timer_on.value=="On":
-				list.extend((
-			getConfigListEntry(" "*5+_("Timer display time (0=endless)"), self.m_dauer,"m_dauer"),
-			getConfigListEntry(" "*5+_("Timer sound"), self.m_sound,"m_sound"),
-			getConfigListEntry(" "*5+_("Timer start volume"), self.m_vol_min,"m_vol_min"),
-			getConfigListEntry(" "*5+_("Timer max volume"), self.m_vol_max,"m_vol_max"),
+			list.extend((
+				getConfigListEntry(" "*5+_("Timer display time (0=endless)"), self.m_dauer,"m_dauer"),
+				getConfigListEntry(" "*5+_("Timer sound"), self.m_sound,"m_sound"),
 			))
-		if self.m_sound.value=="radio":
+			if self.m_sound.value !="None":
+				if self.m_sound.value=="radio":
+					list.extend((getConfigListEntry(" "*5+_("radio url"), self.m_radio_url,"m_radio_url"),))
 				list.extend((
-					getConfigListEntry(_("radio url"), self.m_radio_url,"m_radio_url"),
-					))                
+				getConfigListEntry(" "*5+_("Timer start volume"), self.m_vol_min,"m_vol_min"),
+				getConfigListEntry(" "*5+_("Timer max volume"), self.m_vol_max,"m_vol_max"),
+				))                
 		list.extend((
 			getConfigListEntry(""),
 			getConfigListEntry("-- "+_("extern dats")+" --"),

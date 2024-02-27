@@ -109,20 +109,16 @@ class Timermeldung(Screen, InfoBarNotifications):
 			self.oldvol = eDVBVolumecontrol.getInstance().getVolume()
 			self.sounder=1
 			self.oldService = self.session.nav.getCurrentlyPlayingServiceReference()
-			if sound=="AUDIO":
-				self.musicfile="/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/PFSsound.mp3"
-			elif sound=="radio":
-				if self.url:
+			self.musicfile="/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/PFSsound.mp3"
+			if sound=="radio" and self.url:
 					self.musicfile=self.url
-				else:
-					self.musicfile="/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/PFSsound.mp3"
-					self["text1"].setText(_("radio alarm Clock"))
-		self.onLayoutFinish.append(self.klang)
-		if sound=="AUDIO":
-			self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
-				{
-				iPlayableService.evEOF: self.__schleife,
-				})
+			else:
+				self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
+					{
+					iPlayableService.evEOF: self.__schleife,
+					})
+			self["text1"].setText(_("radio alarm Clock"))
+			self.onLayoutFinish.append(self.klang)
 
 	def ok_press(self):
 		if self.volume_timer.isActive():

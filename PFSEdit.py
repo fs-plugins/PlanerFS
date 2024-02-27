@@ -210,6 +210,7 @@ class PFS_edit_Termin(ConfigListScreen,Screen):
 			self.vaDisplay.value=1
 		if s_d[21] and s_d[22] and s_d[22][0]:
 			self.vaTxt.value=s_d[22][1]
+			if s_d[22][1]==None:self.vaTxt.value=""
 			if s_d[21].startswith("-"):
 				self.vaRel.value=0
 				d=re.match('.*?([0-9]+)',  s_d[21])
@@ -510,7 +511,7 @@ class PFS_edit_Termin(ConfigListScreen,Screen):
 			if self.vaRel.value and self.vaTTrigger1:
 				tr_date= self.vaTTrigger1.value
 				tr_time= self.vaTTrigger2.value
-				at = "%04i%02i%02iT%02i%02i00"      %(tr_date[2],tr_date[1],tr_date[0],tr_time[0],tr_time[1])
+				at = "%04i%02i%02iT%02i%02i00" %(tr_date[2],tr_date[1],tr_date[0],tr_time[0],tr_time[1])
 				trigger=  "TRIGGER;VALUE=DATE-TIME:"+at
 			else:
 				if self.vaRTrigger.value==0:
@@ -521,7 +522,7 @@ class PFS_edit_Termin(ConfigListScreen,Screen):
 					if self.vaTriggerT.value=="D":
 						vor="P"
 						trigger="TRIGGER:-"+vor+str(self.vaRTrigger.value)+self.vaTriggerT.value
-				if len(self.vaTxt.value):
+				if self.vaTxt and self.vaTxt.value and len(self.vaTxt.value):
 					trigger=trigger+"\nDESCRIPTION:"+self.vaTxt.value
 
 		detail_liste= (melde_text,cat,begin,end, action,rule,desc,self.ind_nr,self.terminart.value,self.fname,comment,None,self.ganztag.value,self.location.value,trigger)
