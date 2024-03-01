@@ -1227,9 +1227,6 @@ class PlanerFS7(Screen, HelpableScreen):
 			if self.list_site==1: 
 				if self["event_list"].getCurrent() is not None:
 					index = self["event_list"].getCurrent()#[3]
-					f=open("/tmp/001","a")
-					f.write(str(index[3])+"\n")
-
 					if index and len(index)>3: 
 						try:
 							index=index[3]
@@ -1241,7 +1238,6 @@ class PlanerFS7(Screen, HelpableScreen):
 									self.edit_index=self.eigen_events.index(index[23])+1
 								else:
 									self.edit_index=self.eigen_events.index(index[24])+1
-								f.write(str(self.edit_index)+"\n")
 								self.session.openWithCallback(self.editliste,PFS_edit_Termin,index)
 							else:
 								self.import_termin = index
@@ -1249,8 +1245,7 @@ class PlanerFS7(Screen, HelpableScreen):
 								self.session.openWithCallback(self.edit_antwort, MessageBox, text, MessageBox.TYPE_YESNO)
 						except Exception as e:
 							self.session.openWithCallback(self.edit_antwort, MessageBox, str(e), MessageBox.TYPE_YESNO)
-							#pass
-					f.close()
+
 			else:
 				self.session.openWithCallback(self.t_listCallback, ChoiceBox, title=_("Select for edit or new"), list=self.ed_list)
 

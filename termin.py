@@ -51,7 +51,7 @@ class TerminList():
 		self.schichtlist=[]
 		self.fehler_list=[]
 
-	def t_read(self,anfrage=0,term_datei=None,modul=0):		
+	def t_read(self,anfrage=0,term_datei=None,modul=0,timeron=None):		
 		dataLines=None
 		lt = localtime()
 		self.monat=lt[1]
@@ -126,7 +126,7 @@ class TerminList():
 						else:
 							dataLines = None
 					except Exception as e:
-						f=open("/tmp/005","a")
+						f=open("/tmp/PlanerFS-Errors.txt","a")
 						f.write(str(e)+"\n")
 						f.close()
 						dataLines = None
@@ -151,7 +151,7 @@ class TerminList():
 						elif mask['END'].match(line) and inEvent:
 							parse1 = Rules().parseEvent(eventLines,index,fname,self.schichtnamen)
 							if parse1 and (parse1[5] or (parse1[3].date()>=self.today)): 
-								self.events.append(parse1)
+								if parse1 not in self.events:self.events.append(parse1)
 							inEvent = False
 							index+=1
 						elif inEvent:
@@ -203,15 +203,10 @@ class TerminList():
 															jubi+=1
 												y1=(next_date,x[0],x[1],x[2],day_heute,x[6],zeit1,x[11],jubi,date1,x[4],no_stscr,ld)
 												self.terminlist.append(y1)
-												if (x[15] or "DISPLAY" in str(x[4])) and (eigen or conf["erinn_ext"] == "1"):
+												if timeron and (x[15] or "DISPLAY" in str(x[4])) and (eigen or conf["erinn_ext"] == "1"):
 														if x[15] and x[15][0]:
 															dr=x[15][0]
 															date1=datetime.datetime(z.year,z.month,z.day,dr.hour,dr.minute)
-															if x[15][2] and x[15][3]:
-																if x[15][2]=="m":date1=date1-timedelta(minutes=x[15][3])
-																elif x[15][2]=="h":date1=date1-timedelta(hours=x[15][3])
-																elif x[15][2]=="d":date1=date1-timedelta(days=x[15][3])
-
 														t2b=mktime(date1.timetuple())
 														now = datetime.datetime.now()
 														u = mktime(now.timetuple())
@@ -221,7 +216,7 @@ class TerminList():
 															self.timer_liste.append(y2)
 
 								else:
-									if  not x[10] or x[10] != "no_activ":
+									if timeron and (not x[10] or x[10] != "no_activ"):
 										next_datet2=None
 										now = datetime.datetime.now()
 										next_datet2 = Next_Termin().next_termin(x[5], x[2], x[2],(lt[0],lt[1]),conf["vorschaum"]+1,"terminlist2",x[17])

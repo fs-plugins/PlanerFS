@@ -521,8 +521,8 @@ class PFS_edit_Termin(ConfigListScreen,Screen):
 					vor="PT"
 					if self.vaTriggerT.value=="D":
 						vor="P"
-						trigger="TRIGGER:-"+vor+str(self.vaRTrigger.value)+self.vaTriggerT.value
-				if self.vaTxt and self.vaTxt.value and len(self.vaTxt.value):
+					trigger="TRIGGER:-"+vor+str(self.vaRTrigger.value)+self.vaTriggerT.value
+				if len(self.vaTxt.value):
 					trigger=trigger+"\nDESCRIPTION:"+self.vaTxt.value
 
 		detail_liste= (melde_text,cat,begin,end, action,rule,desc,self.ind_nr,self.terminart.value,self.fname,comment,None,self.ganztag.value,self.location.value,trigger)

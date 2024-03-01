@@ -44,7 +44,7 @@ class PlanerFSonline_files(Screen, ConfigListScreen):
 		self.onl_list2 = []
 		self.index=("",9)
 		if os.path.exists(self.path):
-			fp = file(self.path, 'r')
+			fp = open(self.path, 'r')
 			conf_lines = fp.readlines()
 			fp.close()
 			for x in conf_lines:

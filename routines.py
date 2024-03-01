@@ -207,7 +207,7 @@ class Rules():
 					count.insert(i, i)
 					count.pop()
 		except Exception as e:
-				f=open("/tmp/001","a")
+				f=open("/tmp/PlanerFS-Errors.txt","r+")
 				f.write(str(e)+"\n")
 				f.close()
 		DTstart = None
@@ -272,14 +272,14 @@ class Rules():
 				elif mask['Comment'].match(line):
 					comment = mask['Comment'].match(line).group(1)
 					comment = str(comment).strip('\r\n')
-				elif '"VALARM"' in line:
+				elif 'VALARM' in line:
 					valarm=1
-				elif 'Action' in line:
-					if valarm==0:    
+				elif 'ACTION' in line:
+					#if valarm==0:    
 						aktion=line.strip('\r\n').replace('ACTION:',"")
 						if aktion and str(aktion)=="no_startscreen": no_stsr=1
-					else:
-						aktion_des=line.strip('\r\n').replace('ACTION:',"")
+					#else:
+					#	aktion_des=line.strip('\r\n').replace('ACTION:',"")
 				elif 'EXDATE' in line:
 					ed=line.strip('\r\n').split(":")
 					ed_a= self.parseDate(ed[1],1)
@@ -288,7 +288,7 @@ class Rules():
 					erg=self.parseTrigger(line,DTstart)
 					trigger1=erg[0]
 					if erg[1] and str(aktion).upper()=="DISPLAY":
-						if aktion_des is None: aktion_des=txt_s
+						if aktion_des is None: aktion_des=summary
 						alert=(erg[1],str(aktion_des),erg[2],erg[3])
 
 #			except Exception as e:
@@ -723,13 +723,6 @@ class Next_Termin():
 
 
 class schicht():
-	def parseSchichtb(self, datei=None,sel=None,art="s2"):
-		f=open("/tmp/003","w")
-		f.write("art: "+str(art)+"\n")
-		f.write("sel: "+str(sel)+"\n")
-		f.write("datei: "+str(datei)+"\n")
-		return []
-
 	def parseSchicht(self, datei=None,sel=None,art="s2"):
 		all_list=[]
 		err=""

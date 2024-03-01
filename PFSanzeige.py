@@ -62,16 +62,13 @@ class Timermeldung(Screen, InfoBarNotifications):
 	skin = tmpskin.read()
 	tmpskin.close()
 
-	def __init__(self, session, text="",anz_dauer=0,sound=None,vol=(10,100),url=None,DPKG=None):
+	def __init__(self, session, text="",sound=None,vol=(10,100),url=None,DPKG=None):
 		self.conf=defconf
 		self.m_dauer=0
 		configparser = ConfigParser()   
 		configparser.read("/etc/ConfFS/PlanerFS.conf")
-		if configparser.has_section("settings"):
-			l1=configparser.items("settings")
-			for k,v in  l1:
-				if k=="m_dauer":
-					self.m_dauer=v
+		if configparser.has_section("settings") and configparser.has_option("settings","m_dauer"):
+			self.m_dauer = int(configparser.get("settings","m_dauer"))
 		Screen.__init__(self, session)
 		self.skinName="Timermeldung"
 		InfoBarNotifications.__init__(self)
@@ -83,16 +80,14 @@ class Timermeldung(Screen, InfoBarNotifications):
 		self.text=text
 		self.timer1 = eTimer()
 		self.volume_timer = eTimer()
-		self.ex_timer = eTimer()
 		self.timer1.timeout.get().append(self.klang)
 		self.volume_timer.timeout.get().append(self.vol_plus)
 		self.sound_on=False
-		try:
-			if int(self.m_dauer)>0:
-				self.ex_timer.timeout.get().append(self.exit)        	
+		if self.m_dauer>0:
+				self.ex_timer = eTimer()
+				self.ex_timer.timeout.get().append(self.anzeige_exit)        	
 				self.ex_timer.startLongTimer(self.m_dauer)
-		except:
-			pass
+
 		self["actions"] = ActionMap(["OkCancelActions","GlobalActions"],
 		{
 			"ok": self.ok_press,
@@ -124,7 +119,7 @@ class Timermeldung(Screen, InfoBarNotifications):
 		if self.volume_timer.isActive():
 			self.volume_timer.stop()
 		else:
-			self.close()
+			self.anzeige_exit()
 	def vol_down(self):
 		if self.volume_timer.isActive(): 
 			self.volume_timer.stop()
@@ -167,10 +162,11 @@ class Timermeldung(Screen, InfoBarNotifications):
 			eDVBVolumecontrol.getInstance().setVolume(self.oldvol,self.oldvol)
 			self.session.nav.playService(self.oldService)
 			self.timer1.stop()
-
-	def exit(self):
-		eDVBVolumecontrol.getInstance().setVolume(self.oldvol,self.oldvol)
+		#self.exit()
 		self.close(True)
+#	def exit(self):
+		#if self.sounder:eDVBVolumecontrol.getInstance().setVolume(self.oldvol,self.oldvol)
+#		self.close(True)
 
 
 

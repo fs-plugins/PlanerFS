@@ -37,7 +37,7 @@ except ImportError:
 
 try:
 	from Plugins.Extensions.LCD4linux.module import L4Lelement
-	L4L=L4Lelement()#True
+	L4L=L4Lelement()
 	from PFSl4l import l4l_export
 except Exception as e:
 	L4L=None
@@ -51,7 +51,6 @@ try:
 except:
 	pass
 
-from .timer import Timer_dats
 from .routines import schicht, modul, readfiles
 from .termin import TerminList
 from .PFSimport import online_import
@@ -117,7 +116,6 @@ else:
 	fp.write("\n#Feiertage_Germany = https://calendar.google.com/calendar/ical/de.german%23holiday%40group.v.calendar.google.com/public/basic.ics\n")
 	fp.close()
 
-time_timer=Timer_dats(None,None,None)
 global akt_intv
 if int(conf["akt_intv"]):
 	akt_intv=int(conf["akt_intv"])
@@ -130,12 +128,6 @@ cal_menu = conf["cal_menu"]
 adr_menu = conf["adr_menu"]
 adr_on = conf["adr_on"]
 startscreen_plus = conf["startscreen_plus"]
-
-
-class sofort():
-	def __init__(self,liste=None):
-		if liste:  
-			e1=self.session.open(Timer_dats,1, d_start,None)
 
 class einlesen():
 	def __init__(self,r=None):
@@ -153,13 +145,9 @@ class einlesen():
 			allfiles = readfiles(self,True,conf["cals_dir"])
 			if conf["autosync"]=="Yes":
 				path='/etc/ConfFS/PlanerFS_online.txt'
-				#if conf["cals_dir"] != '/etc/ConfFS/' and os.path.exists(conf["cals_dir"]+'PlanerFS_online.txt'):
-				#	path=conf["dat_dir"]+'PlanerFS_online.txt'
 				erg=online_import().run(path,fer,1)
 				if erg==0 and not Screens.Standby.inStandby:
 					Notifications.AddNotification(MessageBox, "PlanerFS\n"+_("Error: at least one external file could not be loaded!"), type=MessageBox.TYPE_ERROR, timeout = 30)
-
-
 			files=[]
 			if conf["kalender_art"] != "Off":
 				files.append("kalender")
@@ -171,7 +159,7 @@ class einlesen():
 				for file1 in files:
 					if file1 not in fileliste and os.path.exists(file1):
 						fileliste.append(file1)
-						listen2=TerminList().t_read(0,file1,modul)#.listen7
+						listen2=TerminList().t_read(0,file1,modul,conf["timer_on"] =="On")#.listen7
 						if listen2 and len(listen2):termine.extend(listen2[0])
 						timer.extend(listen2[1])
 						if len(listen2)==4:
@@ -207,17 +195,17 @@ class einlesen():
 
 class Termin_Timer():
 	def __init__(self):
-		self.session = None
 		self.erstmal=0
 		self.aktual_timer = eTimer()
 		self.startzeit_timer=None
 		self.display_timer = None
 		self.MyElements = None
 		self.pfsstandby=False
-
+		self.plfstt3_timer = eTimer()
+		self.plfstt3_timer.callback.append(self.T_Box)
+		
 	def saveSession(self, session):
-		self.session = session
-
+		if self.session == None:self.session = session
 
 	def standby_on(self):
 		if Screens.Standby.inStandby:
@@ -232,7 +220,8 @@ class Termin_Timer():
 		self.pfsstandby=False
 		self.standby_check_timer1.startLongTimer(60)
 
-	def Starter(self):
+	def Starter(self,session):
+		self.session = session
 		if time()<1383701983:
 			self.sttimer = eTimer()
 			self.sttimer.timeout.get().append(self.datecheck)
@@ -266,12 +255,8 @@ class Termin_Timer():
 		if akt_intv>0:
 			self.aktual_timer.timeout.get().append(self.aktual)
 			self.aktual_timer.startLongTimer(akt_intv)
-
-		if conf["timer_on"] =="On":
-			if len(plfstimer_list):
-				global time_timer
-				time_timer=Timer_dats(None,None,None)
-				time_timer.startTimer(self.session,plfstimer_list,None)
+		if conf["timer_on"] =="On" and len(plfstimer_list):
+				self.startMeldTimer(plfstimer_list)
 		if start_s != "None" and "time" in start_s: 
 			st=conf["starttime"].strip().split(':')
 			sek=((int(st[0])*60)+int(st[1]))
@@ -307,7 +292,6 @@ class Termin_Timer():
 			else:
 				self.Days()
 
-
 	def Days(self):
 		if self.standby_check_timer1:
 			self.standby_check_timer1.startLongTimer(60)
@@ -315,11 +299,11 @@ class Termin_Timer():
 			from .PFSanzeige import startscreen8
 			Notifications.AddNotificationWithCallback(check_re,startscreen8, plfs_list)
 
-
 	def aktual(self):
 		einlesen(1)
-		if str(conf["timer_on"]) =="On":
-			time_timer.restart(self.session,plfstimer_list,None)
+		if conf["timer_on"] =="On" and len(plfstimer_list):
+			if self.plfstt3_timer.isActive():self.plfstt3_timer.stop()
+			self.startMeldTimer(plfstimer_list)
 		if L4L and conf["l4l_on"]=="Yes":
 			self.l4l()
 		z=datetime.datetime.today()
@@ -330,19 +314,10 @@ class Termin_Timer():
 			next2=akt_intv
 		self.aktual_timer.startLongTimer(next2)
 
-
 	def l4l(self):
 		global L4L
 		global display_size
-#		self.MyElements = L4Lelement()
-#		if self.MyElements is None:
-#			try:
-#				from Plugins.Extensions.LCD4linux.module import L4Lelement
-#				self.MyElements = L4Lelement()
-#			except:
-#				L4L=None
 		if L4L is not None:
-#			self.MyElements = L4Lelement()
 			self.display_timer = eTimer()
 			self.display_timer.timeout.get().append(self.l4l)
 			if display_size>0:
@@ -356,12 +331,120 @@ class Termin_Timer():
 				display_size=L4L.getResolution(l4l_sets[0])[1]
 				self.display_timer.startLongTimer(2)
 			else:
-#				if self.MyElements is None:
-#					from Plugins.Extensions.LCD4linux.module import L4Lelement
-#					self.MyElements = L4Lelement()
 				display_size=L4L.getResolution(l4l_sets[0])[1]
 				self.display_timer.startLongTimer(2)
 
+
+################################################################
+
+	def startMeldTimer(self, tmliste=[]):
+			if len(tmliste)>0:
+				now = datetime.datetime.now()
+				u = mktime(now.timetuple())
+				self.timerlist2=[]
+				for x in tmliste:
+					zeitdiff=int(x[10]-u)
+					if zeitdiff>20:
+						self.timerlist2.append((zeitdiff,x[1],x[6],x[11],x[4],x[7],x[5]))
+				self.timerlist2.sort()
+				if len(self.timerlist2):
+					self.Next_Termin()
+
+	def Next_Termin(self):
+		if len(self.timerlist2):
+			self.timer_dats=self.timerlist2[0]
+			if self.timer_dats[0]>10:
+				self.plfstt3_timer.startLongTimer(self.timer_dats[0])
+				#self.plfstt3_timer.startLongTimer(30)
+			del self.timerlist2[0]
+
+	def from_deep(self,timerdat=None):
+		if timerdat:
+			self.timer_dats=timerdat
+			self.T_Box()
+
+	def T_Box(self):
+		if session:self.session=session
+		startvol=10
+		maxvol=100
+		url=self.timer_dats[5]
+		min_anzeige=0
+		sound="No"
+		text=self.timer_dats[1]
+		vol=self.timer_dats[2]
+		sound=self.timer_dats[4]
+		aktiv=self.timer_dats[6]
+		startvol=int(vol[0])
+		self.sound=sound
+		#self.ex_timer = eTimer()
+
+
+		if L4L:
+			l4lm_font = conf["l4lm_font"]
+			l4l_lcd =  conf["l4l_lcd"]
+			l4l_screen =  conf["l4l_screen"]
+			txt=_("Timermeldung")+"\n\n"+text
+			s1=L4L.getResolution(l4l_lcd)
+			L4L.add( "plFS.07.wait1",{"Typ":"wait","Lcd":str(l4l_lcd)} ) 
+			L4L.add( "plFS.08.box1",{"Typ":"box","PosX":0,"PosY":0,"Color":"red","Fill":True,"Width":s1[0],"Height":s1[1],"Screen":str(l4l_screen),"Mode":"OnMediaIdle","Lcd":str(l4l_lcd)} )
+			L4L.add( "plFS.09.txt1",{"Typ":"txt","Text":txt,"Pos":30,"Size":str(l4lm_font),"Lines":3,"Screen":str(l4l_screen),"Mode":"OnMediaIdle","Lcd":str(l4l_lcd)} )
+			L4L.setScreen(str(l4l_screen),str(l4l_lcd))
+
+
+		from .PFSanzeige import Timermeldung
+		if Screens.Standby.inStandby:
+			eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self.rcKeyPressed)
+			if aktiv=="sb" or aktiv=="dsb":
+				self.vol_down(startvol)
+				Screens.Standby.inStandby.Power()
+				from Tools import Notifications
+				Notifications.AddNotification(Timermeldung,text,sound,vol,url,None)
+			else:
+				if not os.path.exists("/tmp/plfst1"):
+					Standby.inStandby.onHide.append(self.T_Liste)
+		else:
+			if self.sound=="radio" or self.sound=="AUDIO":self.vol_down(startvol)
+			self.session.open(Timermeldung,text,sound,vol,url,None)
+		self.Next_Termin()
+
+	def vol_down(self,startvol):
+			from enigma import eDVBVolumecontrol,eServiceReference, iRecordableService
+			volctrl = eDVBVolumecontrol.getInstance()
+			volctrl.setVolume(startvol,startvol)
+
+	def l4l_exit(self):
+		L4L.delete( "plFS.07.wait1")
+		L4L.delete( "plFS.08.box1")
+		L4L.delete( "plFS.09.txt1")
+		L4L.setScreen("0","1")
+
+	def rcKeyPressed(self, key, flag):
+		if L4L and str(key)=="352":
+			self.l4l_exit()
+
+	def T_Liste(self):
+		if os.path.exists("/tmp/plfst1"):
+			fp = file('/tmp/plfst1', 'r')
+			t_lines = fp.readlines()
+			fp.close()
+			text="verpasste Timer-Meldungen:\n\n"
+			for x in t_lines:
+				text=text+x+"\n"
+			from Tools import Notifications
+			Notifications.AddNotification(MessageBox, text, type=MessageBox.TYPE_INFO)
+			os.unlink("/tmp/plfst1")
+
+
+
+
+
+
+
+
+
+
+
+##########################################################
 
 if modul==0:
 	txt+="no icalendar-modul\n"
@@ -419,10 +502,11 @@ def calen_menu(menuid, **kwargs):
 	return []
 
 def autostart(**kwargs):
+	global session
 	if "session" in kwargs:
 		session = kwargs["session"]
-		t_timer.saveSession(session)
-	t_timer.Starter()
+		#t_timer.saveSession(session)
+	t_timer.Starter(session)
 
 def Plugins(**kwargs):
 	pfc_list=[PluginDescriptor.WHERE_PLUGINMENU]
