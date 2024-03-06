@@ -210,7 +210,10 @@ class PlanerFS7(Screen, HelpableScreen):
 		self.categories=categories1
 		self.TitelTimer = eTimer()
 		self.msp_liste=None
-		self.TitelTimer.callback.append(self.setDatum)
+		if hasattr(self.TitelTimer, 'callback'):
+			self.TitelTimer.callback.append(self.setDatum)
+		else:
+			self.TitelTimer_conn = self.TitelTimer.timeout.connect(self.setDatum)
 		self.edit_index=None
 		self["event_list"].onSelectionChanged.append(self.changed)
 		self["event_list"].style = "notselected"

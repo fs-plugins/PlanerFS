@@ -71,7 +71,7 @@ class PFS_show_we(Screen,ConfigListScreen):
 				zeitdiff= 86400-minuszeit
 			else:
 				zeitdiff= meldezeit-jetzt
-			self.session.openWithCallback(self.back,PFS_alarm_clock,self.alarm_volume.value,zeitdiff,None)
+			self.session.openWithCallback(self.back,PFS_alarm_clock,self.alarm_volume.value,zeitdiff)
 		else:
 			pass
 
@@ -87,7 +87,7 @@ class PFS_alarm_clock(Screen):
 		<widget name="time" size="250,60" font="Regular;58" foregroundColor="white" valign="center" halign="center" backgroundColor="transparent" />
 		</screen>"""
 
-	def __init__(self, session,max_vol=40,zeitdiff =1,DPKG=None):
+	def __init__(self, session,max_vol=40,zeitdiff =1):
 		self.al_vol_max=max_vol
 		self.zeitdiff=zeitdiff
 		self.timer1_instanz=False
@@ -123,7 +123,10 @@ class PFS_alarm_clock(Screen):
 		self.session.open(MessageBox,(_("alert-clock is running - press ESC for abort")), MessageBox.TYPE_INFO, timeout = 5)
 	def start_timer(self):
 		self.we_timer = eTimer()
-		self.we_timer.callback.append(self.klang)
+		if hasattr(self.we_timer, 'callback'):
+			self.we_timer.callback.append(self.klang)
+		else:
+			self.we_timer_conn = self.we_timer.timeout.connect(self.klang)
 		self.we_timer.startLongTimer(self.zeitdiff)
 	def klang(self):
 		self.we_timer=None

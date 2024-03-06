@@ -6,8 +6,7 @@ from Components.ActionMap import ActionMap
 from GlobalActions import globalActionMap
 from Components.Label import Label
 from Components.Sources.List import List
-from enigma import eServiceReference, eTimer
-from enigma import getDesktop
+from enigma import eServiceReference, eTimer, getDesktop
 from time import localtime, strftime
 import datetime
 import os.path
@@ -16,7 +15,7 @@ from Components.VolumeControl import VolumeControl
 from skin import parseColor
 try:from configparser import ConfigParser#py3
 except:from ConfigParser import ConfigParser
-from enigma import iPlayableService
+from enigma import iPlayableService,getDesktop
 from Components.ServiceEventTracker import ServiceEventTracker 
  
 try:
@@ -62,7 +61,7 @@ class Timermeldung(Screen, InfoBarNotifications):
 	skin = tmpskin.read()
 	tmpskin.close()
 
-	def __init__(self, session, text="",sound=None,vol=(10,100),url=None,DPKG=None):
+	def __init__(self, session, text="",sound=None,vol=(10,100),url=None):
 		self.conf=defconf
 		self.m_dauer=0
 		configparser = ConfigParser()   
@@ -173,7 +172,6 @@ class Timermeldung(Screen, InfoBarNotifications):
 
 class startscreen8(Screen, InfoBarNotifications):
 	ALLOW_SUSPEND = True
-	DWide = getDesktop(0).size().width()
 	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/startscreen.xml"
 	elif DWide > 1300:

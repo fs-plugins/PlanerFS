@@ -3,8 +3,9 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
 from os import environ as os_environ
 import gettext
 
-my_version="9.81"
+my_version="9.82"
 dat_dir = "/etc/ConfFS/"
+
 defconf = {
 			"version":"",
 			"timestartstandby":"No",

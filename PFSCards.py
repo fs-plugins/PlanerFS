@@ -1,4 +1,4 @@
-from . import my_version, _
+from . import my_version,getDesktop, _
 
 from Screens.Screen import Screen
 from Screens.VirtualKeyBoard import VirtualKeyBoard

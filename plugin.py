@@ -202,8 +202,10 @@ class Termin_Timer():
 		self.MyElements = None
 		self.pfsstandby=False
 		self.plfstt3_timer = eTimer()
-		self.plfstt3_timer.callback.append(self.T_Box)
-		
+		if hasattr(self.plfstt3_timer, 'callback'):
+			self.plfstt3_timer.callback.append(self.T_Box)
+		else:
+			self.plfstt3_timer_conn = self.plfstt3_timer.timeout.connect(self.T_Box)
 	def saveSession(self, session):
 		if self.session == None:self.session = session
 
@@ -398,13 +400,13 @@ class Termin_Timer():
 				self.vol_down(startvol)
 				Screens.Standby.inStandby.Power()
 				from Tools import Notifications
-				Notifications.AddNotification(Timermeldung,text,sound,vol,url,None)
+				Notifications.AddNotification(Timermeldung,text,sound,vol,url)
 			else:
 				if not os.path.exists("/tmp/plfst1"):
 					Standby.inStandby.onHide.append(self.T_Liste)
 		else:
 			if self.sound=="radio" or self.sound=="AUDIO":self.vol_down(startvol)
-			self.session.open(Timermeldung,text,sound,vol,url,None)
+			self.session.open(Timermeldung,text,sound,vol,url)
 		self.Next_Termin()
 
 	def vol_down(self,startvol):
