@@ -1,5 +1,6 @@
 # PlanerFS 
 für enigma2-Systeme, basierend auf Python 2 und Python 3
+Kalender nach ical-Standard, Adressen nach vcard-Standard - kompatibel mit anderen Anwendung z.B. am PC
 
 ![pfs_kal_b](https://github.com/fs-plugins/PlanerFS/assets/24637469/178befac-82d0-4397-a67b-c7c0f5ce0210)
 
