@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8  -*-
 from . import _
 import datetime
 import re
@@ -39,7 +39,7 @@ class Cards_parse():
 		mask['KEY']=re.compile("^KEY;(.*).*")
 		mask['NOTE']=re.compile("^NOTE;(.*).*")
 
-		count = range(1, len(lines))
+		count = list(range(1, len(lines)))
 		for i in count:
 			data = lines[i]
 			if data.startswith(' '):
@@ -84,10 +84,11 @@ class Cards_parse():
 				line=line.encode("UTF-8")
 			except:
 				line=line.decode("iso-8859-1").encode("UTF-8")
+			line = line.decode("utf-8")
 			if mask['N'].match(line):
 				a=mask['N'].match(line).group(0).split(":")
 				n = (a[0],a[1].strip('\r\n').strip())
-				sortname=n[1].replace("ä","ae").replace("Ä","ae").replace("ö","Oe").replace("Ö","oe").replace("ü","ue").replace("Ü","ue")
+				sortname=str(n[1]).lower().replace("ü","u").replace("ä","a").replace("ö","o").replace("Ö","o").replace("Ü","u").replace("Ä","a")
 			elif mask['FN'].match(line):
 					summary = mask['FN'].match(line).group(1)
 					summary = str(summary.strip('\r\n').strip())
@@ -138,7 +139,7 @@ class Cards_parse():
 					elif "CELL" in a_tel[0].upper():
 						tel_list.append((_("MOBIL"),a_tel[0],a_tel[1].strip('\r\n').strip()))
 					elif "WORK" in a_tel[0].upper():
-						tel_list.append((_("WORK"),a_tel[0],a_tel[1].strip('\r\n').strip()))                                         
+						tel_list.append((_("WORK"),a_tel[0],a_tel[1].strip('\r\n').strip()))
 					elif "FAX" in a_tel[0].upper():
 						tel_list.append((a_tel[0],a_tel[0],a_tel[1].strip('\r\n').strip()))
 					elif "MSG" in a_tel[0].upper():
