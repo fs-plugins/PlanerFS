@@ -1,11 +1,11 @@
 from Components.Language import language
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
-from os import environ as os_environ
+from os import sys,environ as os_environ
 import gettext
 
 my_version="9.82"
 dat_dir = "/etc/ConfFS/"
-
+pyvers=sys.version_info[0]
 defconf = {
 			"version":"",
 			"timestartstandby":"No",
