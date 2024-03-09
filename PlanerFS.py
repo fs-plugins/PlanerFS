@@ -210,10 +210,7 @@ class PlanerFS7(Screen, HelpableScreen):
 		self.categories=categories1
 		self.TitelTimer = eTimer()
 		self.msp_liste=None
-		if hasattr(self.TitelTimer, 'callback'):
-			self.TitelTimer.callback.append(self.setDatum)
-		else:
-			self.TitelTimer_conn = self.TitelTimer.timeout.connect(self.setDatum)
+		self.TitelTimer.callback.append(self.setDatum)
 		self.edit_index=None
 		self["event_list"].onSelectionChanged.append(self.changed)
 		self["event_list"].style = "notselected"
@@ -523,8 +520,8 @@ class PlanerFS7(Screen, HelpableScreen):
 						in1=x
 						self.eigen_events.append(x)
 						if self.show_schichttermin:
-								self.events.append(x)
-					self.schichtlist.append((x[0],x[2],x[3],x[5],x[6],in1,x[17]))
+							self.events.append(x)
+							self.schichtlist.append((x[0],x[2],x[3],x[5],x[6],in1,x[17]))
 				else:
 					if "PlanerFS.ics" in str(x[9]) or "PlanerFS2.ics" in str(x[9]):
 						self.eigen_events.append(x)
@@ -635,11 +632,9 @@ class PlanerFS7(Screen, HelpableScreen):
 					else:
 						y=(next_date,x[0],x[1],x[2],x[3],x[4],x[5],self.jahr,x[6],x[7],x[8],eigen_num,x[9],x[10],zeit,index,zaehler,x[12],zeit2,x[13],repeat,x[11],None,None,x)
 					index+=1
-					
 					eventliste3.append(y)
 					categories=str(x[1])
 					hd=_("HOLIDAY")
-					#hd=str.encode(hd)
 					if self.extern_color=="On" or eigen_num==0:
 						if x[1] and hd in x[1]:# != -1:
 							self.feiertagsliste.append(next_date.day)
@@ -1307,7 +1302,8 @@ class PlanerFS7(Screen, HelpableScreen):
 						end_dat = strftime("DTEND;TZID=Europe/Berlin:%Y%m%dT%H%M%S\n",strptime(str(x[3]), "%Y-%m-%d %H:%M:%S"))
 					else:
 						start_dat = strftime("DTSTART;VALUE=DATE:%Y%m%d\n",strptime(str(x[2]), "%Y-%m-%d %H:%M:%S"))
-						end_dat = strftime("DTEND;VALUE=DATE:%Y%m%d\n",strptime(str(x[3]), "%Y-%m-%d %H:%M:%S"))                    
+						ed2 = x[3] + datetime.timedelta(1)
+						end_dat = strftime("DTEND;VALUE=DATE:%Y%m%d\n",strptime(str(ed2), "%Y-%m-%d %H:%M:%S"))
 					self.altdatum = x[3]
 					summary="SUMMARY:"+x[0]+"\n"
 					desc=x[6]

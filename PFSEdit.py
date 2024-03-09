@@ -470,8 +470,6 @@ class PFS_edit_Termin(ConfigListScreen,Screen):
 			setTimeE=(0,0)
 		begin=datetime.datetime(start_date[2],start_date[1],start_date[0],setTimeA[0],setTimeA[1])
 		end=  datetime.datetime(end_date[2],end_date[1],end_date[0],setTimeE[0],setTimeE[1])
-		if self.ganztag.value == "Yes":
-			end=end+datetime.timedelta(1)
 		if self.terminaction.value=="No": action="no_startscreen"
 		if self.rule_set.value:
 			if self.termin_wiederholung.value==1:
