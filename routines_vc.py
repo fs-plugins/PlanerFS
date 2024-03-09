@@ -88,7 +88,7 @@ class Cards_parse():
 			if mask['N'].match(line):
 				a=mask['N'].match(line).group(0).split(":")
 				n = (a[0],a[1].strip('\r\n').strip())
-				sortname=str(n[1]).lower().replace("Ã¼","u").replace("Ã¤","a").replace("Ã¶","o").replace("Ã–","o").replace("Ãœ","u").replace("Ã„","a")
+				sortname=str(n[1]).lower().replace("ü","u").replace("ä","a").replace("ö","o").replace("Ö","o").replace("Ü","u").replace("Ä","a")
 			elif mask['FN'].match(line):
 					summary = mask['FN'].match(line).group(1)
 					summary = str(summary.strip('\r\n').strip())

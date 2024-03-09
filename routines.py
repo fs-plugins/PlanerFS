@@ -340,7 +340,7 @@ class Rules():
 			day = int(dateStr[6:8])
 		except:
 			f = open("/tmp/PlanerFS-Errors.txt", "a")
-			f.write("parseDate dateStr1: "+str(dateStr)+"\n"+str(test))
+			f.write("parseDate dateStr: "+str(dateStr)+"\n"+str(test))
 			f.close()
 			self.date_ok = 0
 		if self.date_ok:
@@ -356,7 +356,7 @@ class Rules():
 				return date(year, month, day)
 		else:
 				f = open("/tmp/PlanerFS-Errors.txt", "a")
-				f.write("parseDate dateStr2: "+str(dateStr)+"\n"+str(test))
+				f.write("parseDate dateStr: "+str(dateStr)+"\n"+str(test))
 				f.close()
 				return None
 
@@ -417,7 +417,7 @@ class Rules():
 					fx.close()
 
 
-			
+			startTime=time(0)
 			if gcal:
 				self.oldtz = gcal.get('X-WR-TIMEZONE')
 				mask={}
@@ -426,7 +426,6 @@ class Rules():
 					try:
 						if Icomp.name == "VEVENT":
 							timed = 'ganztag'
-							#startTime=time(0)
 							rule=None
 							trigger=0
 							trigger1=None
@@ -442,17 +441,18 @@ class Rules():
 							Icomp_str= str(Icomp)
 							txt_s=str(Code_utf8(Icomp.get('summary')))
 							if schicht and  txt_s.strip() in schicht:schicht1=1
+
 							DTstart = Icomp.decoded("dtstart")
 							if isinstance(DTstart, datetime):
 								timed = 'time'
 							else:
-								DTstart=datetime.combine(DTstart, datetime.min.time())
+								DTstart=datetime.combine(DTstart, startTime)
 							DTend = Icomp.decoded("dtend",None)
 							if DTend:
 								if not isinstance(DTend, datetime):
-									DTend=datetime.combine(DTend, datetime.min.time())
+									DTend=datetime.combine(DTend, startTime)
 									DTend=DTend -timedelta(days=1)
-								if DTend.tzinfo is not None:
+								elif DTend.tzinfo is not None:
 									DTend=DTend+timedelta(hours=getTimeDiffUTC())
 								DTend=DTend.replace(tzinfo=None)
 							if DTstart.tzinfo is not None and DTstart.tzinfo.utcoffset(DTstart) is not None:
@@ -507,6 +507,7 @@ class Rules():
 							if detail_list not in all_list:
 								all_list.append(detail_list)
 								index+=1
+
 					except Exception as e:
 						err+=str(e)+"\n"
 		if len(err):
