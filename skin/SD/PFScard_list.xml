@@ -11,13 +11,12 @@
 
 	<widget source="name_listlabel" render="Listbox" position="20,55" size="520,340" scrollbarMode="showOnDemand" foregroundColor="#000000" backgroundColor="#C0D7FF" enableWrapAround="1" >
 		<convert type="TemplatedMultiContent">
-			{"templates": 
-                            {"default": (30,[
-    					    MultiContentEntryText(pos = (10, 3), size = (300, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), 
+			{"templates": {
+				"default": (30,[
+					MultiContentEntryText(pos = (10, 3), size = (300, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), 
 					],True),
-
-                             },	"fonts": [gFont("Regular", 20)],
-                             "itemHeight": 30
+				}, "fonts": [gFont("Regular", 20)],
+				"itemHeight": 30
 			}
 		</convert>
 	</widget>

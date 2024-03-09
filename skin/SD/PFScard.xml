@@ -11,24 +11,22 @@
 		<widget name="adr" position="20,55" size="260,155" font="Regular;22" zPosition="2"  foregroundColor="#000000" backgroundColor="#C0D7FF" />
 		<widget name="mail" position="300,55" size="250,75" font="Regular;22" zPosition="2"  foregroundColor="#000000" backgroundColor="#C0D7FF" />
 		<widget name="geb" position="300,135" size="250,75" font="Regular;22" zPosition="2"  foregroundColor="#000000" backgroundColor="#C0D7FF" />
-
 		<widget name="adr_background" position="10,50" size="270,160" font="Regular;22" foregroundColor="#000000" backgroundColor="#C0D7FF" />
 		<widget name="adr2_background" position="290,50" size="260,160" font="Regular;22" foregroundColor="#000000" backgroundColor="#C0D7FF" />
 
- 
 	<widget source="tel_listlabel" render="Listbox" position="45,220" size="470,175" zPosition="12" scrollbarMode="showOnDemand" backgroundColor="#C0D7FF" foregroundColor="#000000" enableWrapAround="1" >
 		<convert type="TemplatedMultiContent">
-			{"templates": 
-                            {"default": (30,[
-    					MultiContentEntryText(pos = (5, 3), size = (200, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0: text
-    					MultiContentEntryText(pos = (210, 3), size = (250, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0: text
+			{"templates": {
+				"default": (30,[
+					MultiContentEntryText(pos = (5, 3), size = (200, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0: text
+					MultiContentEntryText(pos = (210, 3), size = (250, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0: text
 					],True),
-                            "not selected": (30,[
-    					MultiContentEntryText(pos = (5, 3), size = (200, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0: text
-    					MultiContentEntryText(pos = (210, 3), size = (250, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0: text
+				"not selected": (30,[
+					MultiContentEntryText(pos = (5, 3), size = (200, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0: text
+					MultiContentEntryText(pos = (210, 3), size = (250, 28), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0: text
 					],False)
-                             },	"fonts": [gFont("Regular", 22),gFont("Regular", 28)],
-                             "itemHeight": 30
+				},	"fonts": [gFont("Regular", 22),gFont("Regular", 28)],
+				"itemHeight": 30
 			}
 		</convert>
 	</widget>

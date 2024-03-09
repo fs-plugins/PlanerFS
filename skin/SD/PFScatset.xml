@@ -1,44 +1,36 @@
 <!--for PFS_categorie_conf7 -->
-		<screen name="PFS_categorie_conf7" position="center,center" size="600,380" title="Select Color" >
+	<screen name="PFS_categorie_conf7" position="center,center" size="600,380" title="Select Color" >
 
-		<ePixmap pixmap="skin_default/buttons/red.png" position="10,345" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/green.png" position="155,345" size="140,40"  alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="300,345" size="140,40"  alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/blue.png" position="450,345" size="140,40"  alphatest="on" />
-		<widget name="key_red" position="10,348" zPosition="1" size="140,35" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" noWrap="1" shadowOffset="-1,-1" />
-		<widget name="key_green" position="155,348" zPosition="1" size="140,35" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" noWrap="1" shadowOffset="-1,-1" />
-		<widget name="key_yellow" position="300,348" zPosition="1" size="140,35" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" noWrap="1" shadowOffset="-1,-1" />
-		<widget name="key_blue" position="450,348" zPosition="1" size="140,35" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" noWrap="1" shadowOffset="-1,-1" />
-
-
-
+	<ePixmap pixmap="skin_default/buttons/red.png" position="10,345" size="140,40" alphatest="on" />
+	<ePixmap pixmap="skin_default/buttons/green.png" position="155,345" size="140,40"  alphatest="on" />
+	<ePixmap pixmap="skin_default/buttons/yellow.png" position="300,345" size="140,40"  alphatest="on" />
+	<ePixmap pixmap="skin_default/buttons/blue.png" position="450,345" size="140,40"  alphatest="on" />
+	<widget name="key_red" position="10,348" zPosition="1" size="140,35" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" noWrap="1" shadowOffset="-1,-1" />
+	<widget name="key_green" position="155,348" zPosition="1" size="140,35" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" noWrap="1" shadowOffset="-1,-1" />
+	<widget name="key_yellow" position="300,348" zPosition="1" size="140,35" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" noWrap="1" shadowOffset="-1,-1" />
+	<widget name="key_blue" position="450,348" zPosition="1" size="140,35" valign="center" halign="center" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" noWrap="1" shadowOffset="-1,-1" />
 
 	<widget source="catmenu" render="Listbox" position="10,20" size="580,300" zPosition="12" enableWrapAround="1" >
 		<convert type="TemplatedMultiContent">
-			{"templates": 
-                            {"default": (30,[
-    					MultiContentEntryText(pos = (5, 5), size = (70, 25), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0, color=MultiContentTemplateColor(2),color_sel=MultiContentTemplateColor(2),backcolor =MultiContentTemplateColor(3),backcolor_sel=MultiContentTemplateColor(3)), # index 0: text
-    					MultiContentEntryText(pos = (80, 5), size = (560, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0: text
+			{"templates": {
+				"default": (30,[
+					MultiContentEntryText(pos = (5, 5), size = (70, 25), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0, color=MultiContentTemplateColor(2),color_sel=MultiContentTemplateColor(2),backcolor =MultiContentTemplateColor(3),backcolor_sel=MultiContentTemplateColor(3)), # index 0: text
+					MultiContentEntryText(pos = (80, 5), size = (560, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0: text
 					],True),
-                            "schicht": (30,[
-    					MultiContentEntryText(pos = (5, 5), size = (225, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0: text
-    					MultiContentEntryText(pos = (275, 5), size = (225, 25), font=0, flags = RT_HALIGN_RIGHT|RT_VALIGN_CENTER, text = 1, color=MultiContentTemplateColor(2),color_sel=MultiContentTemplateColor(2),backcolor =MultiContentTemplateColor(3),backcolor_sel=MultiContentTemplateColor(3)), # index 0: text
+				"schicht": (30,[
+					MultiContentEntryText(pos = (5, 5), size = (225, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0: text
+					MultiContentEntryText(pos = (275, 5), size = (225, 25), font=0, flags = RT_HALIGN_RIGHT|RT_VALIGN_CENTER, text = 1, color=MultiContentTemplateColor(2),color_sel=MultiContentTemplateColor(2),backcolor =MultiContentTemplateColor(3),backcolor_sel=MultiContentTemplateColor(3)), # index 0: text
 					],True),
-
-                            "colorsx": (30,[
-    					MultiContentEntryText(pos = (50, 5), size = (450, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, color = MultiContentTemplateColor(2),color_sel = MultiContentTemplateColor(2),backcolor = MultiContentTemplateColor(3),backcolor_sel = MultiContentTemplateColor(3)), #colors
-    					MultiContentEntryText(pos = (50, 5), size = (225, 25), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 7, color = MultiContentTemplateColor(3),color_sel = MultiContentTemplateColor(5),backcolor = MultiContentTemplateColor(3),backcolor_sel = MultiContentTemplateColor(3)), # text with cal-day-color
-    					MultiContentEntryText(pos = (275, 5), size = (225, 25), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 8, color = MultiContentTemplateColor(3),color_sel = MultiContentTemplateColor(6),backcolor = MultiContentTemplateColor(3),backcolor_sel = MultiContentTemplateColor(3)), # text with holiday-color
-                                        MultiContentEntryText(pos = (0, 5), size = (50, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0, color = 0xffffff),   #arrow left for selected
-                                        MultiContentEntryText(pos = (510, 5), size = (50, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1, color = 0xffffff), #arrow right for selected
+				"colorsx": (30,[
+					MultiContentEntryText(pos = (50, 5), size = (450, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, color = MultiContentTemplateColor(2),color_sel = MultiContentTemplateColor(2),backcolor = MultiContentTemplateColor(3),backcolor_sel = MultiContentTemplateColor(3)), #colors
+					MultiContentEntryText(pos = (50, 5), size = (225, 25), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 7, color = MultiContentTemplateColor(3),color_sel = MultiContentTemplateColor(5),backcolor = MultiContentTemplateColor(3),backcolor_sel = MultiContentTemplateColor(3)), # text with cal-day-color
+					MultiContentEntryText(pos = (275, 5), size = (225, 25), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 8, color = MultiContentTemplateColor(3),color_sel = MultiContentTemplateColor(6),backcolor = MultiContentTemplateColor(3),backcolor_sel = MultiContentTemplateColor(3)), # text with holiday-color
+					MultiContentEntryText(pos = (0, 5), size = (50, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0, color = 0xffffff),   #arrow left for selected
+					MultiContentEntryText(pos = (510, 5), size = (50, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1, color = 0xffffff), #arrow right for selected
 					],True),
-
-                             },	"fonts": [gFont("Regular", 20),gFont("Regular", 28)],
-                             "itemHeight": 30
+				}, "fonts": [gFont("Regular", 20),gFont("Regular", 28)],
+				"itemHeight": 30
 			}
 		</convert>
 	</widget>
-
-
-
-		</screen>
+</screen>

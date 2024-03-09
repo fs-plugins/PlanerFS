@@ -1,142 +1,114 @@
-<!-- empfohlene Aufbewahrungstemperatur -->
-
 <screen name="PlanerFS7" position="center,center" size="720,520" title="PlanerFS" backgroundColor="#20343c4f" flags="wfNoBorder" > 
 	<widget name="kal_num" position="8,0" size="80,40" halign="left" valign="center" zPosition="1" font="Regular;22" foregroundColor="#e5b243" backgroundColor="#20343c4f" /> 
 	<widget name="titel" position="0,0" size="720,40" halign="center" valign="center" zPosition="1" font="Regular;22" foregroundColor="#e5b243" backgroundColor="#20343c4f" /> 
-        <widget name="datum" position="580,0" size="130,40" halign="right" valign="center" zPosition="4" font="Regular;20" foregroundColor="#e5b243" backgroundColor="#20343c4f" /> 
+	<widget name="datum" position="580,0" size="130,40" halign="right" valign="center" zPosition="4" font="Regular;20" foregroundColor="#e5b243" backgroundColor="#20343c4f" /> 
 <!--
 	<widget name="list_titel" position="420,52" size="300,28" font="Regular;20" foregroundColor="#FFFFFF" zPosition="3" halign="center" valign="center" backgroundColor="#20343c4f" /> 
-
 	<widget name="event_list" position="429,95" size="275,285" zPosition="3" foregroundColor="#000000" backgroundColor="#20343c4f" scrollbarMode="showOnDemand"  /> 
-<widget name="dat0list" position="60,90" size="340,40" zPosition="3" itemHeight="40" foregroundColor="#FFFFFF" backgroundColor="#000000"  transparent="0"/>
-<widget name="kwlist" position="10,135" size="40,360" zPosition="3" itemHeight="40" foregroundColor="#FFFFFF" backgroundColor="#000000"  transparent="0"/> 
-<widget name="calendar" position="60,133" size="347,243" zPosition="12" itemHeight="40" foregroundColor="#FFFFFF" backgroundColor="#000000" selectionDisabled="1"  /> 
+	<widget name="dat0list" position="60,90" size="340,40" zPosition="3" itemHeight="40" foregroundColor="#FFFFFF" backgroundColor="#000000"  transparent="0"/>
+	<widget name="kwlist" position="10,135" size="40,360" zPosition="3" itemHeight="40" foregroundColor="#FFFFFF" backgroundColor="#000000"  transparent="0"/> 
+	<widget name="calendar" position="60,133" size="347,243" zPosition="12" itemHeight="40" foregroundColor="#FFFFFF" backgroundColor="#000000" selectionDisabled="1"  /> 
 -->
 
-        <widget name="greena_1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/gra.png" position="380,55" zPosition="4" size="24,24" transparent="1" alphatest="on" />
-        <widget name="greena_2" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/gra.png" position="425,55" zPosition="4" size="24,24" transparent="1" alphatest="on" /> 
-
-
-
+	<widget name="greena_1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/gra.png" position="380,55" zPosition="4" size="24,24" transparent="1" alphatest="on" />
+	<widget name="greena_2" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/gra.png" position="425,55" zPosition="4" size="24,24" transparent="1" alphatest="on" /> 
 	<widget name="list_titel" position="422,52" size="290,28" font="Regular;22" foregroundColor="#FFFFFF" zPosition="3" halign="center" valign="center" backgroundColor="#20343c4f" /> 
 	<widget source="event_list" render="Listbox" position="422,110" size="289,253" zPosition="12" scrollbarMode="showOnDemand" backgroundColor="#20343c4f" foregroundColor="#FFFFFF" enableWrapAround="1" >
 		<convert type="TemplatedMultiContent">
-			{"templates": 
-                            {"default": (25,[
-    					MultiContentEntryText(pos = (10, 0), size = (255, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0,color=MultiContentTemplateColor(1)), # index 0: text
+			{"templates": {
+				"default": (25,[
+					MultiContentEntryText(pos = (10, 0), size = (255, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0,color=MultiContentTemplateColor(1)), # index 0: text
 					],True),
-                            "notselected": (25,[
-    					MultiContentEntryText(pos = (10, 0), size = (255, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0,color=MultiContentTemplateColor(1)), # index 0: text
+				"notselected": (25,[
+					MultiContentEntryText(pos = (10, 0), size = (255, 25), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0,color=MultiContentTemplateColor(1)), # index 0: text
 					],False)
-                             },	"fonts": [gFont("Regular", 22),gFont("Regular", 28)],
-                             "itemHeight": 25
+				}, "fonts": [gFont("Regular", 22),gFont("Regular", 28)],
+				"itemHeight": 25
 			}
 		</convert>
 	</widget>
-
-
 
 	<widget source="weekdays" render="Listbox" position="10,90" size="400,40" zPosition="12" backgroundColor="#000000" foregroundColor="#FFFFFF" scrollbarMode="showOnDemand" >
 		<convert type="TemplatedMultiContent">
 			{"template": [
-    					MultiContentEntryText(pos = (0, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0),
-    					MultiContentEntryText(pos = (50, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 1),
-    					MultiContentEntryText(pos = (100, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 2),
-    					MultiContentEntryText(pos = (150, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 3),
-    					MultiContentEntryText(pos = (200, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 4),
-    					MultiContentEntryText(pos = (250, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 5),
-    					MultiContentEntryText(pos = (300, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 6),
-    					MultiContentEntryText(pos = (350, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 7),
-					],
-
-                             	"fonts": [gFont("Regular", 22)],
-                             "itemHeight": 40,
-                             "selectionEnabled": False
+				MultiContentEntryText(pos = (0, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0),
+				MultiContentEntryText(pos = (50, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 1),
+				MultiContentEntryText(pos = (100, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 2),
+				MultiContentEntryText(pos = (150, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 3),
+				MultiContentEntryText(pos = (200, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 4),
+				MultiContentEntryText(pos = (250, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 5),
+				MultiContentEntryText(pos = (300, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 6),
+				MultiContentEntryText(pos = (350, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 7),
+				], "fonts": [gFont("Regular", 22)],
+				"itemHeight": 40, "selectionEnabled": False
 			}
 		</convert>
 	</widget>
-
 
 	<widget source="kwlist" render="Listbox" position="10,135" size="40,245" zPosition="12" backgroundColor="#20343c4f" foregroundColor="#FFFFFF" scrollbarMode="showOnDemand" >
 		<convert type="TemplatedMultiContent">
 			{"template": [
-    					MultiContentEntryText(pos = (0, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0, border_width = 2,border_color = 0x000000,backcolor=0x000000),
-					],
-
-                             	"fonts": [gFont("Regular", 22),gFont("Regular", 28)],
-                             "itemHeight": 40,
-                             "selectionEnabled": False
+				MultiContentEntryText(pos = (0, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0, border_width = 2,border_color = 0x000000,backcolor=0x000000),
+				],"fonts": [gFont("Regular", 22),gFont("Regular", 28)],
+				"itemHeight": 40,
+				"selectionEnabled": False
 			}
 		</convert>
 	</widget>
-
-
 
 	<widget source="calendar" render="Listbox" position="60,133" size="347,243" zPosition="14" backgroundColor="#20343c4f" foregroundColor="#ffffff" scrollbarMode="showOnDemand" >
 		<convert type="TemplatedMultiContent">
-			{"templates": 
-                             {"default":(40,[
-    					MultiContentEntryText(pos = (0, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0,color=MultiContentTemplateColor(2),backcolor =MultiContentTemplateColor(1), border_width = 4, border_color = MultiContentTemplateColor(3)),
-    					MultiContentEntryText(pos = (80, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 4,color=MultiContentTemplateColor(6),backcolor =MultiContentTemplateColor(5), border_width = 4, border_color = MultiContentTemplateColor(7)),
-    					MultiContentEntryText(pos = (120, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 8,color=MultiContentTemplateColor(10),backcolor =MultiContentTemplateColor(9), border_width = 4, border_color = MultiContentTemplateColor(11)),
-    					MultiContentEntryText(pos = (160, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 12,color=MultiContentTemplateColor(14),backcolor =MultiContentTemplateColor(13), border_width = 4, border_color = MultiContentTemplateColor(15)),
-    					MultiContentEntryText(pos = (200, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 16,color=MultiContentTemplateColor(18),backcolor =MultiContentTemplateColor(17), border_width = 4, border_color = MultiContentTemplateColor(19)),
-    					MultiContentEntryText(pos = (240, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 20,color=MultiContentTemplateColor(22),backcolor =MultiContentTemplateColor(21), border_width = 4, border_color = MultiContentTemplateColor(23)),
-    					MultiContentEntryText(pos = (280, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 24,color=MultiContentTemplateColor(26),backcolor =MultiContentTemplateColor(25), border_width = 4, border_color = MultiContentTemplateColor(27))
+			{"templates": {
+				"default":(40,[
+					MultiContentEntryText(pos = (0, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0,color=MultiContentTemplateColor(2),backcolor =MultiContentTemplateColor(1), border_width = 4, border_color = MultiContentTemplateColor(3)),
+					MultiContentEntryText(pos = (80, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 4,color=MultiContentTemplateColor(6),backcolor =MultiContentTemplateColor(5), border_width = 4, border_color = MultiContentTemplateColor(7)),
+					MultiContentEntryText(pos = (120, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 8,color=MultiContentTemplateColor(10),backcolor =MultiContentTemplateColor(9), border_width = 4, border_color = MultiContentTemplateColor(11)),
+					MultiContentEntryText(pos = (160, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 12,color=MultiContentTemplateColor(14),backcolor =MultiContentTemplateColor(13), border_width = 4, border_color = MultiContentTemplateColor(15)),
+					MultiContentEntryText(pos = (200, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 16,color=MultiContentTemplateColor(18),backcolor =MultiContentTemplateColor(17), border_width = 4, border_color = MultiContentTemplateColor(19)),
+					MultiContentEntryText(pos = (240, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 20,color=MultiContentTemplateColor(22),backcolor =MultiContentTemplateColor(21), border_width = 4, border_color = MultiContentTemplateColor(23)),
+					MultiContentEntryText(pos = (280, 0), size = (40, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 24,color=MultiContentTemplateColor(26),backcolor =MultiContentTemplateColor(25), border_width = 4, border_color = MultiContentTemplateColor(27))
 					]),
-
-                             "with_schicht":(40,[
-    					MultiContentEntryText(pos = (0, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0,backcolor = MultiContentTemplateColor(1),color=MultiContentTemplateColor(2), border_width = 4, border_color = MultiContentTemplateColor(3)),
-    					   MultiContentEntryText(pos = (5, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(4)),
-                                        MultiContentEntryText(pos = (50, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 5,backcolor = MultiContentTemplateColor(6),color=MultiContentTemplateColor(7), border_width = 4, border_color = MultiContentTemplateColor(8)),
-    					      MultiContentEntryText(pos = (55, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(9)),
-                                        MultiContentEntryText(pos = (100, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 10,backcolor = MultiContentTemplateColor(11),color=MultiContentTemplateColor(12), border_width = 4, border_color = MultiContentTemplateColor(13)),
-    					       MultiContentEntryText(pos = (105, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(14)),
-                                        MultiContentEntryText(pos = (150, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 15,backcolor = MultiContentTemplateColor(16),color=MultiContentTemplateColor(17), border_width = 4, border_color = MultiContentTemplateColor(18)),
-    					       MultiContentEntryText(pos = (155, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(19)),
-                                        MultiContentEntryText(pos = (200, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 20,backcolor = MultiContentTemplateColor(21),color=MultiContentTemplateColor(22), border_width = 4, border_color = MultiContentTemplateColor(23)),
-    					       MultiContentEntryText(pos = (205, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(24)),
-                                        MultiContentEntryText(pos = (250, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 25,backcolor = MultiContentTemplateColor(26),color=MultiContentTemplateColor(27), border_width = 4, border_color = MultiContentTemplateColor(28)),
-    					        MultiContentEntryText(pos = (255, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(29)),
-                                        MultiContentEntryText(pos = (300, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 30,backcolor = MultiContentTemplateColor(31),color=MultiContentTemplateColor(32), border_width = 4, border_color = MultiContentTemplateColor(33)),
-					     MultiContentEntryText(pos = (305, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(34)),
-                                        ]),
-                              },
-                             	"fonts": [gFont("Regular", 22),gFont("Regular", 28)],
-                             "itemHeight": 40,
-                             "selectionEnabled": False
-                             
+				"with_schicht":(40,[
+					MultiContentEntryText(pos = (0, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0,backcolor = MultiContentTemplateColor(1),color=MultiContentTemplateColor(2), border_width = 4, border_color = MultiContentTemplateColor(3)),
+					MultiContentEntryText(pos = (5, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(4)),
+					MultiContentEntryText(pos = (50, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 5,backcolor = MultiContentTemplateColor(6),color=MultiContentTemplateColor(7), border_width = 4, border_color = MultiContentTemplateColor(8)),
+					MultiContentEntryText(pos = (55, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(9)),
+					MultiContentEntryText(pos = (100, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 10,backcolor = MultiContentTemplateColor(11),color=MultiContentTemplateColor(12), border_width = 4, border_color = MultiContentTemplateColor(13)),
+					MultiContentEntryText(pos = (105, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(14)),
+					MultiContentEntryText(pos = (150, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 15,backcolor = MultiContentTemplateColor(16),color=MultiContentTemplateColor(17), border_width = 4, border_color = MultiContentTemplateColor(18)),
+					MultiContentEntryText(pos = (155, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(19)),
+					MultiContentEntryText(pos = (200, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 20,backcolor = MultiContentTemplateColor(21),color=MultiContentTemplateColor(22), border_width = 4, border_color = MultiContentTemplateColor(23)),
+					MultiContentEntryText(pos = (205, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(24)),
+					MultiContentEntryText(pos = (250, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 25,backcolor = MultiContentTemplateColor(26),color=MultiContentTemplateColor(27), border_width = 4, border_color = MultiContentTemplateColor(28)),
+					MultiContentEntryText(pos = (255, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(29)),
+					MultiContentEntryText(pos = (300, 2), size = (50, 30), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 30,backcolor = MultiContentTemplateColor(31),color=MultiContentTemplateColor(32), border_width = 4, border_color = MultiContentTemplateColor(33)),
+					MultiContentEntryText(pos = (305, 32), size = (40, 8), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(34)),
+					]),
+				}, "fonts": [gFont("Regular", 22),gFont("Regular", 28)],
+				"itemHeight": 40,
+				"selectionEnabled": False
 			}
 		</convert>
 	</widget>
-        
-        
 
-        <widget name="key_red" position="55,488" zPosition="1" size="115,25" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" halign="left" transparent="1" /> 
+	<widget name="key_red" position="55,488" zPosition="1" size="115,25" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" halign="left" transparent="1" /> 
 	<widget name="key_green" position="190,488" zPosition="1" size="115,25" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" halign="left" transparent="1" /> 
 	<widget name="key_yellow" position="365,488" zPosition="1" size="115,25" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" halign="left" transparent="1" /> 
 	<widget name="key_blue" position="530,488" zPosition="1" size="115,25" font="Regular;16" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" halign="left" transparent="1" /> 
-
 	<ePixmap pixmap="skin_default/buttons/button_red.png" position="30,489" zPosition="2" size="20,24" transparent="1" alphatest="on" /> 
 	<ePixmap pixmap="skin_default/buttons/button_green.png" position="160,489" zPosition="2" size="20,24" transparent="1" alphatest="on" /> 
 	<ePixmap pixmap="skin_default/buttons/button_yellow.png" position="335,489" zPosition="2" size="20,24" transparent="1" alphatest="on" /> 
 	<ePixmap pixmap="skin_default/buttons/button_blue.png" position="500,489" zPosition="2" size="20,24" transparent="1" alphatest="on" /> 
 	<ePixmap pixmap="skin_default/buttons/key_menu.png" position="660,486" zPosition="2" size="60,24" transparent="1" alphatest="on" /> 
-
-		<widget name="ueberschrift" font="Regular;22" position="0,52" size="490,28" valign="center" halign="center" foregroundColor="#FFFFFF" zPosition="3" backgroundColor="#20343c4f" /> 
-
-	        
-
-
-		<widget name="descreption" position="10,390" size="705,84" font="Regular;18" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" zPosition="3" halign="left" />  
-
-		<eLabel position="420,86" size="293,296" zPosition="2" backgroundColor="#bbbbbb" />
-		<eLabel position="422,88" size="289,292" zPosition="2" backgroundColor="#20343c4f" />
-		<eLabel position="6,86" size="405,296" zPosition="2" backgroundColor="#bbbbbb" />
-		<eLabel position="8,88" size="401,292" zPosition="2" backgroundColor="#20343c4f" />
-		<eLabel position="10,126" size="395,2" zPosition="3" backgroundColor="white"/>
-		<eLabel position="54,130" size="3,244" zPosition="3" backgroundColor="white"/>
-		<eLabel position="8,474" size="700,3" zPosition="3" backgroundColor="white"/>
-		<eLabel position="8,40" size="700,3" zPosition="3" backgroundColor="white"/>
+	<widget name="ueberschrift" font="Regular;22" position="0,52" size="490,28" valign="center" halign="center" foregroundColor="#FFFFFF" zPosition="3" backgroundColor="#20343c4f" /> 
+	<widget name="descreption" position="10,390" size="705,84" font="Regular;18" foregroundColor="#FFFFFF" backgroundColor="#20343c4f" zPosition="3" halign="left" />  
+	<eLabel position="420,86" size="293,296" zPosition="2" backgroundColor="#bbbbbb" />
+	<eLabel position="422,88" size="289,292" zPosition="2" backgroundColor="#20343c4f" />
+	<eLabel position="6,86" size="405,296" zPosition="2" backgroundColor="#bbbbbb" />
+	<eLabel position="8,88" size="401,292" zPosition="2" backgroundColor="#20343c4f" />
+	<eLabel position="10,126" size="395,2" zPosition="3" backgroundColor="white"/>
+	<eLabel position="54,130" size="3,244" zPosition="3" backgroundColor="white"/>
+	<eLabel position="8,474" size="700,3" zPosition="3" backgroundColor="white"/>
+	<eLabel position="8,40" size="700,3" zPosition="3" backgroundColor="white"/>
 
 </screen>
