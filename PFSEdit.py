@@ -1,4 +1,4 @@
-from . import _
+from . import DWide, _
 
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -11,7 +11,6 @@ from Components.Input import Input
 from Components.SystemInfo import SystemInfo
 try:from configparser import ConfigParser#py3
 except:from ConfigParser import ConfigParser
-from enigma import getDesktop
 from Components.ConfigList import ConfigListScreen
 from Components.config import getConfigListEntry, ConfigEnableDisable, ConfigInteger, ConfigDateTime, \
 	ConfigYesNo, ConfigText, ConfigClock, ConfigSelection, ConfigNumber, ConfigSubList, ConfigSequence, \
@@ -23,8 +22,6 @@ from time import localtime, mktime,strftime,strptime
 
 
 class PFS_edit_Termin(ConfigListScreen,Screen):
-
-	DWide = getDesktop(0).size().width()
 	if DWide < 1000:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFSconf.xml"
 	elif DWide < 1300:

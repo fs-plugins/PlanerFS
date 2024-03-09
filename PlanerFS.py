@@ -5,7 +5,7 @@
 # Chrashlogs, Vorschlaege, Beschwerden usw. bitte an plugins@fs-plugins.de senden
 #
 ################################################################################
-from . import my_version, dat_dir, defconf, _
+from . import my_version, DWide, dat_dir, defconf, _
 
 from Screens.ChoiceBox import ChoiceBox
 from Screens.Screen import Screen
@@ -29,7 +29,6 @@ from time import localtime, strftime, strptime
 import datetime
 
 from enigma import eTimer,ePoint, eSize
-from enigma import getDesktop
 
 import os
 import re
@@ -98,7 +97,6 @@ weiss = Farben().farb_re(color_list[17])
 
 ansicht=1
 screen_size="HD"
-DWide = getDesktop(0).size().width()
 if DWide < 730:
 	screen_size="SD"
 elif DWide >1300:
@@ -1398,7 +1396,6 @@ class PlanerFS7(Screen, HelpableScreen):
 			self.close(None)
 
 class PanerFS_menu7(Screen):
-	DWide = getDesktop(0).size().width()
 	if screen_size=="SD":
 		skin = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFSmenulist.xml"
 	elif screen_size=="fHD":

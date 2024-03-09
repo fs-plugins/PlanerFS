@@ -1,4 +1,4 @@
-from . import my_version,defconf, _
+from . import my_version,DWide,defconf, _
 
 from Screens.Screen import Screen
 from Screens.InfoBarGenerics import InfoBarNotifications
@@ -6,7 +6,7 @@ from Components.ActionMap import ActionMap
 from GlobalActions import globalActionMap
 from Components.Label import Label
 from Components.Sources.List import List
-from enigma import eServiceReference, eTimer, getDesktop
+from enigma import eServiceReference, eTimer
 from time import localtime, strftime
 import datetime
 import os.path
@@ -15,7 +15,7 @@ from Components.VolumeControl import VolumeControl
 from skin import parseColor
 try:from configparser import ConfigParser#py3
 except:from ConfigParser import ConfigParser
-from enigma import iPlayableService,getDesktop
+from enigma import iPlayableService
 from Components.ServiceEventTracker import ServiceEventTracker 
  
 try:
@@ -49,7 +49,6 @@ class FehlerAnzeige(Screen, InfoBarNotifications):
 
 class Timermeldung(Screen, InfoBarNotifications):
 	ALLOW_SUSPEND = True
-	DWide = getDesktop(0).size().width()
 	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/timermeldung.xml"
 	elif DWide > 1300:
@@ -161,13 +160,7 @@ class Timermeldung(Screen, InfoBarNotifications):
 			eDVBVolumecontrol.getInstance().setVolume(self.oldvol,self.oldvol)
 			self.session.nav.playService(self.oldService)
 			self.timer1.stop()
-		#self.exit()
 		self.close(True)
-#	def exit(self):
-		#if self.sounder:eDVBVolumecontrol.getInstance().setVolume(self.oldvol,self.oldvol)
-#		self.close(True)
-
-
 
 
 class startscreen8(Screen, InfoBarNotifications):

@@ -1,5 +1,5 @@
 # -*- coding: utf-8  -*-
-from . import pyvers, my_version, _
+from . import pyvers, DWide, my_version, _
 
 from Screens.Screen import Screen
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -40,7 +40,6 @@ try:
 	fbf = FritzCallFBF
 except ImportError:
     fbf = None
-DWide = getDesktop(0).size().width()
 
 cardfile = "/etc/ConfFS/PlanerFS.vcf"
 
@@ -56,10 +55,6 @@ if len(color_list)<18:
 	color_list=("#00008B","#D2691E","#006400","#696969","#FFD700","#000000","#B22222","#8B8878","#CD0000","#00868B","#f0f8ff","#ff4500","#20343c4f","#deb887","#228B22","#5F9EA0","#DC143C","#F0F8FF","#EEC900")
 color_days = color_list[10]
 cal_background=color_list[12]
-
-
-size_w = getDesktop(0).size().width()
-size_h = getDesktop(0).size().height()
 
 def det_liste(glist=None):
 		cards2=[]
@@ -117,9 +112,9 @@ def det_liste(glist=None):
 
 class PFS_show_card7(Screen, InfoBarNotifications):
 	ALLOW_SUSPEND = True
-	if size_w < 800:
+	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFScard.xml"
-	elif size_w > 1300:
+	elif DWide > 1300:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/fHD/PFScard.xml"
 	else:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/HD/PFScard.xml"
@@ -302,7 +297,6 @@ class PFS_show_card7(Screen, InfoBarNotifications):
 
 class PFS_edit_cards(ConfigListScreen,Screen, InfoBarNotifications):
 	ALLOW_SUSPEND = True
-	DWide = getDesktop(0).size().width()
 	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFSconf.xml"
 	elif DWide > 1300:
@@ -562,7 +556,6 @@ class PFS_read_vcards:
 		self.cards1.sort(key=lambda x:x[9])
 
 class PFS_show_card_List7(Screen, HelpableScreen, InfoBarNotifications):
-	DWide = getDesktop(0).size().width()
 	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFScard_list.xml"
 	elif DWide > 1300:
@@ -577,7 +570,6 @@ class PFS_show_card_List7(Screen, HelpableScreen, InfoBarNotifications):
 	def __init__(self, session,cal_on=None):
 		self.cal_on=cal_on
 		self.cards_liste=PFS_read_vcards().cards1
-		#self.cards_liste.sort(key=lambda x:x[1][1])
 		Screen.__init__(self, session)
 		self.skinName="show_card_List7"
 		HelpableScreen.__init__(self)

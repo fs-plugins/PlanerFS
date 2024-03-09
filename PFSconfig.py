@@ -1,4 +1,4 @@
-from . import defconf, dat_dir, _
+from . import defconf, DWide, dat_dir, _
 
 import re
 import os
@@ -8,7 +8,6 @@ from Screens.MessageBox import MessageBox
 from Screens.LocationBox import LocationBox
 from Screens.ChoiceBox import ChoiceBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
-from enigma import getDesktop
 from Components.ActionMap import ActionMap
 from Components.Label import Label
 try:from configparser import ConfigParser#py3
@@ -27,7 +26,6 @@ try:
 except:
 	l4l=None
 
-DWide = getDesktop(0).size().width()
 if DWide <800:
 	screen_size="SD"
 elif DWide > 1300:

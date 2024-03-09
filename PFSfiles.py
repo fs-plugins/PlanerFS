@@ -1,4 +1,4 @@
-from . import dat_dir,my_version, _
+from . import dat_dir,DWide,my_version, _
 from Tools.LoadPixmap import LoadPixmap
 from Screens.LocationBox import LocationBox
 from Tools.Directories import *
@@ -10,7 +10,6 @@ from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
 from Screens.Console import Console
-from enigma import getDesktop
 from Components.config import ConfigLocations
 import os.path
 import urllib
@@ -39,9 +38,7 @@ if os.path.exists('/etc/ConfFS/PlanerFS.conf'):
 			adr_on=int(configparser.get("settings","adr_on"))
 backup_path=ConfigLocations(default=[last_backup_path])
 
-
 class PFS_filemenu7(Screen):
-	DWide = getDesktop(0).size().width()
 	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFSmenulist.xml"
 	elif DWide > 1300:
@@ -252,7 +249,6 @@ class BackupLocationBox(LocationBox):
 		LocationBox.__init__(self, session, text = text, filename = filename, currDir = dir, bookmarks = backup_path, autoAdd = True, editDir = True, inhibitDirs = inhibitDirs, minFree = minFree)
 		self.skinName = "LocationBox"
 class del_files7(Screen):
-	DWide = getDesktop(0).size().width()
 	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFSmenulist.xml"
 	elif DWide > 1300:
@@ -387,7 +383,6 @@ class del_files7(Screen):
 		self.close() 
 
 class PFS_allfilelist(Screen):
-	DWide = getDesktop(0).size().width()
 	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFSmenulist.xml"
 	elif DWide > 1300:

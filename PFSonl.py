@@ -1,4 +1,4 @@
-from . import dat_dir, _
+from . import DWide,dat_dir, _
 
 import re
 import os
@@ -6,7 +6,6 @@ from Screens.Screen import Screen
 from Screens.Standby import TryQuitMainloop
 from Screens.MessageBox import MessageBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
-from enigma import getDesktop
 from Components.ActionMap import ActionMap,NumberActionMap
 from Components.Label import Label
 from Components.ConfigList import ConfigListScreen
@@ -15,8 +14,6 @@ try:from configparser import ConfigParser#py3
 except:from ConfigParser import ConfigParser
 
 class PlanerFSonline_files(Screen, ConfigListScreen):
-
-	DWide = getDesktop(0).size().width()
 	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFSconf.xml"
 	elif DWide >1300:

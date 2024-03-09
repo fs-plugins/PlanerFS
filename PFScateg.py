@@ -1,4 +1,4 @@
-from . import _
+from . import DWide, _
 
 from Screens.Screen import Screen
 from Screens.ChoiceBox import ChoiceBox
@@ -13,7 +13,6 @@ from Components.Input import Input
 try:from configparser import ConfigParser#py3
 except:from ConfigParser import ConfigParser
 from Components.ActionMap import ActionMap,HelpableActionMap
-from enigma import getDesktop
 import os.path
 
 pfscolor_list=("#006400","#BDB76B","#556B2F","#CAFF70","#BCEE68","#A2CD5A","#6E8B3D","#8FBC8F","#C1FFC1",
@@ -55,10 +54,9 @@ pfscolor_list=("#006400","#BDB76B","#556B2F","#CAFF70","#BCEE68","#A2CD5A","#6E8
 
 
 class color_select(Screen):
-	size_w = getDesktop(0).size().width()
-	if size_w < 800:
+	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFScatset.xml"
-	elif size_w > 1300:
+	elif DWide > 1300:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/fHD/PFScatset.xml"
 	else:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/HD/PFScatset.xml"
@@ -117,10 +115,9 @@ class color_select(Screen):
 
 
 class PFS_categorie_conf7(Screen, HelpableScreen):
-	size_w = getDesktop(0).size().width()
-	if size_w < 800:
+	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFScatset.xml"
-	elif size_w > 1300:
+	elif DWide > 1300:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/fHD/PFScatset.xml"
 	else:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/HD/PFScatset.xml"
@@ -302,10 +299,9 @@ class schicht_conf(Screen, HelpableScreen):
 		L4l=True
 	except:
 		L4l=None        
-	size_w = getDesktop(0).size().width()
-	if size_w < 800:
+	if DWide < 800:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/SD/PFScatset.xml"
-	elif size_w > 1300:
+	elif DWide > 1300:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/fHD/PFScatset.xml"
 	else:
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/HD/PFScatset.xml"
