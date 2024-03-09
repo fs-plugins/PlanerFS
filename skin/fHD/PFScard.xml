@@ -1,36 +1,33 @@
 <!--for class PFS_show_card #+400,+200-->
 <screen name="show_card7" title= "" position="center,center" size="960,600">  
-		<ePixmap position="0,5" size="200,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-		<ePixmap position="200,5" size="200,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-		<ePixmap position="400,5" size="200,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-		<ePixmap position="600,5" size="200,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-		<widget name="key_red" position="0,5" zPosition="1" size="200,40" valign="center" halign="center" font="Regular;30" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget name="key_green" position="200,5" zPosition="1" size="200,40" valign="center" halign="center" font="Regular;30" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget name="key_yellow" position="400,5" zPosition="1" size="200,40" valign="center" halign="center" font="Regular;30" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-		<widget name="key_blue" position="600,5" zPosition="1" size="200,40" valign="center" halign="center" font="Regular;30" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+	<ePixmap position="0,5" size="200,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
+	<ePixmap position="200,5" size="200,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
+	<ePixmap position="400,5" size="200,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
+	<ePixmap position="600,5" size="200,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
+	<widget name="key_red" position="0,5" zPosition="1" size="200,40" valign="center" halign="center" font="Regular;30" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+	<widget name="key_green" position="200,5" zPosition="1" size="200,40" valign="center" halign="center" font="Regular;30" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+	<widget name="key_yellow" position="400,5" zPosition="1" size="200,40" valign="center" halign="center" font="Regular;30" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+	<widget name="key_blue" position="600,5" zPosition="1" size="200,40" valign="center" halign="center" font="Regular;30" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+	<widget name="adr" position="20,55" size="460,255" font="Regular;35" zPosition="2"  foregroundColor="#000000" backgroundColor="#C0D7FF" />
+	<widget name="mail" position="500,55" size="450,105" font="Regular;35" zPosition="2"  foregroundColor="#000000" backgroundColor="#C0D7FF" />
+	<widget name="geb" position="500,160" size="450,100" font="Regular;35" zPosition="2"  foregroundColor="#000000" backgroundColor="#C0D7FF" />
+	<widget name="bild" position="500,320" size="350,275" backgroundColor="#000000" transparent="1" alphatest="on"/>
+	<widget name="adr_background" position="10,50" size="470,260" font="Regular;35" foregroundColor="#000000" backgroundColor="#C0D7FF" />
+	<widget name="adr2_background" position="490,50" size="460,260" font="Regular;35" foregroundColor="#000000" backgroundColor="#C0D7FF" />
 
-		<widget name="adr" position="20,55" size="460,255" font="Regular;35" zPosition="2"  foregroundColor="#000000" backgroundColor="#C0D7FF" />
-		<widget name="mail" position="500,55" size="450,105" font="Regular;35" zPosition="2"  foregroundColor="#000000" backgroundColor="#C0D7FF" />
-		<widget name="geb" position="500,160" size="450,100" font="Regular;35" zPosition="2"  foregroundColor="#000000" backgroundColor="#C0D7FF" />
-		<widget name="bild" position="500,320" size="350,275" backgroundColor="#000000" transparent="1" alphatest="on"/>
-
-		<widget name="adr_background" position="10,50" size="470,260" font="Regular;35" foregroundColor="#000000" backgroundColor="#C0D7FF" />
-		<widget name="adr2_background" position="490,50" size="460,260" font="Regular;35" foregroundColor="#000000" backgroundColor="#C0D7FF" />
-
-	
 	<widget source="tel_listlabel" render="Listbox" position="10,320" size="470,275" zPosition="12" scrollbarMode="showOnDemand" backgroundColor="#C0D7FF" foregroundColor="#000000" enableWrapAround="1" >
 		<convert type="TemplatedMultiContent">
-			{"templates": 
-                            {"default": (50,[
-    					MultiContentEntryText(pos = (15, 3), size = (200, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0: text
-    					MultiContentEntryText(pos = (220, 3), size = (250, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0: text
+			{"templates": {
+				"default": (50,[
+					MultiContentEntryText(pos = (15, 3), size = (200, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0: text
+					MultiContentEntryText(pos = (220, 3), size = (250, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0: text
 					],True),
-                            "not selected": (50,[
-    					MultiContentEntryText(pos = (15, 3), size = (200, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0: text
-    					MultiContentEntryText(pos = (220, 3), size = (250, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0: text
+				"not selected": (50,[
+					MultiContentEntryText(pos = (15, 3), size = (200, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0: text
+					MultiContentEntryText(pos = (220, 3), size = (250, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), # index 0: text
 					],False)
-                             },	"fonts": [gFont("Regular", 35),gFont("Regular", 28)],
-                             "itemHeight": 50
+				}, "fonts": [gFont("Regular", 35),gFont("Regular", 28)],
+				"itemHeight": 50
 			}
 		</convert>
 	</widget>

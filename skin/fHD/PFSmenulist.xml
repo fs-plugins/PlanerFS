@@ -4,18 +4,16 @@
 <screen name ="menulist7" position="240,100" size="900,620" title="PlanerFS" >
 	<widget source="menulist" render="Listbox" position="20,10" size="880,600" scrollbarMode="showOnDemand" foregroundColor="#FFFFFF" enableWrapAround="1" >
 		<convert type="TemplatedMultiContent">
-			{"templates": 
-                            {"default": (50,[
-    					    MultiContentEntryText(pos = (10, 0), size = (30, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), 
-                                            MultiContentEntryText(pos = (40, 0), size = (850, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), 
+			{"templates": {
+				"default": (50,[
+					MultiContentEntryText(pos = (10, 0), size = (30, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), 
+					MultiContentEntryText(pos = (40, 0), size = (850, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), 
 					],True),
-
-                            "files": (50,[
-    					    MultiContentEntryText(pos = (10, 0), size = (870, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), 
-
+				"files": (50,[
+					MultiContentEntryText(pos = (10, 0), size = (870, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 1), 
 					],True),
-                             },	"fonts": [gFont("Regular", 32),gFont("Regular", 28)],
-                             "itemHeight": 50
+				}, "fonts": [gFont("Regular", 32),gFont("Regular", 28)],
+				"itemHeight": 50
 			}
 		</convert>
 	</widget>
