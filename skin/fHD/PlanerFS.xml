@@ -19,8 +19,7 @@
 				"notselected": (50,[
 					MultiContentEntryText(pos = (10, 0), size = (680, 50), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0,color=MultiContentTemplateColor(1)), # index 0: text
 					],False),
-				}, "fonts": [gFont("Regular", 34),gFont("Regular", 28)],
-				"itemHeight": 50
+				}, "fonts": [gFont("Regular", 34),gFont("Regular", 28)], "itemHeight": 50
 			}
 		</convert>
 	</widget>
@@ -37,9 +36,7 @@
 				MultiContentEntryText(pos = (550, 0), size = (110, 60), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 5),
 				MultiContentEntryText(pos = (660, 0), size = (110, 60), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 6),
 				MultiContentEntryText(pos = (770, 0), size = (110, 60), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 7),
-				], "fonts": [gFont("Regular", 38),gFont("Regular", 28)]
-				"itemHeight": 50,
-				"selectionEnabled": False
+				], "fonts": [gFont("Regular", 38),gFont("Regular", 28)], "itemHeight": 50, "selectionEnabled": False
 			}
 		</convert>
 	</widget>
@@ -49,9 +46,7 @@
 		<convert type="TemplatedMultiContent">
 			{"template": [
 				MultiContentEntryText(pos = (0, 0), size = (110, 70), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0, border_width = 2,border_color = 0x000000,backcolor=0x000000),
-				], "fonts": [gFont("Regular", 40),gFont("Regular", 28)],
-				"itemHeight": 70,
-				"selectionEnabled": False
+				], "fonts": [gFont("Regular", 40),gFont("Regular", 28)], "itemHeight": 70, "selectionEnabled": False
 			}
 		</convert>
 	</widget>
@@ -84,9 +79,7 @@
 					MultiContentEntryText(pos = (660, 2), size = (110, 58), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 30,backcolor = MultiContentTemplateColor(31),color=MultiContentTemplateColor(32), border_width = 4, border_color = MultiContentTemplateColor(33)),
 					MultiContentEntryText(pos = (670, 58), size = (90, 10), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = "",backcolor =MultiContentTemplateColor(34)),
 					]),
-				}, "fonts": [gFont("Regular", 40),gFont("Regular", 28)],
-				"itemHeight": 70,
-				"selectionEnabled": False
+				}, "fonts": [gFont("Regular", 40),gFont("Regular", 28)], "itemHeight": 70, "selectionEnabled": False
 			}
 		</convert>
 	</widget>
