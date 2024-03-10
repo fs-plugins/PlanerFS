@@ -1,5 +1,5 @@
 # -*- coding: utf-8  -*-
-from . import pyvers, DWide, my_version, _
+from . import pyvers, DWide, _
 
 from Screens.Screen import Screen
 from Screens.VirtualKeyBoard import VirtualKeyBoard

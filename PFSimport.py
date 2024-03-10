@@ -17,7 +17,6 @@ from .routines_vc import Cards_parse
 import ssl
 import requests
 
-version=""
 altloesch=365
 altloesch_on="No"
 

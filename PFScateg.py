@@ -151,12 +151,12 @@ class PFS_categorie_conf7(Screen, HelpableScreen):
 						mcolor_list=v.split(",")
 		self.categories= list(categories.split(","))
 		self.color_list=list(mcolor_list)
-		allcolor_list=["#00008B","#D2691E","#006400","#696969","#FFD700","#000000","#B22222","#8B8878","#CD0000","#00868B","#f0f8ff","#ff4500","#20343c4f","#deb887","#228B22","#5F9EA0","#DC143C","#F0F8FF","#EEC900","#20343c4f","#f0f8ff"]
-		if len(self.color_list)<21:
+		allcolor_list=["#00008B","#D2691E","#006400","#696969","#FFD700","#000000","#B22222","#8B8878","#CD0000","#00868B","#f0f8ff","#ff4500","#20343c4f","#deb887","#228B22","#5F9EA0","#DC143C","#F0F8FF","#EEC900","#20343c4f","#f0f8ff","#000000","#FFFFFF"]
+		if len(self.color_list)<23:
 			self.color_list.extend(allcolor_list[len(self.color_list):])
 		if len(self.categories)<10:
 			self.categories=[_("None"),_("Birthday"), _("HOLIDAY"), _("Anniversary"), _("Wedding day"),_("None"),_("None"),_("None"),_("None"),_("None")]
-		self.categories.extend((_("calendar days"),_("calendar holiday"),_("calendar background"),_("calendar event"),_("calendar today background"),_("list inactive"),_("list anniversaries"),_("list text"),_("list heading"),_("startscreen background"),_("startscreen text")))
+		self.categories.extend((_("calendar days"),_("calendar holiday"),_("calendar background"),_("calendar event"),_("calendar today background"),_("list inactive"),_("list anniversaries"),_("list text"),_("list heading"),_("startscreen background"),_("startscreen text"),_("calendar week background"),_("calendar week text")))
 
 		Screen.__init__(self, session)
 		self.skinName="PFS_categorie_conf5"
@@ -216,10 +216,12 @@ class PFS_categorie_conf7(Screen, HelpableScreen):
 			elif x[0] ==_("startscreen background") or x[0] ==_("startscreen text"):
 				txtcol= int(self.color_list[20].lstrip('#'), 16)
 				bgcol=  int(self.color_list[19].lstrip('#'), 16)
-
 			elif x[0] ==_("calendar holiday"):
 				txtcol= int(x[1].lstrip('#'), 16)
 				self.t_farb2= txtcol
+			elif x[0] ==_("calendar week text") or x[0] ==_("calendar week background"):
+				txtcol= int(self.color_list[22].lstrip('#'), 16)
+				bgcol=  int(self.color_list[21].lstrip('#'), 16)
 			elif x[0] in (_("list inactive"),_("list anniversaries"),_("list text"),_("list heading")):
 				bgcol= bgcol
 				txtcol= int(x[1].lstrip('#'), 16)

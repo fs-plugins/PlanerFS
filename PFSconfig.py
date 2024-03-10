@@ -112,7 +112,6 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 		self.countdown_dat = NoSave(ConfigSequence(seperator = ".",limits=lim_1,default = self.olddate))
 		self.timestartstandby = NoSave(ConfigSelection(choices = [("Yes", _("Yes")), ("No", _("No"))], default = self.conf["timestartstandby"]))
 		self.timer_on = NoSave(ConfigSelection(choices = [("On", _("On")), ("Off", _("Off"))], default = self.conf["timer_on"]))
-		self.ansicht = NoSave(ConfigSelection(choices = [(2, _("Big screen")),(1, _("Split screen"))], default = self.conf["ansicht"]))
 
 		akt_i= self.conf["akt_intv"]
 		if akt_i>1440:akt_i=1440
@@ -453,7 +452,6 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 
 	def save_abfrage(self):
 		l_2=[]
-		fix_list=("ansicht","extern_color")
 		for x in self.list:
 			if len(x)>2:l_2.append(str(x[1].value))
 		if self.alt_list != l_2 or self.altferien != self.conf["ferien"]:
@@ -496,8 +494,6 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 			help=_("write /tmp/plfs_ges for 'see text file' in LCD4Linux")
 		elif cur==self.l4l_ges_file_len:
 			help=_("Limit line length")
-		elif cur==self.ansicht:
-			help=_("Show on start big or split screen")
 		elif cur==self.countdown_text or cur==self.countdown_dat:
 			help=_("Countdown for the start display and LCD screen, insert in the text 'pd' for the number of days")
 		if help:

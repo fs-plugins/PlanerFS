@@ -1,4 +1,4 @@
-# -*- coding: utf-8  -*-
+# -*- coding: cp1252  -*-
 from . import _
 import datetime
 import re

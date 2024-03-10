@@ -57,45 +57,8 @@ categories1=[]
 color_list=[]
 z_liste=conf["z_liste"]#("0","1","1","0","1","1","0","0","0","0")
 days=(_("Monday"),_("Tuesday"),_("Wednesday"),_("Thursday"),_("Friday"),_("Saturday"),_("Sunday"))
-configparser = ConfigParser()
-if os.path.exists('/etc/ConfFS/PlanerFS.conf'):
-	configparser.read("/etc/ConfFS/PlanerFS.conf")
-	if configparser.has_section("settings"):
-		l1=configparser.items("settings")
-		for k,v in  l1:
-			if len(str(v)):
-				if k=="categories":
-					cat_categories=v#.encode("UTF-8")
-					categories1=list(cat_categories.split(","))
-				elif k == "schicht_col":
-					conf["schicht_col"]= v
-				elif k=="cat_color_list":
-					cat_color_list=v
-					color_list= list(cat_color_list.split(",")) 
-				elif k=="z_liste":
-					z_liste=list(v.split(","))
-				else:
-					try:
-						conf[k] = int(v)
-					except:    
-						conf[k] = v
 
-#if (conf["adr_on"]):
-#	from .PFSCards import PFS_edit_cards,PFS_show_card7,PFS_show_card_List7
-
-allcolor_list=["#00008B","#D2691E","#006400","#696969","#FFD700","#000000","#B22222","#8B8878","#CD0000","#00868B","#f0f8ff","#ff4500","#20343c4f","#deb887","#228B22","#5F9EA0","#DC143C","#F0F8FF","#EEC900","#20343c4f","#f0f8ff"]
-if len(color_list)<21:
-	color_list.extend(allcolor_list[len(color_list):])
-
-if len(categories1)<10:
-	categories1=(_("None"),_("Birthday"), _("HOLIDAY"), _("Anniversary"), _("Wedding day"),_("None"),_("None"),_("None"),_("None"),_("None"))
-
-cal_bg=Farben().farb_re(color_list[12])
-color_inactiv= Farben().farb_re(color_list[15])
-rot = Farben().farb_re(color_list[16])
-weiss = Farben().farb_re(color_list[17])
-
-ansicht=1
+allcolor_list=["#00008B","#D2691E","#006400","#696969","#FFD700","#000000","#B22222","#8B8878","#CD0000","#00868B","#f0f8ff","#ff4500","#20343c4f","#deb887","#228B22","#5F9EA0","#DC143C","#F0F8FF","#EEC900","#20343c4f","#f0f8ff","#000000","#ffffff"]
 screen_size="HD"
 if DWide < 730:
 	screen_size="SD"
@@ -112,7 +75,6 @@ lt = localtime()
 
 class PlanerFS7(Screen, HelpableScreen):
 	def __init__(self, session):
-		global ansicht
 		global conf
 		global color_list
 		global categories1
@@ -123,18 +85,16 @@ class PlanerFS7(Screen, HelpableScreen):
 		if configparser.has_section("settings"):
 			l1=configparser.items("settings")
 			for k,v in  l1:
-				if k.strip() == "ansicht":
-					ansicht = int(v)
-				elif k == "schicht_col":
+				if k == "schicht_col":
 					conf["schicht_col"]= v
 				elif k.strip() == "kalender_art":
 					conf["kalender_art"] = v
 				if k=="categories":
-					cat_categories=v#.encode("UTF-8")
+					cat_categories=v
 					categories1=list(cat_categories.split(","))
 				elif k=="cat_color_list":
 					cat_color_list=v
-					color_list= list(cat_color_list.split(",")) 
+					color_list= list(cat_color_list.split(","))
 				elif k=="z_liste":
 					z_liste=list(v.split(","))
 				else:
@@ -142,7 +102,10 @@ class PlanerFS7(Screen, HelpableScreen):
 						conf[k] = int(v)
 					except:    
 						conf[k] = v
-
+		if len(color_list)<23:
+			color_list.extend(allcolor_list[len(color_list):])
+		if len(categories1)<10:
+			categories1=(_("None"),_("Birthday"), _("HOLIDAY"), _("Anniversary"), _("Wedding day"),_("None"),_("None"),_("None"),_("None"),_("None"))
 		self.schichtnamen=None
 		self.show_schichttermin=False
 		self.kalnum=1
@@ -164,7 +127,6 @@ class PlanerFS7(Screen, HelpableScreen):
 		color_inactiv= Farben().farb_re(color_list[15])
 		rot = Farben().farb_re(color_list[16])
 		weiss = Farben().farb_re(color_list[17])
-		ansicht=1
 		skindatei = "/usr/lib/enigma2/python/Plugins/Extensions/PlanerFS/skin/"+screen_size+"/PlanerFS.xml"
 		tmpskin = open(skindatei)
 		self.skin = tmpskin.read()
@@ -861,7 +823,8 @@ class PlanerFS7(Screen, HelpableScreen):
 		list1 = []
 		for wn in kwliste:
 			text= '%0.2d' %wn
-			list1.append((text,0))
+			#list1.append((text,0))
+			list1.append((text,Farben().farb_re(color_list[21]),Farben().farb_re(color_list[22])))
 		self["kwlist"].setList(list1)
 
 	def termin_liste_anzeigen(self):
@@ -1102,6 +1065,7 @@ class PlanerFS7(Screen, HelpableScreen):
 							self.d3list.append(0xffffff)
 						else:
 							self.d3list.append(0x000000)
+							#self.d3list.append(Farben().farb_re(self.cal_background))
 						if conf["schicht_art"] and msp_color: self.d3list.append(msp_color)    
 				if d_test>0:
 					self.d2list.append(tuple(self.d3list))
