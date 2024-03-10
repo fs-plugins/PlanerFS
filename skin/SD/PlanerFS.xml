@@ -48,7 +48,7 @@
 	<widget source="kwlist" render="Listbox" position="10,135" size="40,245" zPosition="12" backgroundColor="#20343c4f" foregroundColor="#FFFFFF" scrollbarMode="showOnDemand" >
 		<convert type="TemplatedMultiContent">
 			{"template": [
-				MultiContentEntryText(pos = (0, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0, border_width = 2,border_color = 0x000000,backcolor=0x000000),
+				MultiContentEntryText(pos = (0, 0), size = (50, 40), font=0, flags = RT_HALIGN_CENTER|RT_VALIGN_CENTER, text = 0, border_width = 2,border_color = 0x000000,color=MultiContentTemplateColor(2),backcolor =MultiContentTemplateColor(1)),
 				],"fonts": [gFont("Regular", 22),gFont("Regular", 28)],
 				"itemHeight": 40,
 				"selectionEnabled": False
