@@ -76,6 +76,7 @@ lt = localtime()
 class PlanerFS7(Screen, HelpableScreen):
 	def __init__(self, session):
 		global conf
+		global z_liste
 		global color_list
 		global categories1
 		global cal_bg,color_inactiv,rot,weiss
