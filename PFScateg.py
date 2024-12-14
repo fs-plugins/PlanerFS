@@ -144,12 +144,13 @@ class PFS_categorie_conf7(Screen, HelpableScreen):
 				l1=configparser.items("settings")
 				for k,v in  l1:
 					if k=="categories":
-						categories=v.encode("UTF-8")
+						categories=str(v)
 					elif k=="z_liste":
 						self.z_liste=list(v.split(","))
 					elif k=="cat_color_list":
 						mcolor_list=v.split(",")
-		self.categories= list(categories.split(","))
+		cats= categories.split(",")
+		self.categories= list(cats)
 		self.color_list=list(mcolor_list)
 		allcolor_list=["#00008B","#D2691E","#006400","#696969","#FFD700","#000000","#B22222","#8B8878","#CD0000","#00868B","#f0f8ff","#ff4500","#20343c4f","#deb887","#228B22","#5F9EA0","#DC143C","#F0F8FF","#EEC900","#20343c4f","#f0f8ff","#000000","#FFFFFF"]
 		if len(self.color_list)<23:
@@ -272,7 +273,7 @@ class PFS_categorie_conf7(Screen, HelpableScreen):
 		self.col=",".join(self.color_list)
 		zz=",".join(self.z_liste)
 		if os.path.exists('/etc/ConfFS/PlanerFS.conf'):
-			self.configparser2.set("settings", "categories",self.catego.decode("utf-8"))
+			self.configparser2.set("settings", "categories",str(self.catego.encode("UTF-8")))
 			self.configparser2.set("settings", "cat_color_list",self.col)
 			self.configparser2.set("settings", "z_liste",zz)
 		fp = open("/etc/ConfFS/PlanerFS.conf","w")

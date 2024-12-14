@@ -261,7 +261,7 @@ class online_import():
 								status=resp.status_code
 								if status==200:
 									res = resp.content
-									f=open(datei2,"w")
+									f=open(datei2,"wb")
 									f.write(res)
 									f.close()
 									erg=2
