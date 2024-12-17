@@ -147,7 +147,7 @@ class einlesen():
 				path='/etc/ConfFS/PlanerFS_online.txt'
 				erg=online_import().run(path,fer,1)
 				if erg==0 and not Screens.Standby.inStandby:
-					Notifications.AddNotification(MessageBox, "PlanerFS\n"+_("Error: at least one external file could not be loaded!"), type=MessageBox.TYPE_ERROR, timeout = 30)
+					Notifications.AddNotification(MessageBox, "PlanerFS\n"+_("Error: at least one external file could not be loaded!")+"\n/tmp/PlanerFS_Errors.txt", type=MessageBox.TYPE_ERROR, timeout = 30)
 			files=[]
 			if conf["kalender_art"] != "Off":
 				files.append("kalender")
@@ -481,8 +481,8 @@ def adress_menu(menuid, **kwargs):
 		return []
 
 def pfs_wecker(session, **kwargs):
-	from .PFSwe import PFS_show_we
-	session.open(PFS_show_we)
+	from .PFSwe import PFS_show_we as wecker
+	session.open(wecker)
 
 def pfs_wecker2(**kwargs):
 	begin = -1
@@ -527,6 +527,7 @@ def Plugins(**kwargs):
 		list.append(PluginDescriptor(name="PlanerFS", where=PluginDescriptor.WHERE_MENU, fnc=calen_menu))
 	if adr_on==1 and (adr_menu==3 or adr_menu==4):
 		list.append(PluginDescriptor(name="PlanerFS address book", where=PluginDescriptor.WHERE_MENU, fnc=adress_menu))
-	list.append(PluginDescriptor(name="PlanerFS alarm clock", where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=pfs_wecker))
+	#list.append(PluginDescriptor(name="PlanerFS alarm clock", where=PluginDescriptor.WHERE_MENU, icon="PlanerFS.png", description=_("Alarm timer"), fnc=pfs_wecker))
+	list.append(PluginDescriptor(name="PlanerFS alarm clock", where=PluginDescriptor.WHERE_PLUGINMENU, icon="PlanerFS.png", description=_("Alarm timer"), fnc=pfs_wecker))
 
 	return list 

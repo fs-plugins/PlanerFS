@@ -155,7 +155,7 @@ class PlanerFS7(Screen, HelpableScreen):
 		self["errs"] = Pixmap()
 		self["errs"].hide()
 		self["help"] = ScrollLabel("")
-		self["help"].hide()
+		#self["help"].hide()
 		self.hlp=None
 		self.ed_list=["New event",()]
 		self.sel_dat=0
@@ -181,8 +181,8 @@ class PlanerFS7(Screen, HelpableScreen):
 		self["descreption"] = Label("")
 		self["titel"] = Label("PlanerFS - "+my_version)
 		self.setTitle("PlanerFS - "+my_version)
-		self["datum"] = Label('%0.2d.%0.2d.%0.4d %0.2d:%0.2d%s' %(lt[2],lt[1],lt[0],lt[3],lt[4]," "*2)) 
-		self["kal_num"] = Label(_("cal.1"))
+		self["datum"] = Label('%0.2d.%0.2d.%0.4d %0.2d:%0.2d %s' %(lt[2],lt[1],lt[0],lt[3],lt[4]," "*2)) 
+		self["kal_num"] = Label(" "*5+_("cal.1"))
 		self["ueberschrift"] = Label("")
 		self["key_yellow"] = Label(_("Timer"))
 		self["key_green"] = Label(_("Update data"))
@@ -251,15 +251,18 @@ class PlanerFS7(Screen, HelpableScreen):
 
 	def setDatum(self):
 		lt = localtime()
-		self["datum"].setText('%0.2d.%0.2d.%0.4d %0.2d:%0.2d%s' %(lt[2],lt[1],lt[0],lt[3],lt[4]," "*2))
+		self["datum"].setText('%0.2d.%0.2d.%0.4d %0.2d:%0.2d %s' %(lt[2],lt[1],lt[0],lt[3],lt[4]," "*2))
 		self.TitelTimer.startLongTimer(60) 
 
 	def start_set(self):
 		self.TitelTimer.startLongTimer(60)
+		self["help"].instance.setZPosition(999)
+		self["help"].hide()
 		if self.bgr_skin:
 			self.instance.setBackgroundColor(parseColor(self.cal_background))
 			self["descreption"].instance.setBackgroundColor(parseColor(self.cal_background))
 			self["ueberschrift"].instance.setBackgroundColor(parseColor(self.cal_background))
+			self["list_titel"].instance.setBackgroundColor(parseColor(self.cal_background))
 		if str(conf["ferien"]) != "0":
 			from .PFSimport import online_import
 			online_import().run(dat_dir,(conf["ferien"],conf["l_ferien"]),None)
@@ -364,6 +367,7 @@ class PlanerFS7(Screen, HelpableScreen):
 							text=text+"\n\n"+str(e)
 				self["help"].setText(text)
 				self["help"].show()
+				#self["help"].instance.setZPosition(6)
 				self.hlp=1
 
 	def showAbout(self,args=None):

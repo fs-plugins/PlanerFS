@@ -25,7 +25,8 @@ class PFS_show_we(Screen,ConfigListScreen):
 		self.wecker=0
 		self.al_vol_max=40
 		self.now = [x for x in localtime()]
-		self.alarm_time=NoSave(ConfigClock(default =mktime(self.now)))
+		t1=mktime((self.now[0],self.now[1],self.now[2],self.now[3],self.now[4],0,0,0,-1))
+		self.alarm_time=NoSave(ConfigClock(default =t1))
 		self.alarm_volume = NoSave(ConfigInteger(default=30, limits=(0, 99)))
 		self.sound_on=False
 		self.list1 = []
