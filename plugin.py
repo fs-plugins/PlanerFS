@@ -101,7 +101,7 @@ else:
 	datei=open('/etc/ConfFS/PlanerFS.conf',"w")
 	configparser.add_section("settings")
 	for k,v in conf.items():
-		configparser.set("settings", k,v)
+		configparser.set("settings", k,str(v))
 	configparser.write(datei)
 	datei.close()
 
