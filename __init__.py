@@ -4,7 +4,7 @@ from os import sys, environ as os_environ
 import gettext
 from enigma import getDesktop
 
-my_version="9.92"
+my_version="9.94"
 dat_dir = "/etc/ConfFS/"
 pyvers=sys.version_info[0]
 DWide = getDesktop(0).size().width()
@@ -12,6 +12,7 @@ defconf = {
 			"timestartstandby":"No",
 			"startscreen_plus":"True",
 			"timer_on":"On",
+			"version":0,
 			"akt_intv":0,
 			"m_dauer":0,
 			"m_sound":"None",
