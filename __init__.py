@@ -4,7 +4,7 @@ from os import sys, environ as os_environ
 import gettext
 from enigma import getDesktop
 
-my_version="9.94"
+my_version="9.95"
 dat_dir = "/etc/ConfFS/"
 pyvers=sys.version_info[0]
 DWide = getDesktop(0).size().width()

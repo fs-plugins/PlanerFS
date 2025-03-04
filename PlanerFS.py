@@ -25,7 +25,7 @@ from Components.Sources.List import List
 from Components.ScrollLabel import ScrollLabel
 
 from skin import parseColor, parseFont
-from time import localtime, strftime, strptime
+from time import strftime, strptime
 import datetime
 
 from enigma import eTimer,ePoint, eSize
@@ -70,7 +70,7 @@ termindatei_2 = ""
 if os.path.isfile("/etc/ConfFS/PlanerFS2.ics"):
 	termindatei_2 = "/etc/ConfFS/PlanerFS2.ics"
 cal_files_path="/etc/ConfFS"
-lt = localtime()
+
 ###############################################################################		
 
 class PlanerFS7(Screen, HelpableScreen):
@@ -144,6 +144,11 @@ class PlanerFS7(Screen, HelpableScreen):
 		self.skinName = "PlanerFS7"
 		self.menutitle=""
 		wt=[(_("WN"),_("Mon"), _("Tue"), _("Wed"), _("Thu"), _("Fri"), _("Sat"), _("Su"))]
+		self.today=datetime.datetime.now()
+		altdat=datetime.datetime.today()-datetime.timedelta(conf["altloesch"])
+		self.altdat=datetime.datetime(altdat.year,altdat.month,altdat.day,23,59,59)
+		self.monat=self.today.month
+		self.jahr=self.today.year
 		self["weekdays"]= List([])
 		self["weekdays"].setList(wt)
 		self["event_list"] = List([])
@@ -151,11 +156,11 @@ class PlanerFS7(Screen, HelpableScreen):
 		self["kwlist"] = List([])
 		self["greena_1"] = Pixmap()
 		self["greena_2"] = Pixmap()
-		self["greena_2"].hide()                
+		self["greena_2"].hide()
 		self["errs"] = Pixmap()
 		self["errs"].hide()
 		self["help"] = ScrollLabel("")
-		#self["help"].hide()
+		self["help"].hide()
 		self.hlp=None
 		self.ed_list=["New event",()]
 		self.sel_dat=0
@@ -181,8 +186,8 @@ class PlanerFS7(Screen, HelpableScreen):
 		self["descreption"] = Label("")
 		self["titel"] = Label("PlanerFS - "+my_version)
 		self.setTitle("PlanerFS - "+my_version)
-		self["datum"] = Label('%0.2d.%0.2d.%0.4d %0.2d:%0.2d %s' %(lt[2],lt[1],lt[0],lt[3],lt[4]," "*2)) 
-		self["kal_num"] = Label(" "*5+_("cal.1"))
+		self["datum"] = Label('%0.2d.%0.2d.%0.4d %0.2d:%0.2d%s' %(self.today.day,self.monat,self.jahr,self.today.hour,self.today.minute," "*2)) 
+		self["kal_num"] = Label(_("cal.1"))
 		self["ueberschrift"] = Label("")
 		self["key_yellow"] = Label(_("Timer"))
 		self["key_green"] = Label(_("Update data"))
@@ -235,12 +240,6 @@ class PlanerFS7(Screen, HelpableScreen):
 			"seekBack": (self.rueck,_("previous month")),
 			}, -1)
 
-		self.today=datetime.date.today()
-		altdat=datetime.datetime.today()-datetime.timedelta(conf["altloesch"])
-		self.altdat=datetime.datetime(altdat.year,altdat.month,altdat.day,23,59,59)
-		self.monat=lt[1]
-		self.jahr=lt[0]
-
 		self.terminfile=termindatei
 		if self.monat==12:
 			sdt1=datetime.date(self.jahr+1, 1, 1)-datetime.timedelta(1)
@@ -250,19 +249,16 @@ class PlanerFS7(Screen, HelpableScreen):
 		self.onLayoutFinish.append(self.start_set)
 
 	def setDatum(self):
-		lt = localtime()
-		self["datum"].setText('%0.2d.%0.2d.%0.4d %0.2d:%0.2d %s' %(lt[2],lt[1],lt[0],lt[3],lt[4]," "*2))
+		self.today=datetime.datetime.now()
+		self["datum"].setText('%0.2d.%0.2d.%0.4d %0.2d:%0.2d%s' %(self.today.day,self.monat,self.jahr,self.today.hour,self.today.minute," "*2))
 		self.TitelTimer.startLongTimer(60) 
 
 	def start_set(self):
 		self.TitelTimer.startLongTimer(60)
-		self["help"].instance.setZPosition(999)
-		self["help"].hide()
 		if self.bgr_skin:
 			self.instance.setBackgroundColor(parseColor(self.cal_background))
 			self["descreption"].instance.setBackgroundColor(parseColor(self.cal_background))
 			self["ueberschrift"].instance.setBackgroundColor(parseColor(self.cal_background))
-			self["list_titel"].instance.setBackgroundColor(parseColor(self.cal_background))
 		if str(conf["ferien"]) != "0":
 			from .PFSimport import online_import
 			online_import().run(dat_dir,(conf["ferien"],conf["l_ferien"]),None)
@@ -367,7 +363,6 @@ class PlanerFS7(Screen, HelpableScreen):
 							text=text+"\n\n"+str(e)
 				self["help"].setText(text)
 				self["help"].show()
-				#self["help"].instance.setZPosition(6)
 				self.hlp=1
 
 	def showAbout(self,args=None):
@@ -397,13 +392,13 @@ class PlanerFS7(Screen, HelpableScreen):
 		self.einlesen()
 
 	def red(self):
-		lt=self["list_titel"].getText().replace(_(" (active)"),"")
+		rlt=self["list_titel"].getText().replace(_(" (active)"),"")
 		if self.list_site==0:
 			self.list_site=1
 			self["event_list"].style = "default"
 			self.changed()
 			self["key_red"].setText(_("Calendar"))
-			self["list_titel"].setText(lt+_(" (active)"))
+			self["list_titel"].setText(rlt+_(" (active)"))
 			self["greena_1"].hide()
 			self["greena_2"].show()
 		else:
@@ -412,7 +407,7 @@ class PlanerFS7(Screen, HelpableScreen):
 			except:
 				pass
 			self["descreption"].setText("")
-			self["list_titel"].setText(lt)
+			self["list_titel"].setText(rlt)
 			self["event_list"].style = "notselected"
 			self.list_site=0 
 			self.showActiveDat()
@@ -515,7 +510,7 @@ class PlanerFS7(Screen, HelpableScreen):
 				fname=str(line).replace("filename:/etc/ConfFS/","")
 				rname=fname
 			if "X-WR-CALNAME" in line:
-				fname2=str(line).replace("X-WR-CALNAME:","")                        
+				fname2=str(line).replace("X-WR-CALNAME:","")
 			if mask['BEGIN'].match(line):
 				eventLines = []
 				inEvent = True
@@ -913,8 +908,8 @@ class PlanerFS7(Screen, HelpableScreen):
 
 	def blue(self): 
 		self.today=datetime.date.today()
-		self.monat=lt[1]
-		self.jahr=lt[0]
+		self.monat=self.today.month#self.lt[1]
+		self.jahr=self.today.year#self.lt[0]
 		if self.monat==12:
 			sdt1=datetime.date(self.jahr+1, 1, 1)-datetime.timedelta(1)
 		else:
