@@ -1,3 +1,8 @@
+![Status: EOL](https://shields.io)
+
+> [!CAUTION]
+> **End of Life (EOL):** Diese Software hat das Ende ihres Lebenszyklus erreicht. Es gibt keine Weiterentwicklung und keine Sicherheitsupdates mehr.
+
 # PlanerFS 
 für enigma2-Systeme, basierend auf Python 2 und Python 3<br />
 Kalender nach ical-Standard, Adressen nach vcard-Standard - kompatibel mit anderen Anwendungen (z.B. am PC)
